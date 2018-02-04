@@ -1,0 +1,3 @@
+target ‘Spott' do
+pod 'Mapbox-iOS-SDK', '~> 3.7'
+end
