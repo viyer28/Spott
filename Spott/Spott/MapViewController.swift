@@ -53,6 +53,17 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         }
         return view
     }
+    func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
+        // Instantiate and return our custom callout view.
+        return SpottCalloutView(representedObject: annotation)
+    }
+    
+    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
+        // Optionally handle taps on the callout.
+        
+        // Hide the callout.
+        mapView.deselectAnnotation(annotation, animated: true)
+    }
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         // Always allow callouts to popup when annotations are tapped.

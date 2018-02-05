@@ -32,9 +32,9 @@ class MapAnnotationView: MGLAnnotationView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
-        self.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         self.backgroundColor = C.darkColor
         self.layer.borderWidth = 3.0 as CGFloat
+        self.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         self.layer.cornerRadius = self.frame.size.width / 2
         //self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
         //imageView.layer.cornerRadius = imageView.frame.size.width / 2;
@@ -51,45 +51,65 @@ class MapAnnotationView: MGLAnnotationView {
         self.addSubview(pointsLabel)
     }
     
-//    override var image: UIImage? {
-//        get {
-//            return self.imageView.image
-//        }
-//
-//        set {
-//            //self.imageView.image = newValue
-//        }
-//    }
-    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-//class SpottCalloutView: UIView, MGLCalloutView {
-//    var representedObject: MGLAnnotation
-//    
-//    var leftAccessoryView: UIView
-//    
-//    var rightAccessoryView: UIView
-//    
-//    var delegate: MGLCalloutViewDelegate?
-//    
-//    required init(representedObject: MGLAnnotation) {
-//        super.init(representedObject: representedObject)
-//        print(1)
-//    }
-//    
-//    required init?(coder decoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-//    func dismissCallout(animated: Bool) {
-//        return
-//    }
-//    
-//    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
-//        print(1)
-//    }
+class SpottCalloutView: UIView, MGLCalloutView {
+    
+    let dismissesAutomatically: Bool = true
+    let isAnchoredToAnnotation: Bool = false
+    lazy var leftAccessoryView = UIView()
+    lazy var rightAccessoryView = UIView()
+    weak var delegate: MGLCalloutViewDelegate?
+    var representedObject: MGLAnnotation
+    var backgroundView: UIView!
+    
+    required init(representedObject: MGLAnnotation) {
+        self.representedObject = representedObject
+        super.init(frame: .zero)
+        backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: C.w*0.3, height: C.h*0.2))
+        backgroundView.layer.cornerRadius = backgroundView.frame.size.width / 10
+        backgroundView.backgroundColor = UIColor.white
+        self.addSubview(backgroundView)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // callout view delegate: present callout
+    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+//        if !representedObject.responds(to: #selector(getter: MGLAnnotation.title)) {
+//            return
+//        }
+        print(3)
+        view.addSubview(self)
+        
+        let frameWidth = backgroundView.bounds.size.width
+        let frameHeight = backgroundView.bounds.size.height
+        let frameOriginX = rect.origin.x + (rect.size.width/2.0) - (frameWidth/2.0)
+        let frameOriginY = rect.origin.y - frameHeight
+        frame = CGRect(x: frameOriginX, y: frameOriginY, width: frameWidth, height: frameHeight)
+        
+        
+    }
+    override var center: CGPoint {
+        set {
+            var newCenter = newValue
+            newCenter.y = newCenter.y - bounds.midY
+            super.center = newCenter
+        }
+        get {
+            return super.center
+        }
+    }
+    
+    func dismissCallout(animated: Bool) {
+        removeFromSuperview()
 
-//}
+    }
+
+}
+

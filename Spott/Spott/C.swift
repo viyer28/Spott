@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-
+import MapKit
 class C: NSObject {
     static var w: CGFloat!
     static var h: CGFloat!
@@ -17,3 +17,12 @@ class C: NSObject {
     static var lightColor = UIColor(red:232.0/255.0, green:233.0/255.0, blue:235.0/255.0, alpha:1.0)
     
 }
+
+
+class Event: NSObject {
+    var location: CLLocationCoordinate2D!
+    var name: String!
+    var going: Int!
+    var pontentials: Int!
+}
+
