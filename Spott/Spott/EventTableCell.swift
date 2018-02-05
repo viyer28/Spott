@@ -18,13 +18,20 @@ class EventTableCell: UITableViewCell {
     var timeLabel: UILabel!
     var titleLabel: UILabel!
     var locationLabel: UILabel!
-    var locationImage: UIImageView!
+    var statusImage: UIImageView!
     var friendImage1: UIImageView!
     var friendImage2: UIImageView!
     var dotLabel: UILabel!
     var goingLabel:UILabel!
+    var distanceLabel:UILabel!
     var friendsGoing = 3
     var going = 123
+    var distance = 3.0
+    var potentialsGoing = 5
+    var friendsLabel:UILabel!
+    var numFriendsLabel:UILabel!
+    var potentialLabel:UILabel!
+    var numPotentialLabel:UILabel!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -44,23 +51,16 @@ class EventTableCell: UITableViewCell {
         dayLabel.textColor = UIColor.white
         dayLabel.textAlignment = .center
         dayLabel.font = UIFont(name: "Futura", size: 12)
-        dayLabel.text="Today"
         
         dateLabel = UILabel(frame: CGRect(x: wholeView.frame.size.width*0.05, y: wholeView.frame.height*0.4, width: wholeView.frame.size.width*0.2, height: wholeView.frame.height * 0.2))
         dateLabel.textColor = UIColor.white
         dateLabel.textAlignment = .center
         dateLabel.font = UIFont(name: "Futura", size: 12)
-        dateLabel.text="Feb. 4"
         
         timeLabel = UILabel(frame: CGRect(x: wholeView.frame.size.width*0.05, y: wholeView.frame.height * 0.6, width: wholeView.frame.size.width*0.2, height: wholeView.frame.height * 0.2))
         timeLabel.textColor = UIColor.white
         timeLabel.textAlignment = .center
         timeLabel.font = UIFont(name: "Futura", size: 12)
-        timeLabel.text="3:00 pm"
-        
-        wholeView.addSubview(dayLabel)
-        wholeView.addSubview(dateLabel)
-        wholeView.addSubview(timeLabel)
         
         let rw = rightView.frame.width
         let rh = rightView.frame.height
@@ -69,16 +69,14 @@ class EventTableCell: UITableViewCell {
         titleLabel.textColor = UIColor.blue
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: "Futura", size: 12)
-        titleLabel.text="Physics Study Group"
         
         locationLabel = UILabel(frame: CGRect(x: rw*0.3, y: rh * 0.7, width: rw*0.5, height: rh * 0.2))
         locationLabel.textColor = UIColor.blue
         locationLabel.textAlignment = .center
         locationLabel.font = UIFont(name: "Futura", size: 12)
-        locationLabel.text="Reg Library"
         
-        locationImage = UIImageView(frame:CGRect(x: rw*0.2, y: rh * 0.8-rw * 0.05, width: rw * 0.1, height: rw * 0.1))
-        locationImage.image = UIImage(named: "eventPinIcon")
+        statusImage = UIImageView(frame:CGRect(x: rw*0.2, y: rh * 0.8-rw * 0.05, width: rw * 0.1, height: rw * 0.1))
+        statusImage.image = UIImage(named: "goingIcon")
         
         if(friendsGoing > 0)
         {
@@ -106,16 +104,62 @@ class EventTableCell: UITableViewCell {
             rightView.addSubview(dotLabel)
         }
         
-        goingLabel = UILabel(frame: CGRect(x: rw*0.075+(rw*0.15*CGFloat(min(friendsGoing, 3))), y: rh * 0.5-rw*0.05, width: rw * 0.325, height: rw * 0.15))
+        goingLabel = UILabel(frame: CGRect(x: rw*0.055+(rw*0.175*CGFloat(min(friendsGoing, 3))), y: rh * 0.35-rw*0.05, width: rw * 0.325, height: rw * 0.15))
         goingLabel.textColor = UIColor.blue
         goingLabel.textAlignment = .left
-        goingLabel.font = UIFont(name: "Futura", size: 12)
-        goingLabel.text = String(going) + " going"
-        rightView.addSubview(goingLabel)
+        goingLabel.font = UIFont(name: "Futura", size: 10)
         
+        distanceLabel = UILabel(frame: CGRect(x: rw*0.8, y: rh * 0.9-rw*0.075, width: rw * 0.15, height: rw * 0.15))
+        distanceLabel.textColor = UIColor.blue
+        distanceLabel.textAlignment = .left
+        distanceLabel.font = UIFont(name: "Futura", size: 8)
+        distanceLabel.text = String(format: "%.1f", distance) + " M"
+        
+        friendsLabel = UILabel(frame: CGRect(x: rw*0.025+(rw*0.15*CGFloat(min(friendsGoing, 3))), y: rh * 0.525-rw*0.05, width: rw * 0.325, height: rw * 0.1))
+        friendsLabel.textColor = UIColor.blue
+        friendsLabel.textAlignment = .center
+        friendsLabel.font = UIFont(name: "Futura", size: 6)
+        friendsLabel.text="Friends:"
+        
+        numFriendsLabel = UILabel(frame: CGRect(x: rw*0.025+(rw*0.15*CGFloat(min(friendsGoing, 3))), y: rh * 0.625-rw*0.05, width: rw * 0.325, height: rw * 0.1))
+        numFriendsLabel.textColor = UIColor.blue
+        numFriendsLabel.textAlignment = .center
+        numFriendsLabel.font = UIFont(name: "Futura", size: 12)
+        numFriendsLabel.text = String(friendsGoing)
+        
+        potentialLabel = UILabel(frame: CGRect(x: rw*0.175+(rw*0.15*CGFloat(min(friendsGoing, 3))), y: rh * 0.525-rw*0.05, width: rw * 0.325, height: rw * 0.1))
+        potentialLabel.textColor = UIColor.blue
+        potentialLabel.textAlignment = .center
+        potentialLabel.font = UIFont(name: "Futura", size: 6)
+        potentialLabel.text="Potentials:"
+        
+        numPotentialLabel = UILabel(frame: CGRect(x: rw*0.175+(rw*0.15*CGFloat(min(friendsGoing, 3))), y: rh * 0.625-rw*0.05, width: rw * 0.325, height: rw * 0.1))
+        numPotentialLabel.textColor = UIColor.blue
+        numPotentialLabel.textAlignment = .center
+        numPotentialLabel.font = UIFont(name: "Futura", size: 12)
+       
+        dayLabel.text="Today"
+        dateLabel.text="Feb. 4"
+        timeLabel.text="3:00 pm"
+        titleLabel.text="Physics Study Group"
+        locationLabel.text="Reg Library"
+        goingLabel.text = String(going) + " going"
+        numFriendsLabel.text = String(friendsGoing)
+        numPotentialLabel.text = String(potentialsGoing)
+        
+        wholeView.addSubview(dayLabel)
+        wholeView.addSubview(dateLabel)
+        wholeView.addSubview(timeLabel)
+        rightView.addSubview(goingLabel)
+        rightView.addSubview(distanceLabel)
         rightView.addSubview(titleLabel)
         rightView.addSubview(locationLabel)
-        rightView.addSubview(locationImage)
+        rightView.addSubview(statusImage)
+        rightView.addSubview(friendsLabel)
+        rightView.addSubview(numFriendsLabel)
+        rightView.addSubview(potentialLabel)
+        rightView.addSubview(numPotentialLabel)
+        
         
     }
     required init?(coder aDecoder: NSCoder) {
