@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Firebase
+import FirebaseAuth
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -16,17 +17,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        UINavigationBar.appearance().barTintColor = C.darkColor
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : C.lightColor, NSAttributedStringKey.font: UIFont(name: "Futura", size: 18)!]
+        FirebaseApp.configure()
+        do {
+            try Auth.auth().signOut()
+        }
+        catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        UINavigationBar.appearance().barTintColor = UIColor.white
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.black, NSAttributedStringKey.font: UIFont(name: "FuturaPT-Light", size: 30)!]
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UITabBar.appearance().tintColor = C.lightColor
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "Futura", size: 10)!], for: [])
-        let initialViewController = TabBarViewController()
-        initialViewController.view.backgroundColor = .white
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = initialViewController
-        window?.makeKeyAndVisible()
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "FuturaPT-Light", size: 10)!], for: [])
+        if Auth.auth().currentUser != nil
+        {
+            let initialViewController = TabBarViewController()
+            //initialViewController.view.backgroundColor = C.darkColor
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
+        else
+        {
+            let initialViewController = LoginViewController()
+            //initialViewController.view.backgroundColor = C.darkColor
+            window = UIWindow(frame: UIScreen.main.bounds)
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
         C.w = window?.frame.width
         C.h = window?.frame.height
+        
+        C.regLibrary.latitude = 41.792212
+        C.regLibrary.longitude = -87.599573
+        C.regLibrary.name = "Reg Library"
+        C.regLibrary.friends = 11
+        C.regLibrary.potentials = 11
+        C.regLibrary.population = 123
+        
+        let physStudyGroup = Event()
+        physStudyGroup.potentials = 7
+        physStudyGroup.going = 3
+        physStudyGroup.name = "Physics Study Group"
+        physStudyGroup.location = C.regLibrary
+        physStudyGroup.numFriends = 23
+        physStudyGroup.going = 1
+        
+        
+        C.events.append(physStudyGroup)
+        C.events.append(physStudyGroup)
+        C.events.append(physStudyGroup)
+        
+        C.user.name = "Griffon"
+        C.user.numFriends = 123
+        //C.user.friends
+        C.user.profilePictureURL = "sample_prof"
+        C.user.whoIam = ["Charismatic", "Chill", "Risktaking"]
+        C.user.whatIDo = ["Tennis", "Trumpet", "Skiiing"]
+        C.user.xp = 10000
+        C.user.level = 10
+        C.user.major = "Economics"
+        C.user.hometown = "Washington DC"
+        C.user.age = 20
+        
         // Override point for customization after application launch.
         return true
     }

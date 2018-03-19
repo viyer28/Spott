@@ -8,29 +8,39 @@
 
 import UIKit
 
-class EventsViewController: UITableViewController {
+class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
+    var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-       self.title = "Events";
-        self.tableView.backgroundColor = UIColor.black
-        self.tableView.rowHeight = C.h*0.25
-        self.tableView.separatorColor = UIColor.black
+        self.tableView = UITableView(frame: CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.85))
+        self.tableView.delegate = self
+        self.view.backgroundColor = UIColor.white
+        tableView.dataSource = self
+        self.tableView.rowHeight = C.h*0.2
+        tableView.allowsSelection = false;
+        self.tableView.separatorColor = UIColor.white
+        self.view.addSubview(tableView)
+        let locationLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.1))
+        locationLabel.textAlignment = .center
+        locationLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
+        locationLabel.text = "friday, march 3"
+        self.view.addSubview(locationLabel)
+        
         //        self.navigationController?.navigationBar.titleTextAttributes =
         //            [NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 27)!,
         //             NSAttributedStringKey.foregroundColor: UIColor.black]
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return C.events.count
     }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         NSLog("get cell")
-        let cell = EventTableCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
+        let cell = EventTableCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell", event: C.events[indexPath.row], row: indexPath.row)
         //cell.textLabel!.text = "foo"
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         
     }

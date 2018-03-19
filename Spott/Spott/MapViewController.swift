@@ -16,19 +16,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     var tabBar:TabBarViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         MGLAccountManager.setAccessToken(MapboxAccessToken)
-        let leftMargin:CGFloat = 0
-        let topMargin:CGFloat = self.navigationController!.navigationBar.frame.height
-        tabBar = self.navigationController!.tabBarController! as! TabBarViewController
-        let mapWidth:CGFloat = view.frame.size.width
-        let mapHeight = (view.frame.size.height)-(self.navigationController!.navigationBar.frame.size.height)-(self.tabBarController!.tabBar.frame.size.height)
         let url = URL(string: "mapbox://styles/mapbox/streets-v10")
-        mapView = MGLMapView(frame: CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight), styleURL: url)
+        mapView = MGLMapView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h), styleURL: url)
         mapView.delegate = self
         view.addSubview(mapView)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.frame = CGRect(x: leftMargin, y: topMargin, width: mapWidth, height: mapHeight)
         mapView.isZoomEnabled = true
         mapView.isScrollEnabled = true
         mapView.center = view.center
@@ -42,7 +35,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         
     }
     override func viewDidAppear(_ animated: Bool) {
-        mapView.setCenter(tabBar.center, zoomLevel: 15, animated: false)
+        mapView.setCenter(TabBarViewController.userLocation.coordinate, zoomLevel: 15, animated: false)
     }
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         
@@ -60,7 +53,6 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
         // Optionally handle taps on the callout.
-        
         // Hide the callout.
         mapView.deselectAnnotation(annotation, animated: true)
     }

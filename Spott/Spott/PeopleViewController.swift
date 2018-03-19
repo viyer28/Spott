@@ -17,12 +17,13 @@ class PeopleViewController: UICollectionViewController {
         super.viewDidLoad()
         self.title = "People";
         let flowLayout = UICollectionViewFlowLayout()
+        self.view.backgroundColor = UIColor.white
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
-        flowLayout.sectionInset = UIEdgeInsets(top: self.view.frame.height * 0.25, left: self.view.frame.width * 0.1, bottom: self.view.frame.height * 0.25, right: self.view.frame.width * 0.1)
-        flowLayout.itemSize = CGSize(width: C.w*0.8, height: C.h*0.5)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: self.view.frame.width * 0.1, bottom: 0, right: self.view.frame.width * 0.1)
+        flowLayout.itemSize = CGSize(width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3)
 
         self.collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
-        self.collectionView!.backgroundColor = UIColor.white
+        self.collectionView!.backgroundColor = UIColor.white.withAlphaComponent(0)
         self.collectionView!.showsHorizontalScrollIndicator = false;
         self.collectionView!.isPagingEnabled = true;
         self.collectionView!.delegate = self;
@@ -30,6 +31,11 @@ class PeopleViewController: UICollectionViewController {
         self.view.addSubview(self.collectionView!)
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
          print(1)
+        let locationLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.1))
+        locationLabel.textAlignment = .center
+        locationLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
+        locationLabel.text = "regenstein library"
+        self.view.addSubview(locationLabel)
     }
     
     override func didReceiveMemoryWarning() {
@@ -48,7 +54,8 @@ class PeopleViewController: UICollectionViewController {
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        cell.backgroundColor = UIColor.blue
+        let profileView = MatchProflieView()
+        cell.addSubview(profileView)
         return cell
         // Configure the cell
         

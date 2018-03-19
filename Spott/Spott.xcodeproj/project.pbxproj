@@ -7,10 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2751CD482025545E000A38B0 /* Mapbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2751CD472025545D000A38B0 /* Mapbox.framework */; };
+		270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270A120E203A9DED009F6C6E /* GoogleService-Info.plist */; };
+		27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA0203F4F150096AF34 /* LoginViewController.swift */; };
+		27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA2203F5A810096AF34 /* SignUpViewController.swift */; };
+		2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2744A443203770AF00DAB7CF /* FuturaPTLight.otf */; };
+		2744A448203770CF00DAB7CF /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2744A447203770CF00DAB7CF /* Fonts */; };
+		2744A44F2037718600DAB7CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2744A44D2037718600DAB7CF /* Info.plist */; };
+		2744A4502037718600DAB7CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2744A44D2037718600DAB7CF /* Info.plist */; };
+		2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744A45120379B8300DAB7CF /* MatchProfileView.swift */; };
 		2751CD492025545E000A38B0 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2751CD472025545D000A38B0 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */; };
-		277F20102025651500A32991 /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 277F200E202564FA00A32991 /* FuturaPTLight.otf */; };
+		277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 277D980F20380B14007A0811 /* FuturaPTBook.otf */; };
 		2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E3F72024F6B700A3B2E8 /* ViewController.swift */; };
 		2782E40B2024F6B700A3B2E8 /* SpottTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E40A2024F6B700A3B2E8 /* SpottTests.swift */; };
 		2782E4162024F6B700A3B2E8 /* SpottUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4152024F6B700A3B2E8 /* SpottUITests.swift */; };
@@ -20,13 +27,15 @@
 		2782E42D2024F78200A3B2E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4262024F78200A3B2E8 /* ProfileViewController.swift */; };
 		2782E42E2024F78200A3B2E8 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4272024F78200A3B2E8 /* PeopleViewController.swift */; };
 		2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4292024F78200A3B2E8 /* TabBarViewController.swift */; };
-		2782E4332024F79500A3B2E8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4312024F79400A3B2E8 /* Info.plist */; };
 		2782E4342024F79500A3B2E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4322024F79400A3B2E8 /* Assets.xcassets */; };
 		2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */; };
+		278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D306A202CB2B700B0B941 /* EventProfileView.swift */; };
 		27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A4DE5920250A6900AAC8A8 /* C.swift */; };
 		27A4DE5C2025125B00AAC8A8 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */; };
+		27B07FDE202BDC5B0002FE0B /* LocationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */; };
+		27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9C4792030EF5B000D0BB1 /* Objects.swift */; };
 		27D26F282029053000F585B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D26F272029052F00F585B5 /* AppDelegate.swift */; };
-		625A8893DD950552B6CFAFCB /* libPods-Spott.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */; };
+		3341E0F44488F219F871F621 /* libPods-Spott.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,9 +71,16 @@
 
 /* Begin PBXFileReference section */
 		157829373D4E0C06750FF66F /* Pods-Spott.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.release.xcconfig"; sourceTree = "<group>"; };
+		270A120E203A9DED009F6C6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		27283FA0203F4F150096AF34 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		27283FA2203F5A810096AF34 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		2744A443203770AF00DAB7CF /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
+		2744A447203770CF00DAB7CF /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Spott/Fonts; sourceTree = "<group>"; };
+		2744A44D2037718600DAB7CF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2744A45120379B8300DAB7CF /* MatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfileView.swift; sourceTree = "<group>"; };
 		2751CD472025545D000A38B0 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = Spott/frameworks/Mapbox.framework; sourceTree = "<group>"; };
 		276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableCell.swift; sourceTree = "<group>"; };
-		277F200E202564FA00A32991 /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
+		277D980F20380B14007A0811 /* FuturaPTBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTBook.otf; sourceTree = "<group>"; };
 		2782E3F22024F6B700A3B2E8 /* Spott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spott.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2782E3F72024F6B700A3B2E8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2782E4062024F6B700A3B2E8 /* SpottTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpottTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,11 +95,13 @@
 		2782E4262024F78200A3B2E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2782E4272024F78200A3B2E8 /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		2782E4292024F78200A3B2E8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		2782E4312024F79400A3B2E8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../../scratch_work/test2/test2/Info.plist; sourceTree = "<group>"; };
 		2782E4322024F79400A3B2E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../scratch_work/test2/test2/Assets.xcassets; sourceTree = "<group>"; };
 		2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		278D306A202CB2B700B0B941 /* EventProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProfileView.swift; sourceTree = "<group>"; };
 		27A4DE5920250A6900AAC8A8 /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 		27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
+		27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProfileView.swift; sourceTree = "<group>"; };
+		27B9C4792030EF5B000D0BB1 /* Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		27D26F272029052F00F585B5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spott.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD4B8D4F6B2FD522BD76A68E /* Pods-Spott.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.debug.xcconfig"; sourceTree = "<group>"; };
@@ -94,8 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2751CD482025545E000A38B0 /* Mapbox.framework in Frameworks */,
-				625A8893DD950552B6CFAFCB /* libPods-Spott.a in Frameworks */,
+				3341E0F44488F219F871F621 /* libPods-Spott.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +136,7 @@
 		2782E3E92024F6B700A3B2E8 = {
 			isa = PBXGroup;
 			children = (
+				2744A447203770CF00DAB7CF /* Fonts */,
 				2751CD472025545D000A38B0 /* Mapbox.framework */,
 				2782E3F42024F6B700A3B2E8 /* Spott */,
 				2782E4092024F6B700A3B2E8 /* SpottTests */,
@@ -143,9 +161,14 @@
 			isa = PBXGroup;
 			children = (
 				2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */,
+				270A120E203A9DED009F6C6E /* GoogleService-Info.plist */,
 				27D26F272029052F00F585B5 /* AppDelegate.swift */,
+				27283FA0203F4F150096AF34 /* LoginViewController.swift */,
+				27283FA2203F5A810096AF34 /* SignUpViewController.swift */,
 				2782E4242024F78100A3B2E8 /* MapViewController.swift */,
 				2782E4262024F78200A3B2E8 /* ProfileViewController.swift */,
+				2744A45120379B8300DAB7CF /* MatchProfileView.swift */,
+				27B9C4792030EF5B000D0BB1 /* Objects.swift */,
 				276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */,
 				27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */,
 				279C80692025518700F3950C /* Fonts */,
@@ -154,9 +177,11 @@
 				2782E4272024F78200A3B2E8 /* PeopleViewController.swift */,
 				2782E4252024F78200A3B2E8 /* EventsViewController.swift */,
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
+				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
+				27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */,
 				2782E3F72024F6B700A3B2E8 /* ViewController.swift */,
+				2744A44D2037718600DAB7CF /* Info.plist */,
 				2782E4322024F79400A3B2E8 /* Assets.xcassets */,
-				2782E4312024F79400A3B2E8 /* Info.plist */,
 			);
 			path = Spott;
 			sourceTree = "<group>";
@@ -182,7 +207,8 @@
 		279C80692025518700F3950C /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				277F200E202564FA00A32991 /* FuturaPTLight.otf */,
+				277D980F20380B14007A0811 /* FuturaPTBook.otf */,
+				2744A443203770AF00DAB7CF /* FuturaPTLight.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -316,10 +342,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				277F20102025651500A32991 /* FuturaPTLight.otf in Resources */,
-				2782E4332024F79500A3B2E8 /* Info.plist in Resources */,
+				277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */,
+				2744A448203770CF00DAB7CF /* Fonts in Resources */,
 				2782E4342024F79500A3B2E8 /* Assets.xcassets in Resources */,
 				2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */,
+				2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */,
+				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +355,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2744A44F2037718600DAB7CF /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2744A4502037718600DAB7CF /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,9 +409,12 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Spott/Pods-Spott-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/gRPC/gRPCCertificates.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -418,11 +451,17 @@
 				2782E42D2024F78200A3B2E8 /* ProfileViewController.swift in Sources */,
 				2782E42E2024F78200A3B2E8 /* PeopleViewController.swift in Sources */,
 				27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */,
+				27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */,
 				276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */,
 				2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */,
 				2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */,
 				2782E42A2024F78200A3B2E8 /* FeedViewController.swift in Sources */,
+				2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */,
+				27B07FDE202BDC5B0002FE0B /* LocationProfileView.swift in Sources */,
 				2782E42B2024F78200A3B2E8 /* MapViewController.swift in Sources */,
+				27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */,
+				278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */,
+				27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */,
 				2782E42C2024F78200A3B2E8 /* EventsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,8 +617,9 @@
 					"$(PROJECT_DIR)/Spott/frameworks",
 				);
 				INFOPLIST_FILE = Spott/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = brendansanderson.Spott;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spott.Spott;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -598,8 +638,9 @@
 					"$(PROJECT_DIR)/Spott/frameworks",
 				);
 				INFOPLIST_FILE = Spott/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = brendansanderson.Spott;
+				PRODUCT_BUNDLE_IDENTIFIER = com.spott.Spott;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

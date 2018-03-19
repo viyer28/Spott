@@ -14,21 +14,19 @@ class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
     var locationManager:CLLocationManager!
     let feednc = UINavigationController(rootViewController: FeedViewController())
     let eventsnc = UINavigationController(rootViewController: EventsViewController())
-    let mapnc = UINavigationController(rootViewController: MapViewController())
-    let peoplenc = UINavigationController(rootViewController: PeopleViewController())
-    let profilenc = UINavigationController(rootViewController: ProfileViewController())
-    var center = CLLocationCoordinate2D(latitude: 0, longitude: 0)
-    var mapvc: MapViewController!
+    let peoplevc = PeopleViewController()
+    let profilevc = ProfileViewController()
+    static var userLocation = CLLocation(latitude: 0, longitude: 0)
+    var mapvc = MapViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBar.barTintColor = C.darkColor
-        mapvc = (mapnc.viewControllers[0] as! MapViewController)
-        viewControllers = [feednc, eventsnc, mapnc, peoplenc, profilenc]
+        viewControllers = [feednc, eventsnc, mapvc, peoplevc, profilevc]
         feednc.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "FeedIcon"), tag: 1)
         eventsnc.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "EventsIcon"), tag: 1)
-        mapnc.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "MapIcon"), tag: 1)
-        peoplenc.tabBarItem = UITabBarItem(title: "People", image: UIImage(named: "PeopleIcon"), tag: 1)
-        profilenc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "ProfileIcon"), tag: 1)
+        mapvc.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "MapIcon"), tag: 1)
+        peoplevc.tabBarItem = UITabBarItem(title: "People", image: UIImage(named: "PeopleIcon"), tag: 1)
+        profilevc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "ProfileIcon"), tag: 1)
         determineCurrentLocation()
     }
     
@@ -49,12 +47,12 @@ class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
+        let uLoc:CLLocation = locations[0] as CLLocation
         
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
         //manager.stopUpdatingLocation()
-        center = CLLocationCoordinate2D(latitude: userLocation.coordinate.latitude, longitude: userLocation.coordinate.longitude)
+        TabBarViewController.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
         //let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         
         //mapvc.mapView.setRegion(region, animated: false)

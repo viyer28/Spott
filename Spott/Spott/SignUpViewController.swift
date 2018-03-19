@@ -33,7 +33,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         ch = self.tableView.frame.height
         cw = self.tableView.frame.width
         tableView.allowsSelection = false;
-        self.tableView.backgroundColor = C.darkColor
+        self.tableView.backgroundColor = UIColor.white
         self.tableView.separatorColor = C.goldishColor
         tableView.separatorInset = UIEdgeInsets.zero;
         tableView.delegate = self
@@ -61,22 +61,22 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
         cell.separatorInset = UIEdgeInsets.zero;
-        cell.backgroundView?.backgroundColor = C.darkColor
-        cell.backgroundColor = C.darkColor
+        cell.backgroundView?.backgroundColor = UIColor.white
+        cell.backgroundColor = UIColor.white
         if indexPath.row == 0
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.25, y: ch*0.01, width: cw * 0.5, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 32.0)
             titleLabel.textAlignment = .center
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = C.darkColor
             titleLabel.text="Sign Up"
             cell.addSubview(titleLabel)
             
             let backButton = UIButton(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.2, height: ch*0.08))
-            backButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            backButton.titleLabel?.text = "back"
+            backButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 28.0)
+            backButton.titleLabel?.text = "<"
             backButton.setTitleColor(C.goldishColor, for: .normal)
-            backButton.setTitle("back", for: .normal)
+            backButton.setTitle("<", for: .normal)
             backButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
             
             cell.addSubview(backButton)
@@ -85,7 +85,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.1, y: ch*0.01, width: cw * 0.18, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = C.darkColor
             titleLabel.text="Name:"
             titleLabel.textAlignment = .right
             cell.addSubview(titleLabel)
@@ -105,7 +105,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.1, y: ch*0.01, width: cw * 0.18, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = C.darkColor
             titleLabel.text="Email:"
             titleLabel.textAlignment = .right
             cell.addSubview(titleLabel)
@@ -127,7 +127,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let title1Label = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
             title1Label.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             title1Label.textAlignment = .right
-            title1Label.textColor = UIColor.white
+            title1Label.textColor = C.darkColor
             title1Label.text="Password:"
             cell.addSubview(title1Label)
             
@@ -147,7 +147,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let title2Label = UILabel(frame: CGRect(x: 0, y: ch*0.11, width: cw * 0.28, height: ch * 0.08))
             title2Label.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             title2Label.textAlignment = .right
-            title2Label.textColor = UIColor.white
+            title2Label.textColor = C.darkColor
             title2Label.text="Reenter:"
             cell.addSubview(title2Label)
             
@@ -168,7 +168,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.1, y: ch*0.01, width: cw * 0.18, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = C.darkColor
             titleLabel.text="Major:"
             titleLabel.textAlignment = .right
             cell.addSubview(titleLabel)
@@ -190,7 +190,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             let genderLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
             genderLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            genderLabel.textColor = UIColor.white
+            genderLabel.textColor = C.darkColor
             genderLabel.text="Gender:"
             genderLabel.textAlignment = .right
             cell.addSubview(genderLabel)
@@ -213,7 +213,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.25, y: ch*0.01, width: cw * 0.5, height: ch * 0.06))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = C.darkColor
             titleLabel.text="Profile Picture"
             titleLabel.textAlignment = .center
             cell.addSubview(titleLabel)
@@ -249,7 +249,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.4, height: ch * 0.04))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 16.0)
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = C.darkColor
             titleLabel.text="Who are you?"
             titleLabel.textAlignment = .left
             cell.addSubview(titleLabel)
@@ -288,13 +288,13 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             cell.addSubview(whatField2)
             cell.addSubview(whatField3)
             
-            let centerLine = UIView(frame: CGRect(x: cw*0.498, y: 0, width: cw*0.001, height: ch*0.2))
+            let centerLine = UIView(frame: CGRect(x: cw*0.498, y: 0, width: cw*0.001, height: ch*0.25))
             centerLine.backgroundColor = C.goldishColor
             cell.addSubview(centerLine)
             
             let titleLabel2 = UILabel(frame: CGRect(x: cw*0.55, y: ch*0.01, width: cw * 0.4, height: ch * 0.04))
             titleLabel2.font = UIFont(name: "FuturaPT-Light", size: 16.0)
-            titleLabel2.textColor = UIColor.white
+            titleLabel2.textColor = C.darkColor
             titleLabel2.text="What do you do?"
             titleLabel2.textAlignment = .left
             cell.addSubview(titleLabel2)
@@ -477,14 +477,37 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
 //        }
         Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!, completion: { (user, error) in
             if error == nil {
-                print("fail")
-            }else{
-                print("sucess")
+                print(1)
+                    var ref: DocumentReference? = nil
+                    ref = Firestore.firestore().collection("user_info").addDocument(data: [
+                        "gender": self.genderField.text!,
+                        "name": self.nameField.text!,
+                        "who1": self.whoField1.text!,
+                        "who2": self.whoField2.text!,
+                        "who3": self.whoField3.text!,
+                        "what1": self.whatField1.text!,
+                        "what2": self.whatField1.text!,
+                        "what3": self.whatField1.text!,
+                        "major": self.majorField.text!
+                    ]) { err in
+                        if let err = err {
+                            print("Error adding document: \(err)")
+                        } else {
+                        }
+                    }
+                print("Document added with ID: \(ref!.documentID)")
+                let tabCont = TabBarViewController()
+                C.updateUser(refid: ref!.documentID)
+                C.refid = ref!.documentID
+                self.present(tabCont, animated: false, completion: nil)
             }
-        print("YAY")
+            else{
+                print("fail")
+            }
         })
         
 }
+    
     private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profileImageView.contentMode = .scaleAspectFit
