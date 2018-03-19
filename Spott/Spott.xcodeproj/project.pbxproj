@@ -103,6 +103,8 @@
 		27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProfileView.swift; sourceTree = "<group>"; };
 		27B9C4792030EF5B000D0BB1 /* Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		27D26F272029052F00F585B5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ACF074E22029067600818884 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ACF074E42029067F00818884 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spott.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD4B8D4F6B2FD522BD76A68E /* Pods-Spott.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -174,7 +176,9 @@
 				279C80692025518700F3950C /* Fonts */,
 				27A4DE5920250A6900AAC8A8 /* C.swift */,
 				2782E4232024F78100A3B2E8 /* FeedViewController.swift */,
+				ACF074E22029067600818884 /* Assets.xcassets */,
 				2782E4272024F78200A3B2E8 /* PeopleViewController.swift */,
+				ACF074E42029067F00818884 /* Info.plist */,
 				2782E4252024F78200A3B2E8 /* EventsViewController.swift */,
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,

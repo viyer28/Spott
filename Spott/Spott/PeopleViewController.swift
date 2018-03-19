@@ -60,6 +60,63 @@ class PeopleViewController: UICollectionViewController {
         // Configure the cell
         
     }
+    
+    func findClosestUsers(user: User, location: Location) -> [User]! {
+        var closest: [User]!
+        closest = nil
+        
+        for person in location.population {
+            let distance = sqrtf(powf(Float(person.latitude - user.latitude), 2) + powf(Float(person.longitude - user.longitude), 2))
+            if (closest == nil){
+                closest.insert(person, at: 0)
+            } else {
+                for (index, p) in closest.enumerated() {
+                    let pdist = sqrtf(powf(Float(p.latitude - user.latitude), 2) + powf(Float(p.longitude - user.longitude),2))
+                    if (distance <= pdist){
+                        closest.insert(person, at: index)
+                    }
+                }
+            }
+        }
+        
+        return closest
+    }
+    
+    func findClosestFriends(user: User, location: Location) -> [User]! {
+        var closest: [User]!
+        closest = nil
+        
+        for person in location.friends {
+            let distance = sqrtf(powf(Float(person.latitude - user.latitude), 2) + powf(Float(person.longitude - user.longitude), 2))
+            if (closest == nil){
+                closest.insert(person, at: 0)
+            } else {
+                for (index, p) in closest.enumerated() {
+                    let pdist = sqrtf(powf(Float(p.latitude - user.latitude), 2) + powf(Float(p.longitude - user.longitude),2))
+                    if (distance <= pdist){
+                        closest.insert(person, at: index)
+                    }
+                }
+            }
+        }
+        
+        return closest
+    }
+    
+    func findClosestNonFriends(user: User, location: Location) -> [User]! {
+        var closest_people = findClosestUsers(user: user, location: location)
+        let closest_friends = findClosestFriends(user: user, location: location)
+        var closest_nonfriends: [User]!
+        closest_nonfriends = nil
+        
+        for (index, person) in closest_people!.enumerated() {
+            if (!closest_friends!.contains(person)) {
+                closest_nonfriends.append(closest_people!.remove(at: index))
+            }
+        }
+        
+        return closest_nonfriends
+    }
 //    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 //        targetContentOffset.pointee = scrollView.contentOffset
 //        var factor: CGFloat = 0.5

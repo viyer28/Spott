@@ -30,31 +30,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UITabBar.appearance().tintColor = C.lightColor
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "FuturaPT-Light", size: 10)!], for: [])
-        if Auth.auth().currentUser != nil
-        {
+//        if Auth.auth().currentUser != nil
+//        {
             let initialViewController = TabBarViewController()
             //initialViewController.view.backgroundColor = C.darkColor
             window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = initialViewController
             window?.makeKeyAndVisible()
-        }
-        else
-        {
-            let initialViewController = LoginViewController()
-            //initialViewController.view.backgroundColor = C.darkColor
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = initialViewController
-            window?.makeKeyAndVisible()
-        }
+//        }
+//        else
+//        {
+//            let initialViewController = LoginViewController()
+//            //initialViewController.view.backgroundColor = C.darkColor
+//            window = UIWindow(frame: UIScreen.main.bounds)
+//            window?.rootViewController = initialViewController
+//            window?.makeKeyAndVisible()
+//        }
         C.w = window?.frame.width
         C.h = window?.frame.height
         
         C.regLibrary.latitude = 41.792212
         C.regLibrary.longitude = -87.599573
         C.regLibrary.name = "Reg Library"
-        C.regLibrary.friends = 11
+        C.regLibrary.friends_num = 11
         C.regLibrary.potentials = 11
-        C.regLibrary.population = 123
+        C.regLibrary.population_num = 123
         
         let physStudyGroup = Event()
         physStudyGroup.potentials = 7

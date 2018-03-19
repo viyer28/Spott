@@ -13,10 +13,11 @@ class Location : NSObject {
     var latitude: CGFloat!
     var longitude: CGFloat!
     var name: String!
-    var friends: Int!
+    var friends_num: Int!
+    var friends: [User]!
     var potentials: Int!
-    var population: Int!
-    
+    var population_num: Int!
+    var population: [User]!
 }
 
 class Event : NSObject {
@@ -47,5 +48,8 @@ class User: NSObject {
     var gender: String!
     var age: Int!
     var friendsNum = 123
+    var latitude: CGFloat!
+    var longitude: CGFloat!
+    var spotted: Bool!
 }
 
