@@ -13,6 +13,8 @@
 		AC416C751FE9E50000E6B9B8 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC416C741FE9E50000E6B9B8 /* FBSDKLoginKit.framework */; };
 		AC416C791FE9E65F00E6B9B8 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC416C781FE9E65F00E6B9B8 /* Bolts.framework */; };
 		AC416C7B1FE9E66E00E6B9B8 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC416C7A1FE9E66E00E6B9B8 /* FBSDKCoreKit.framework */; };
+		AC416C7E1FEAF97900E6B9B8 /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC416C7D1FEAF97900E6B9B8 /* InitialViewController.swift */; };
+		ACE37B901FEB4E5C00E3E5D4 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE37B8F1FEB4E5C00E3E5D4 /* SignUpViewController.swift */; };
 		ACEF8B791FE9BFB600414689 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEF8B781FE9BFB600414689 /* AppDelegate.swift */; };
 		ACEF8B7B1FE9BFB600414689 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACEF8B7A1FE9BFB600414689 /* LoginViewController.swift */; };
 		ACEF8B7E1FE9BFB600414689 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACEF8B7C1FE9BFB600414689 /* Main.storyboard */; };
@@ -55,6 +57,8 @@
 		AC416C781FE9E65F00E6B9B8 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		AC416C7A1FE9E66E00E6B9B8 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		AC416C7C1FE9E79B00E6B9B8 /* mark1.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mark1.entitlements; sourceTree = "<group>"; };
+		AC416C7D1FEAF97900E6B9B8 /* InitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
+		ACE37B8F1FEB4E5C00E3E5D4 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		ACEF8B751FE9BFB600414689 /* mark1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mark1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACEF8B781FE9BFB600414689 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACEF8B7A1FE9BFB600414689 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 				AC416C7C1FE9E79B00E6B9B8 /* mark1.entitlements */,
 				AC2F779B1FE9DA71000C0C1A /* GoogleService-Info.plist */,
 				ACEF8B781FE9BFB600414689 /* AppDelegate.swift */,
+				AC416C7D1FEAF97900E6B9B8 /* InitialViewController.swift */,
+				ACE37B8F1FEB4E5C00E3E5D4 /* SignUpViewController.swift */,
 				ACEF8B7A1FE9BFB600414689 /* LoginViewController.swift */,
 				ACEF8B7C1FE9BFB600414689 /* Main.storyboard */,
 				ACEF8B821FE9BFB700414689 /* Assets.xcassets */,
@@ -475,6 +481,8 @@
 				ACEF8B7B1FE9BFB600414689 /* LoginViewController.swift in Sources */,
 				ACEF8B791FE9BFB600414689 /* AppDelegate.swift in Sources */,
 				ACEF8B811FE9BFB600414689 /* mark1.xcdatamodeld in Sources */,
+				AC416C7E1FEAF97900E6B9B8 /* InitialViewController.swift in Sources */,
+				ACE37B901FEB4E5C00E3E5D4 /* SignUpViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

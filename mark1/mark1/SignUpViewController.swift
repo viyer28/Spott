@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  SignUpViewController.swift
 //  mark1
 //
-//  Created by Varun Iyer on 12/19/17.
+//  Created by Varun Iyer on 12/20/17.
 //  Copyright © 2017 Spott. All rights reserved.
 //
 
@@ -11,19 +11,19 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import FirebaseAuth
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+class SignUpViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     var loginButton : FBSDKLoginButton?
-
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    
     @IBOutlet weak var orLabel: UILabel!
     
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //if ([FBSDKAccessToken currentAccessToken]){
-            // User is logged in, do work such as go to next view controller.
+        // User is logged in, do work such as go to next view controller.
         //}
         // Do any additional setup after loading the view, typically from a nib.
         
@@ -33,15 +33,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         loginButton.center = view.center
         view.addSubview(loginButton)
         let buttonConstraintA = NSLayoutConstraint(item: orLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: loginButton, attribute: NSLayoutAttribute.bottom, multiplier: 1, constant: 20)
-
+        
         self.view.addConstraint(buttonConstraintA)
-
+        
     }
     
-    @IBAction func bottomLogInTapped(_ sender: Any) {
+    @IBAction func bottomSignUpTapped(_ sender: Any) {
         if let email = emailTextField.text {
             if let password = passwordTextField.text {
-                Auth.auth().signIn(withEmail: email, password: password, completion: { (user, error) in
+                Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error) in
                     if let error = error {
                         self.presentAlert(alert: error.localizedDescription)
                     }
@@ -91,4 +91,3 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
     }
 }
-
