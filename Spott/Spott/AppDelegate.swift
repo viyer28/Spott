@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.user.major = "Economics"
         C.user.hometown = "Washington DC"
         C.user.age = 20
-        
+
         // Override point for customization after application launch.
         return true
     }

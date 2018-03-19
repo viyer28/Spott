@@ -10,6 +10,7 @@
 		270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270A120E203A9DED009F6C6E /* GoogleService-Info.plist */; };
 		27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA0203F4F150096AF34 /* LoginViewController.swift */; };
 		27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA2203F5A810096AF34 /* SignUpViewController.swift */; };
+		27441AA9205F599700718A07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27441AA8205F599700718A07 /* Assets.xcassets */; };
 		2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2744A443203770AF00DAB7CF /* FuturaPTLight.otf */; };
 		2744A448203770CF00DAB7CF /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2744A447203770CF00DAB7CF /* Fonts */; };
 		2744A44F2037718600DAB7CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2744A44D2037718600DAB7CF /* Info.plist */; };
@@ -27,7 +28,6 @@
 		2782E42D2024F78200A3B2E8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4262024F78200A3B2E8 /* ProfileViewController.swift */; };
 		2782E42E2024F78200A3B2E8 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4272024F78200A3B2E8 /* PeopleViewController.swift */; };
 		2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4292024F78200A3B2E8 /* TabBarViewController.swift */; };
-		2782E4342024F79500A3B2E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4322024F79400A3B2E8 /* Assets.xcassets */; };
 		2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */; };
 		278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D306A202CB2B700B0B941 /* EventProfileView.swift */; };
 		27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A4DE5920250A6900AAC8A8 /* C.swift */; };
@@ -74,6 +74,7 @@
 		270A120E203A9DED009F6C6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		27283FA0203F4F150096AF34 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		27283FA2203F5A810096AF34 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		27441AA8205F599700718A07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2744A443203770AF00DAB7CF /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
 		2744A447203770CF00DAB7CF /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Spott/Fonts; sourceTree = "<group>"; };
 		2744A44D2037718600DAB7CF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -95,7 +96,6 @@
 		2782E4262024F78200A3B2E8 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		2782E4272024F78200A3B2E8 /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		2782E4292024F78200A3B2E8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		2782E4322024F79400A3B2E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../scratch_work/test2/test2/Assets.xcassets; sourceTree = "<group>"; };
 		2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		278D306A202CB2B700B0B941 /* EventProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProfileView.swift; sourceTree = "<group>"; };
 		27A4DE5920250A6900AAC8A8 /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
@@ -179,9 +179,9 @@
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
 				27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */,
+				27441AA8205F599700718A07 /* Assets.xcassets */,
 				2782E3F72024F6B700A3B2E8 /* ViewController.swift */,
 				2744A44D2037718600DAB7CF /* Info.plist */,
-				2782E4322024F79400A3B2E8 /* Assets.xcassets */,
 			);
 			path = Spott;
 			sourceTree = "<group>";
@@ -344,8 +344,8 @@
 			files = (
 				277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */,
 				2744A448203770CF00DAB7CF /* Fonts in Resources */,
-				2782E4342024F79500A3B2E8 /* Assets.xcassets in Resources */,
 				2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */,
+				27441AA9205F599700718A07 /* Assets.xcassets in Resources */,
 				2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */,
 				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
 			);
