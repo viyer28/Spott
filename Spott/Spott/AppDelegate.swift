@@ -18,36 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        do {
-            try Auth.auth().signOut()
-        }
-        catch let error as NSError {
-            print(error.localizedDescription)
-        }
+        
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.black, NSAttributedStringKey.font: UIFont(name: "FuturaPT-Light", size: 30)!]
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UITabBar.appearance().tintColor = C.lightColor
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "FuturaPT-Light", size: 10)!], for: [])
-//        if Auth.auth().currentUser != nil
-//        {
-            let initialViewController = TabBarViewController()
-            //initialViewController.view.backgroundColor = C.darkColor
-            window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = initialViewController
-            window?.makeKeyAndVisible()
-//        }
-//        else
-//        {
-//            let initialViewController = LoginViewController()
-//            //initialViewController.view.backgroundColor = C.darkColor
-//            window = UIWindow(frame: UIScreen.main.bounds)
-//            window?.rootViewController = initialViewController
-//            window?.makeKeyAndVisible()
-//        }
-        C.w = window?.frame.width
-        C.h = window?.frame.height
+        
+        
         
         C.regLibrary.latitude = 41.792212
         C.regLibrary.longitude = -87.599573
@@ -80,6 +59,71 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.user.major = "Economics"
         C.user.hometown = "Washington DC"
         C.user.age = 20
+        
+//        if Auth.auth().currentUser != nil
+//        {
+//            try! Auth.auth().signOut()
+//        }
+        
+        if Auth.auth().currentUser != nil
+        {
+            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting documents: \(err)")
+                    } else {
+                        print("Recieved documents")
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            C.refid = document.documentID
+                            C.userData = document.data()
+                            C.user.name = C.userData["name"] as! String
+                            if C.userData["who1"] != nil
+                            {
+                                C.user.whoIam[0] = C.userData["who1"] as! String
+                            }
+                            if C.userData["who2"] != nil
+                            {
+                                C.user.whoIam[1] = C.userData["who2"] as! String
+                            }
+                            if C.userData["who3"] != nil
+                            {
+                                C.user.whoIam[2] = C.userData["who3"] as! String
+                            }
+                            if C.userData["what1"] != nil
+                            {
+                                C.user.whoIam[0] = C.userData["what1"] as! String
+                            }
+                            if C.userData["what2"] != nil
+                            {
+                                C.user.whoIam[1] = C.userData["what2"] as! String
+                            }
+                            if C.userData["what3"] != nil
+                            {
+                                C.user.whoIam[2] = C.userData["what3"] as! String
+                            }
+                            C.user.major = C.userData["major"] as! String
+                            let initialViewController = TabBarViewController()
+                            //initialViewController.view.backgroundColor = C.darkColor
+                            self.window = UIWindow(frame: UIScreen.main.bounds)
+                            C.w = self.window?.frame.width
+                            C.h = self.window?.frame.height
+                            self.window?.rootViewController = initialViewController
+                            self.window?.makeKeyAndVisible()
+                        }
+                    }
+            }
+        }
+        else
+        {
+            let initialViewController = LoginViewController()
+            //initialViewController.view.backgroundColor = C.darkColor
+            window = UIWindow(frame: UIScreen.main.bounds)
+            C.w = window?.frame.width
+            C.h = window?.frame.height
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
+        
 
         // Override point for customization after application launch.
         return true

@@ -93,19 +93,63 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: self.usernameField.text!, password: self.passwordField.text!) { (user, error) in
             
             if error == nil {
-                
-                //Print into the console if successfully logged in
-//                print("You have successfully logged in")
-//                let vc = TabBarViewController()
-//                vc.view.backgroundColor = C.darkColor
-//                let window = UIWindow(frame: UIScreen.main.bounds)
-//                window?.rootViewController = vc
-//                window?.makeKeyAndVisible()
-                
-                
+                self.loginSuccess()
             } else {
-                
                 print("boo")
+            }
+        }
+    }
+    func loginSuccess()
+    {
+        if (Auth.auth().currentUser != nil)
+        {
+            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    print("Recieved documents")
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                        C.refid = document.documentID
+                        C.userData = document.data()
+                        C.user.name = C.userData["name"] as! String
+                        C.user.numFriends = 123
+                        C.user.profilePictureURL = "sample_prof"
+                        C.user.whoIam = ["Charismatic", "Chill", "Risktaking"]
+                        C.user.whatIDo = ["Tennis", "Trumpet", "Skiiing"]
+                        if C.userData["who1"] != nil
+                        {
+                            C.user.whoIam[0] = C.userData["who1"] as! String
+                        }
+                        if C.userData["who2"] != nil
+                        {
+                            C.user.whoIam[1] = C.userData["who2"] as! String
+                        }
+                        if C.userData["who3"] != nil
+                        {
+                            C.user.whoIam[2] = C.userData["who3"] as! String
+                        }
+                        if C.userData["what1"] != nil
+                        {
+                            C.user.whoIam[0] = C.userData["what1"] as! String
+                        }
+                        if C.userData["what2"] != nil
+                        {
+                            C.user.whoIam[1] = C.userData["what2"] as! String
+                        }
+                        if C.userData["what3"] != nil
+                        {
+                            C.user.whoIam[2] = C.userData["what3"] as! String
+                        }
+                        C.user.xp = 10000
+                        C.user.level = 10
+                        C.user.major = C.userData["major"] as! String
+                        C.user.age = 20
+                        let initialViewController = TabBarViewController()
+                        //initialViewController.view.backgroundColor = C.darkColor
+                        self.present(initialViewController, animated: false, completion: nil)
+                    }
+                }
             }
         }
     }

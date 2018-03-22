@@ -28,6 +28,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     var cw: CGFloat!
     var profileImageView: UIImageView!
     var majors = ["Computer Science", "Economics"]
+    let db = Firestore.firestore()
     override func viewDidLoad() {
         super.viewDidLoad()
         ch = self.tableView.frame.height
@@ -53,6 +54,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         whoField3 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.18, width: cw*0.4, height: ch*0.04));
         majorField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
         profileImageView = UIImageView(frame: CGRect(x: cw*0.5 - ch * 0.15, y: ch*0.15, width: ch*0.3, height: ch*0.3))
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -461,71 +463,93 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             self.present(alert, animated: true, completion: nil)
             return
         }
-//        else if whoField1.text?.count == 0 || whoField2.text?.count == 0 || whoField3.text?.count == 0
-//        {
-//            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//            return
-//        }
-//        else if whatField1.text?.count == 0 || whatField2.text?.count == 0 || whatField3.text?.count == 0
-//        {
-//            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
-//            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-//            self.present(alert, animated: true, completion: nil)
-//            return
-//        }
+        else if whoField1.text?.count == 0 || whoField2.text?.count == 0 || whoField3.text?.count == 0
+        {
+            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        else if whatField1.text?.count == 0 || whatField2.text?.count == 0 || whatField3.text?.count == 0
+        {
+            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
         Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!, completion: { (user, error) in
             if error == nil {
-                print(1)
-                    var ref: DocumentReference? = nil
-                    ref = Firestore.firestore().collection("user_info").addDocument(data: [
-                        "gender": self.genderField.text!,
-                        "name": self.nameField.text!,
-                        "who1": self.whoField1.text!,
-                        "who2": self.whoField2.text!,
-                        "who3": self.whoField3.text!,
-                        "what1": self.whatField1.text!,
-                        "what2": self.whatField1.text!,
-                        "what3": self.whatField1.text!,
-                        "major": self.majorField.text!
-                    ]) { err in
-                        if let err = err {
-                            print("Error adding document: \(err)")
-                        } else {
-                        }
-                    }
-                print("Document added with ID: \(ref!.documentID)")
-                let tabCont = TabBarViewController()
-                C.updateUser(refid: ref!.documentID)
-                C.refid = ref!.documentID
-                self.present(tabCont, animated: false, completion: nil)
+                //self.addUserInfo()
             }
             else{
                 print("fail")
             }
         })
-        
-}
-    
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            profileImageView.contentMode = .scaleAspectFit
-            profileImageView.image = pickedImage
+        if Auth.auth().currentUser != nil
+        {
+            var ref: DocumentReference? = nil
+            ref = self.db.collection("user_info").addDocument(data: [
+                "gender" : self.genderField.text!,
+                "name" : self.nameField.text!,
+                "who1" : self.whoField1.text!,
+                "who2" : self.whoField2.text!,
+                "who3" : self.whoField3.text!,
+                "what1" : self.whatField1.text!,
+                "what2" : self.whatField2.text!,
+                "what3" : self.whatField3.text!,
+                "major" : self.majorField.text!,
+                "user_id" : Auth.auth().currentUser!.uid
+            ]) { err in
+                if let err = err {
+                    print("Error adding document: \(err)")
+                } else {
+                    print("Added Document succesfully")
+                }
+            }
+            let tabCont = TabBarViewController()
+            C.updateUser(refid: ref!.documentID)
+            C.refid = ref!.documentID
+            self.present(tabCont, animated: false, completion: nil)
         }
-        
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        NSLog("\(info)")
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            profileImageView.image = image
-            dismiss(animated: true, completion: nil)
-        }
-    }
 
-
+    }
+//
+//func addUserInfo()
+//{
+//    var ref: DocumentReference? = nil
+//    ref = Firestore.firestore().collection("test").addDocument(data: [
+//        "name": "Tokyo",
+//        "country": "Japan"
+//    ]) { err in
+//        if let err = err {
+//            print("Error adding document: \(err)")
+//        } else {
+//            print("Document test added with ID: \(ref!.documentID)")
+//        }
+//    }
+//    let tabCont = TabBarViewController()
+//    C.updateUser(refid: ref!.documentID)
+//    C.refid = ref!.documentID
+//    self.present(tabCont, animated: false, completion: nil)
+//}
+//    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+//        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            profileImageView.contentMode = .scaleAspectFit
+//            profileImageView.image = pickedImage
+//        }
+//
+//        dismiss(animated: true, completion: nil)
+//    }
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        NSLog("\(info)")
+//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+//            profileImageView.image = image
+//            dismiss(animated: true, completion: nil)
+//        }
+//    }
+//
+//
 }
 
 extension SignUpViewController: UITextFieldDelegate {

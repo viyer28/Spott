@@ -26,6 +26,7 @@ class C: NSObject {
     static var eventDarkBrownColor = UIColor(red:155.0/255.0, green:99.0/255.0, blue:29.0/255.0, alpha:1.0)
     static var eventLightBrownColor = UIColor(red:246.0/255.0, green:194.0/255.0, blue:127.0/255.0, alpha:1.0)
     static var refid: String!
+    static var userData: Dictionary<String, Any>!
     
     static func updateUser(refid: String)
     {

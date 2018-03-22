@@ -55,7 +55,7 @@ class ProfileViewController: UITableViewController {
             let levelLabel = UILabel(frame: CGRect(x: C.w*0.03, y: C.w*0.83, width: C.w * 0.28, height: C.w * 0.08))
             levelLabel.textColor = C.goldishColor
             levelLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
-            levelLabel.text = "\(C.user.level)"
+            levelLabel.text = "Lvl: \(C.user.level!)"
             cell.addSubview(levelLabel)
             
             let majorLabel = UILabel(frame: CGRect(x: C.w*0.05, y: C.w*0.925, width: C.w * 0.45, height: C.w * 0.05))
@@ -85,7 +85,7 @@ class ProfileViewController: UITableViewController {
             numFriendsLabel.textColor = C.blueishColor
             numFriendsLabel.textAlignment = .right
             numFriendsLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
-            numFriendsLabel.text = "\(C.user.numFriends)"
+            numFriendsLabel.text = "\(C.user.numFriends!)"
             cell.addSubview(numFriendsLabel)
             
             let friendsLabel = UILabel(frame: CGRect(x: C.w*0.26, y: C.h*0.025, width: C.w * 0.18, height: C.h * 0.05))
