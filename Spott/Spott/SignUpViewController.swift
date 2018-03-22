@@ -479,12 +479,16 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         }
         Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!, completion: { (user, error) in
             if error == nil {
-                //self.addUserInfo()
+                self.addUserInfo()
             }
             else{
                 print("fail")
             }
         })
+
+    }
+    func addUserInfo()
+    {
         if Auth.auth().currentUser != nil
         {
             var ref: DocumentReference? = nil
@@ -498,7 +502,10 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 "what2" : self.whatField2.text!,
                 "what3" : self.whatField3.text!,
                 "major" : self.majorField.text!,
-                "user_id" : Auth.auth().currentUser!.uid
+                "user_id" : Auth.auth().currentUser!.uid,
+                "num_friends" : 0,
+                "level" : 1,
+                "xp" : 0
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -507,49 +514,24 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 }
             }
             let tabCont = TabBarViewController()
-            C.updateUser(refid: ref!.documentID)
-            C.refid = ref!.documentID
-            self.present(tabCont, animated: false, completion: nil)
+            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                } else {
+                    print("Recieved documents")
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                        C.refid = document.documentID
+                        C.userData = document.data()
+                        C.updateUser()
+                        let tabCont = TabBarViewController()
+                        //initialViewController.view.backgroundColor = C.darkColor
+                        self.present(tabCont, animated: false, completion: nil)
+                    }
+                }
+            }
         }
-
     }
-//
-//func addUserInfo()
-//{
-//    var ref: DocumentReference? = nil
-//    ref = Firestore.firestore().collection("test").addDocument(data: [
-//        "name": "Tokyo",
-//        "country": "Japan"
-//    ]) { err in
-//        if let err = err {
-//            print("Error adding document: \(err)")
-//        } else {
-//            print("Document test added with ID: \(ref!.documentID)")
-//        }
-//    }
-//    let tabCont = TabBarViewController()
-//    C.updateUser(refid: ref!.documentID)
-//    C.refid = ref!.documentID
-//    self.present(tabCont, animated: false, completion: nil)
-//}
-//    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            profileImageView.contentMode = .scaleAspectFit
-//            profileImageView.image = pickedImage
-//        }
-//
-//        dismiss(animated: true, completion: nil)
-//    }
-//
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-//        NSLog("\(info)")
-//        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            profileImageView.image = image
-//            dismiss(animated: true, completion: nil)
-//        }
-//    }
-//
-//
 }
 
 extension SignUpViewController: UITextFieldDelegate {

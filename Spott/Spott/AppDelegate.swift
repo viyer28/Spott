@@ -60,10 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.user.hometown = "Washington DC"
         C.user.age = 20
         
-//        if Auth.auth().currentUser != nil
-//        {
-//            try! Auth.auth().signOut()
-//        }
+        if Auth.auth().currentUser != nil
+        {
+            try! Auth.auth().signOut()
+        }
         
         if Auth.auth().currentUser != nil
         {
@@ -76,32 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             print("\(document.documentID) => \(document.data())")
                             C.refid = document.documentID
                             C.userData = document.data()
-                            C.user.name = C.userData["name"] as! String
-                            if C.userData["who1"] != nil
-                            {
-                                C.user.whoIam[0] = C.userData["who1"] as! String
-                            }
-                            if C.userData["who2"] != nil
-                            {
-                                C.user.whoIam[1] = C.userData["who2"] as! String
-                            }
-                            if C.userData["who3"] != nil
-                            {
-                                C.user.whoIam[2] = C.userData["who3"] as! String
-                            }
-                            if C.userData["what1"] != nil
-                            {
-                                C.user.whoIam[0] = C.userData["what1"] as! String
-                            }
-                            if C.userData["what2"] != nil
-                            {
-                                C.user.whoIam[1] = C.userData["what2"] as! String
-                            }
-                            if C.userData["what3"] != nil
-                            {
-                                C.user.whoIam[2] = C.userData["what3"] as! String
-                            }
-                            C.user.major = C.userData["major"] as! String
+                            C.updateUser()
                             let initialViewController = TabBarViewController()
                             //initialViewController.view.backgroundColor = C.darkColor
                             self.window = UIWindow(frame: UIScreen.main.bounds)

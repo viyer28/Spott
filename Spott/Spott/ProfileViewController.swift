@@ -70,10 +70,10 @@ class ProfileViewController: UITableViewController {
             locationLabel.text = location
             cell.addSubview(locationLabel)
             
-            let ageLabel = UILabel(frame: CGRect(x: C.w*0.9, y: C.w*0.925, width: C.w * 0.05, height: C.w * 0.05))
+            let ageLabel = UILabel(frame: CGRect(x: C.w*0.9, y: C.w*0.925, width: C.w * 0.1, height: C.w * 0.05))
             ageLabel.textColor = C.blueishColor
             ageLabel.font = UIFont(name: "FuturaPT-Light", size: 12.0)
-            ageLabel.text = "\(C.user.age)"
+            ageLabel.text = "\(C.user.age!)"
             cell.addSubview(ageLabel)
 
         }
@@ -144,7 +144,7 @@ class ProfileViewController: UITableViewController {
             let whoIAmTraitsLabel = UILabel(frame: CGRect(x: C.w*0.15, y: C.h*0.05, width: C.w*0.35, height: C.h*0.10))
             whoIAmTraitsLabel.numberOfLines = 3
             whoIAmTraitsLabel.textColor = C.blueishColor
-            whoIAmTraitsLabel.text = "adventurous\nintroverted\nconfident"
+            whoIAmTraitsLabel.text = "\(C.user.whoIam[0])\n\(C.user.whoIam[1])\n\(C.user.whoIam[2])"
             whoIAmTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
             cell.addSubview(whoIAmTraitsLabel)
             
@@ -156,7 +156,7 @@ class ProfileViewController: UITableViewController {
             let whatIDoTraitsLabel = UILabel(frame: CGRect(x: C.w*0.65, y: C.h*0.05, width: C.w*0.35, height: C.h*0.10))
             whatIDoTraitsLabel.numberOfLines = 3
             whatIDoTraitsLabel.textColor = C.blueishColor
-            whatIDoTraitsLabel.text = "snowboard\ntennis\nprogram"
+            whatIDoTraitsLabel.text = "\(C.user.whatIDo[0])\n\(C.user.whatIDo[1])\n\(C.user.whatIDo[2])"
             whatIDoTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
             cell.addSubview(whatIDoTraitsLabel)
         }

@@ -28,25 +28,37 @@ class C: NSObject {
     static var refid: String!
     static var userData: Dictionary<String, Any>!
     
-    static func updateUser(refid: String)
+    static func updateUser()
     {
-        let docsref = Firestore.firestore().collection("user_info").document(refid)
-        docsref.getDocument { (document, error) in
-            if let document = document {
-                print("Document data: \(document.data())")
-            } else {
-                print("Document does not exist")
-            }
+        C.user.name = C.userData["name"] as! String
+        C.user.xp = C.userData["xp"] as! Int
+        C.user.level = C.userData["level"] as! Int
+        C.user.numFriends = C.userData["num_friends"] as! Int
+        if C.userData["who1"] != nil
+        {
+            C.user.whoIam[0] = C.userData["who1"] as! String
         }
-//        user.name = ref.value(forKey: "name") as! String
-//        user.major = ref.value(forKey: "major") as! String
-//        user.whoIam[0] = ref.value(forKey: "who1") as! String
-//        user.whoIam[1] = ref.value(forKey: "who2") as! String
-//        user.whoIam[2] = ref.value(forKey: "who3") as! String
-//        user.whatIDo[0] = ref.value(forKey: "what1") as! String
-//        user.whatIDo[1] = ref.value(forKey: "what2") as! String
-//        user.whatIDo[2] = ref.value(forKey: "what3") as! String
-//        user.gender = ref.value(forKey: "gender") as! String
+        if C.userData["who2"] != nil
+        {
+            C.user.whoIam[1] = C.userData["who2"] as! String
+        }
+        if C.userData["who3"] != nil
+        {
+            C.user.whoIam[2] = C.userData["who3"] as! String
+        }
+        if C.userData["what1"] != nil
+        {
+            C.user.whoIam[0] = C.userData["what1"] as! String
+        }
+        if C.userData["what2"] != nil
+        {
+            C.user.whoIam[1] = C.userData["what2"] as! String
+        }
+        if C.userData["what3"] != nil
+        {
+            C.user.whoIam[2] = C.userData["what3"] as! String
+        }
+        C.user.major = C.userData["major"] as! String
     }
     
 }
