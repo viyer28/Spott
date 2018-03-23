@@ -59,6 +59,64 @@ class C: NSObject {
             C.user.whoIam[2] = C.userData["what3"] as! String
         }
         C.user.major = C.userData["major"] as! String
+        
+        updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
     }
     
+    static func updateFriends(user: User, friends: [String])
+    {
+        var friend_userData: Dictionary<String, Any>!
+        
+        for friend in friends {
+            let f = User()
+            
+            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: friend).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting Friend documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                        friend_userData = document.data()
+                        
+                        f.name = friend_userData["name"] as! String
+                        f.xp = friend_userData["xp"] as! Int
+                        f.level = friend_userData["level"] as! Int
+                        f.numFriends = friend_userData["num_friends"] as! Int
+                        if friend_userData["who1"] != nil
+                        {
+                            f.whoIam[0] = friend_userData["who1"] as! String
+                        }
+                        if friend_userData["who2"] != nil
+                        {
+                            f.whoIam[1] = friend_userData["who2"] as! String
+                        }
+                        if friend_userData["who3"] != nil
+                        {
+                            f.whoIam[2] = friend_userData["who3"] as! String
+                        }
+                        if friend_userData["what1"] != nil
+                        {
+                            f.whoIam[0] = friend_userData["what1"] as! String
+                        }
+                        if friend_userData["what2"] != nil
+                        {
+                            f.whoIam[1] = friend_userData["what2"] as! String
+                        }
+                        if friend_userData["what3"] != nil
+                        {
+                            f.whoIam[2] = friend_userData["what3"] as! String
+                        }
+                        f.major = friend_userData["major"] as! String
+                        
+                        updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                    }
+                    print("Recieved Friend documents")
+                }
+            }
+            
+            if (f.name != nil){
+                user.friends.append(f)
+            }
+        }
+    }
 }

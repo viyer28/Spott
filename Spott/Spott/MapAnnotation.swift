@@ -11,18 +11,14 @@ import MapKit
 import UIKit
 import Mapbox
 
-class MapAnnotation : NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D
-    var title: String?
-    var subtitle: String?
-    var image: UIImage?
-    var colour: UIColor?
+class MapAnnotation : MGLPointAnnotation {
+    var type: Int?
     override init() {
-        self.coordinate = CLLocationCoordinate2D()
-        self.title = nil
-        self.subtitle = nil
-        self.image = nil
-        self.colour = UIColor.white
+        super.init()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 

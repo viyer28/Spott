@@ -27,9 +27,10 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         mapView.center = view.center
         mapView.showsUserLocation = true;
         self.title = "Map";
-        let point = MGLPointAnnotation()
+        let point = MapAnnotation()
         point.coordinate = CLLocationCoordinate2D(latitude:  41.792212, longitude:  -87.599573)
         point.title = "Regenstein Library"
+        point.type = 0
         mapView.addAnnotation(point)
         //mapView.addAnnotation(myAnnotation)
         
@@ -44,6 +45,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         if view == nil {
             view = MapAnnotationView(reuseIdentifier: "mapAnnotation")
         }
+        
         return view
     }
     func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
