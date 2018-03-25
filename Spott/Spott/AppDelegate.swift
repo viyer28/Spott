@@ -60,11 +60,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.user.hometown = "Washington DC"
         C.user.age = 20
         
-        if Auth.auth().currentUser != nil
-        {
-            try! Auth.auth().signOut()
-        }
-        
+//        if Auth.auth().currentUser != nil
+//        {
+//            try! Auth.auth().signOut()
+//        }
+//
         if Auth.auth().currentUser != nil
         {
             Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in

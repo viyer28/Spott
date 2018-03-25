@@ -26,7 +26,10 @@ class ProfileViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
@@ -67,7 +70,7 @@ class ProfileViewController: UITableViewController {
             let locationLabel = UILabel(frame: CGRect(x: C.w*0.6, y: C.w*0.925, width: C.w * 0.2, height: C.w * 0.05))
             locationLabel.textColor = C.blueishColor
             locationLabel.font = UIFont(name: "FuturaPT-Light", size: 12.0)
-            locationLabel.text = location
+            locationLabel.text = C.user.hometown
             cell.addSubview(locationLabel)
             
             let ageLabel = UILabel(frame: CGRect(x: C.w*0.9, y: C.w*0.925, width: C.w * 0.1, height: C.w * 0.05))
@@ -76,6 +79,13 @@ class ProfileViewController: UITableViewController {
             ageLabel.text = "\(C.user.age!)"
             cell.addSubview(ageLabel)
 
+            let image = UIImage(named: "settingsIcon") as UIImage?
+            let settingsButton   = UIButton(type: UIButtonType.custom) as UIButton
+            settingsButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
+            settingsButton.setImage(image, for: .normal)
+             settingsButton.addTarget(self, action: #selector(goToSettings), for: UIControlEvents.touchUpInside)
+            self.view.addSubview(settingsButton)
+            
         }
         else if indexPath.row == 1
         {
@@ -202,7 +212,12 @@ class ProfileViewController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+    @objc func goToSettings ()
+    {
+        let initialViewController = SettingsViewController()
+        //initialViewController.view.backgroundColor = C.darkColor
+        self.present(initialViewController, animated: false, completion: nil)
+    }
     
 }
 

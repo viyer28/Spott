@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import Firebase
-class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var emailField: UITextField!
     var nameField: UITextField!
@@ -59,6 +59,11 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData()
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
     }
@@ -70,10 +75,10 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         if indexPath.row == 0
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.25, y: ch*0.01, width: cw * 0.5, height: ch * 0.08))
-            titleLabel.font = UIFont(name: "FuturaPT-Light", size: 32.0)
+            titleLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
             titleLabel.textAlignment = .center
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Sign Up"
+            titleLabel.text="Account Info"
             cell.addSubview(titleLabel)
             
             let backButton = UIButton(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.2, height: ch*0.08))
@@ -83,7 +88,15 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             backButton.setTitle("<", for: .normal)
             backButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
             
+            let logoutButton = UIButton(frame: CGRect(x: cw*0.75, y: ch*0.01, width: cw * 0.2, height: ch*0.08))
+            logoutButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
+            logoutButton.titleLabel?.text = "Logout"
+            logoutButton.setTitleColor(C.goldishColor, for: .normal)
+            logoutButton.setTitle("Logout", for: .normal)
+            logoutButton.addTarget(self, action: #selector(logoutClick), for: UIControlEvents.touchUpInside)
+            
             cell.addSubview(backButton)
+            cell.addSubview(logoutButton)
         }
         if indexPath.row == 1
         {
@@ -102,8 +115,9 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             nameField.backgroundColor = UIColor.white
             nameField.borderStyle = UITextBorderStyle.roundedRect
             nameField.tintColor = UIColor.black
+            nameField.text = C.user.name
             cell.addSubview(nameField)
-          
+            
         }
         if indexPath.row == 2
         {
@@ -123,6 +137,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             emailField.tintColor = UIColor.black
             emailField.borderStyle = UITextBorderStyle.roundedRect
             emailField.autocapitalizationType = .none
+            emailField.text = Auth.auth().currentUser?.email
             cell.addSubview(emailField)
             
         }
@@ -187,6 +202,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             majorField.tintColor = .clear
             majorField.delegate = self
             majorField.inputView = pickerView
+            majorField.text = C.user.major
             
             cell.addSubview(majorField)
         }
@@ -208,6 +224,8 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             homeField.tintColor = UIColor.black
             homeField.borderStyle = UITextBorderStyle.roundedRect
             homeField.autocapitalizationType = .none
+            homeField.text = C.user.hometown
+            
             cell.addSubview(homeField)
         }
         else if indexPath.row == 6
@@ -227,6 +245,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             genderField.delegate = self
             genderField.backgroundColor = UIColor.white
             genderField.borderStyle = UITextBorderStyle.roundedRect
+            genderField.text = C.user.gender
             
             let pickerView = SignUpPickerView(frame: CGRect.zero, field:genderField, type: 2)
             genderField.inputView = pickerView
@@ -287,6 +306,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whatField1.delegate = self
             whatField1.backgroundColor = UIColor.white
             whatField1.borderStyle = UITextBorderStyle.roundedRect
+            whatField1.text = C.user.whatIDo[0]
             
             whatField2.font = UIFont(name: "FuturaPT-Light", size: 12.0)
             whatField2.returnKeyType = UIReturnKeyType.done
@@ -297,6 +317,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whatField2.delegate = self
             whatField2.backgroundColor = UIColor.white
             whatField2.borderStyle = UITextBorderStyle.roundedRect
+            whatField2.text = C.user.whatIDo[1]
             
             whatField3.font = UIFont(name: "FuturaPT-Light", size: 12.0)
             whatField3.returnKeyType = UIReturnKeyType.done
@@ -307,6 +328,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whatField3.delegate = self
             whatField3.backgroundColor = UIColor.white
             whatField3.borderStyle = UITextBorderStyle.roundedRect
+            whatField3.text = C.user.whatIDo[2]
             
             cell.addSubview(whatField1)
             cell.addSubview(whatField2)
@@ -332,6 +354,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whoField1.delegate = self
             whoField1.backgroundColor = UIColor.white
             whoField1.borderStyle = UITextBorderStyle.roundedRect
+            whoField1.text = C.user.whoIam[0]
             
             whoField2.font = UIFont(name: "FuturaPT-Light", size: 12.0)
             whoField2.returnKeyType = UIReturnKeyType.done
@@ -342,6 +365,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whoField2.delegate = self
             whoField2.backgroundColor = UIColor.white
             whoField2.borderStyle = UITextBorderStyle.roundedRect
+            whoField2.text = C.user.whoIam[1]
             
             whoField3.font = UIFont(name: "FuturaPT-Light", size: 12.0)
             whoField3.returnKeyType = UIReturnKeyType.done
@@ -352,6 +376,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whoField3.delegate = self
             whoField3.backgroundColor = UIColor.white
             whoField3.borderStyle = UITextBorderStyle.roundedRect
+            whoField3.text = C.user.whoIam[2]
             
             cell.addSubview(whoField1)
             cell.addSubview(whoField2)
@@ -364,9 +389,9 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             signUpButton.frame = cell.frame
             signUpButton.backgroundColor = C.goldishColor
             signUpButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            signUpButton.titleLabel?.text = "Create Account"
+            signUpButton.titleLabel?.text = "Update Account"
             signUpButton.setTitleColor(C.darkColor, for: .normal)
-            signUpButton.setTitle("Create Account", for: .normal)
+            signUpButton.setTitle("Update Account", for: .normal)
             signUpButton.addTarget(self, action: #selector(signUpClick), for: UIControlEvents.touchUpInside)
             cell.addSubview(signUpButton)
         }
@@ -409,7 +434,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return majors.count
-    
+        
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return majors[row]
@@ -435,6 +460,17 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
+    
+    @objc func logoutClick()
+    {
+        if Auth.auth().currentUser != nil
+        {
+            try! Auth.auth().signOut()
+        }
+        let initialViewController = LoginViewController()
+        present(initialViewController, animated: false, completion: nil)
+    }
+    
     @objc func cameraRollClick() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
             let imagePicker = UIImagePickerController()
@@ -449,52 +485,52 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     @objc func signUpClick()
     {
         if nameField.text?.count as Int! < 4 {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Name must be at least 3 characters", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Update Information", message: "Name must be at least 3 characters", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
         else if emailField.text?.count as Int! == 0 {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Email field is empty", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Update Information", message: "Email field is empty", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
         else if (emailField.text as String!).index(of: "@") == nil
         {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Email must be a uchicago email", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Update Information", message: "Email must be a uchicago email", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
         else if emailField.text?[(emailField.text as String!).index(of: "@")!...] != "@uchicago.edu" {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Email must be a uchicago email", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Update Information", message: "Email must be a uchicago email", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
-        else if passwordField.text?.count as Int! < 7 {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Pasword must be at least 7 characters", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
-        else if passwordField.text?.count as Int! != passwordField.text?.count as Int! {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Paswords do not match", preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            return
-        }
+//        else if passwordField.text?.count as Int! < 7 {
+//            let alert = UIAlertController(title: "Cannot Update Information", message: "Pasword must be at least 7 characters", preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            return
+//        }
+//        else if passwordField.text?.count as Int! != passwordField.text?.count as Int! {
+//            let alert = UIAlertController(title: "Cannot Update Information", message: "Paswords do not match", preferredStyle: UIAlertControllerStyle.alert)
+//            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+//            self.present(alert, animated: true, completion: nil)
+//            return
+//        }
         else if whoField1.text?.count == 0 || whoField2.text?.count == 0 || whoField3.text?.count == 0
         {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Update Information", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
         else if whatField1.text?.count == 0 || whatField2.text?.count == 0 || whatField3.text?.count == 0
         {
-            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Update Information", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
@@ -506,65 +542,50 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             self.present(alert, animated: true, completion: nil)
             return
         }
-        Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!, completion: { (user, error) in
-            if error == nil {
-                self.addUserInfo()
-            }
-            else{
-                print("fail")
-            }
-        })
-
-    }
-    func addUserInfo()
-    {
-        if Auth.auth().currentUser != nil
-        {
-            var ref: DocumentReference? = nil
-            ref = self.db.collection("user_info").addDocument(data: [
-                "gender" : self.genderField.text!,
-                "hometown" : self.homeField.text!,
-                "name" : self.nameField.text!,
-                "who1" : self.whoField1.text!,
-                "who2" : self.whoField2.text!,
-                "who3" : self.whoField3.text!,
-                "what1" : self.whatField1.text!,
-                "what2" : self.whatField2.text!,
-                "what3" : self.whatField3.text!,
-                "major" : self.majorField.text!,
-                "user_id" : Auth.auth().currentUser!.uid,
-                "num_friends" : 0,
-                "level" : 1,
-                "xp" : 0
+        db.collection("user_info").document(C.refid).setData([
+            "gender" : self.genderField.text!,
+            "name" : self.nameField.text!,
+            "who1" : self.whoField1.text!,
+            "who2" : self.whoField2.text!,
+            "who3" : self.whoField3.text!,
+            "what1" : self.whatField1.text!,
+            "hometown" : self.homeField.text!,
+            "what2" : self.whatField2.text!,
+            "what3" : self.whatField3.text!,
+            "major" : self.majorField.text!,
+            "level" : C.user.level,
+            "xp" : C.user.xp,
+            "num_friends" : C.user.numFriends,
+            "friends" : C.userData["friends"] as! [String],
+            "user_id" : Auth.auth().currentUser!.uid
             ]) { err in
                 if let err = err {
-                    print("Error adding document: \(err)")
+                    print("Error writing document: \(err)")
                 } else {
-                    print("Added Document succesfully")
+                    print("Document successfully written!")
+                    self.updateUserData()
                 }
-            }
-            let tabCont = TabBarViewController()
-            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting documents: \(err)")
-                } else {
-                    print("Recieved documents")
-                    for document in querySnapshot!.documents {
-                        print("\(document.documentID) => \(document.data())")
-                        C.refid = document.documentID
-                        C.userData = document.data()
-                        C.updateUser()
-                        let tabCont = TabBarViewController()
-                        //initialViewController.view.backgroundColor = C.darkColor
-                        self.present(tabCont, animated: false, completion: nil)
-                    }
-                }
+        }
+        
+    }
+    func updateUserData()
+    {
+        let docRef = db.collection("user_info").document(C.refid)
+        
+        docRef.getDocument { (document, error) in
+            if let document = document {
+                C.userData = document.data()
+                C.updateUser()
+                //initialViewController.view.backgroundColor = C.darkColor
+                self.dismiss(animated: false, completion: nil)
+            } else {
+                print("Document does not exist")
             }
         }
     }
 }
 
-extension SignUpViewController: UITextFieldDelegate {
+extension SettingsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField,
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
@@ -584,8 +605,7 @@ extension SignUpViewController: UITextFieldDelegate {
     }
     
 }
-
-class SignUpPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource{
+class SettingsPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource{
     
     
     var majors = ["Computer Science", "Economics"]
@@ -674,6 +694,6 @@ class SignUpPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSou
     @objc func doneClick() {
         field.resignFirstResponder()
     }
-        
+    
 }
 

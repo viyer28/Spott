@@ -33,6 +33,7 @@ class C: NSObject {
         C.user.name = C.userData["name"] as! String
         C.user.xp = C.userData["xp"] as! Int
         C.user.level = C.userData["level"] as! Int
+        C.user.gender = C.userData["gender"] as! String
         C.user.numFriends = C.userData["num_friends"] as! Int
         if C.userData["who1"] != nil
         {
@@ -58,6 +59,10 @@ class C: NSObject {
         {
             C.user.whoIam[2] = C.userData["what3"] as! String
         }
+        if C.userData["hometown"] != nil
+        {
+            C.user.hometown = C.userData["hometown"] as! String
+        }
         C.user.major = C.userData["major"] as! String
         
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
@@ -66,7 +71,7 @@ class C: NSObject {
     static func updateFriends(user: User, friends: [String])
     {
         var friend_userData: Dictionary<String, Any>!
-        
+        C.user.friends = []
         for friend in friends {
             let f = User()
             
@@ -82,6 +87,8 @@ class C: NSObject {
                         f.xp = friend_userData["xp"] as! Int
                         f.level = friend_userData["level"] as! Int
                         f.numFriends = friend_userData["num_friends"] as! Int
+                        f.whoIam = ["", "", ""]
+                        f.whatIDo = ["", "", ""]
                         if friend_userData["who1"] != nil
                         {
                             f.whoIam[0] = friend_userData["who1"] as! String
@@ -108,14 +115,13 @@ class C: NSObject {
                         }
                         f.major = friend_userData["major"] as! String
                         
-                        updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                        //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                    }
+                    if (f.name != nil){
+                        user.friends.append(f)
                     }
                     print("Recieved Friend documents")
                 }
-            }
-            
-            if (f.name != nil){
-                user.friends.append(f)
             }
         }
     }
