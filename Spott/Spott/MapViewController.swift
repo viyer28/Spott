@@ -27,11 +27,26 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         mapView.center = view.center
         mapView.showsUserLocation = true;
         self.title = "Map";
-        let point = MapAnnotation()
-        point.coordinate = CLLocationCoordinate2D(latitude:  41.792212, longitude:  -87.599573)
-        point.title = "Regenstein Library"
-        point.type = 0
-        mapView.addAnnotation(point)
+        for location in C.locations {
+            let point = MapAnnotation()
+            point.coordinate = CLLocationCoordinate2D(latitude:  location.latitude, longitude:  location.longitude)
+            point.title = location.name
+            point.type = 0
+            mapView.addAnnotation(point)
+        }
+        for friend in C.user.friends {
+            let point = MapAnnotation()
+            point.coordinate = CLLocationCoordinate2D(latitude:  friend.latitude, longitude:  friend.longitude)
+            point.title = friend.name
+            point.type = 1
+            mapView.addAnnotation(point)
+        }
+//        let point = MapAnnotation()
+//        point.coordinate = CLLocationCoordinate2D(latitude:  41.792212, longitude:  -87.599573)
+//        point.title = "Regenstein Library"
+//        point.type = 0
+        
+        //mapView.addAnnotation(point)
         //mapView.addAnnotation(myAnnotation)
         
     }
@@ -39,6 +54,16 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         mapView.setCenter(TabBarViewController.userLocation.coordinate, zoomLevel: 15, animated: false)
     }
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        
+        if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
+        {
+            var view: MapUserAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: "mapUserAnnotation") as? MapUserAnnotationView
+            if view == nil {
+                view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation")
+            }
+            return view
+        }
+        
         
         //    // Assign a reuse identifier to be used by both of the annotation views, taking advantage of their similarities.
         var view: MapAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: "mapAnnotation") as? MapAnnotationView
@@ -50,6 +75,11 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     }
     func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
         // Instantiate and return our custom callout view.
+        if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
+        {
+            mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+            return UserCalloutView(representedObject: annotation)
+        }
         return SpottCalloutView(representedObject: annotation)
     }
     

@@ -72,6 +72,29 @@ class MapAnnotationView: MGLAnnotationView {
     }
 }
 
+class MapUserAnnotationView: MGLAnnotationView {
+    private var imageView: UIImageView!
+    
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        //self.layer.borderWidth = 3.0 as CGFloat
+        self.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        self.layer.cornerRadius = self.frame.size.width / 2
+        self.clipsToBounds = true
+        self.backgroundColor = UIColor.clear
+        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        img.image = UIImage(named: "sample_prof")
+        self.addSubview(img)
+        self.layer.borderWidth = 2.0 as CGFloat
+        self.layer.borderColor = C.goldishColor.cgColor
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
 class SpottCalloutView: UIView, MGLCalloutView {
     
     let dismissesAutomatically: Bool = true
@@ -138,7 +161,7 @@ class SpottCalloutView: UIView, MGLCalloutView {
         potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
         potentialsLabel.text="Potentials: " + String(numPotentials)
         
-        titleLabel.text = "Reg Library"
+        titleLabel.text = representedObject.title!
         
         
         let blueGradient = CAGradientLayer()
@@ -205,5 +228,74 @@ class SpottCalloutView: UIView, MGLCalloutView {
 
     }
 
+}
+
+class UserCalloutView: UIView, MGLCalloutView {
+    
+    let dismissesAutomatically: Bool = true
+    let isAnchoredToAnnotation: Bool = false
+    lazy var leftAccessoryView = UIView()
+    lazy var rightAccessoryView = UIView()
+    weak var delegate: MGLCalloutViewDelegate?
+    var representedObject: MGLAnnotation
+    var backgroundView: UIView!
+    var chatBackgroundView: UIView!
+    var vw: CGFloat!
+    var vh: CGFloat!
+    let numFriends = 3
+    let numPotentials = 10
+    let population = 100
+    
+    required init(representedObject: MGLAnnotation) {
+        self.representedObject = representedObject
+        super.init(frame: .zero)
+        backgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.6-C.th, width: C.w, height: C.h*0.4))
+        backgroundView.backgroundColor = UIColor.white
+        let rectShape = CAShapeLayer()
+        rectShape.bounds = self.backgroundView.frame
+        rectShape.position = self.backgroundView.center
+        rectShape.path = UIBezierPath(roundedRect: self.backgroundView.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: C.h*0.1, height: C.h*0.1)).cgPath
+        backgroundView.layer.mask = rectShape
+        self.addSubview(backgroundView)
+        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.7-C.th, width: C.w, height: C.h*0.3))
+        chatBackgroundView.backgroundColor = UIColor.gray
+        self.addSubview(chatBackgroundView)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // callout view delegate: present callout
+    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+        //        if !representedObject.responds(to: #selector(getter: MGLAnnotation.title)) {
+        //            return
+        //        }
+        
+        view.addSubview(self)
+//
+//        let frameWidth = backgroundView.bounds.size.width
+//        let frameHeight = backgroundView.bounds.size.height
+//        let frameOriginX = rect.origin.x + (rect.size.width/2.0) - (frameWidth/2.0)
+//        let frameOriginY = rect.origin.y - frameHeight
+//        frame = CGRect(x: frameOriginX, y: frameOriginY, width: frameWidth, height: frameHeight)
+        
+        
+    }
+//    @objc func calloutTapped() {
+//        var mw = CGFloat(0.0)
+//        var mh = CGFloat(0.0)
+//        mw = (self.superview?.frame.width)!
+//        mh = (self.superview?.frame.height)!
+//        print(C.h)
+//        print(C.w)
+//        self.superview?.addSubview(LocationProfileView(frame: CGRect(x: mw * 0.1, y: mh * 0.1, width: mw * 0.8, height: mh * 0.8)))
+//    }
+    
+    func dismissCallout(animated: Bool) {
+        removeFromSuperview()
+        
+    }
+    
 }
 

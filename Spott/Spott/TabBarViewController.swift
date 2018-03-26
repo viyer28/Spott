@@ -10,16 +10,19 @@ import Foundation
 import UIKit
 import CoreLocation
 import MapKit
+import Firebase
 class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
     var locationManager:CLLocationManager!
     let feednc = UINavigationController(rootViewController: FeedViewController())
     let eventsnc = UINavigationController(rootViewController: EventsViewController())
     let peoplevc = PeopleViewController()
     let profilevc = ProfileViewController()
+    var lastUpdate = NSDate()
     static var userLocation = CLLocation(latitude: 0, longitude: 0)
     var mapvc = MapViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
+        C.th = self.tabBar.frame.size.height
         self.tabBar.barTintColor = C.darkColor
         viewControllers = [feednc, eventsnc, mapvc, peoplevc, profilevc]
         feednc.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "FeedIcon"), tag: 1)
@@ -53,6 +56,25 @@ class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
         // other wise this function will be called every time when user location changes.
         //manager.stopUpdatingLocation()
         TabBarViewController.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
+        
+        
+        if (NSDate().timeIntervalSince(lastUpdate as Date) > 30)
+        {
+            let ref = Firestore.firestore().collection("user_info").document(C.refid)
+            lastUpdate = NSDate()
+            // Set the "capital" field of the city 'DC'
+            ref.updateData([
+                "longitude": uLoc.coordinate.longitude,
+                "latitude": uLoc.coordinate.latitude
+            ]) { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
+            }
+
+        }
         //let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         
         //mapvc.mapView.setRegion(region, animated: false)

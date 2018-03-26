@@ -63,6 +63,9 @@ PODS:
     - gRPC-Core (= 1.9.0)
     - gRPC-RxLibrary (= 1.9.0)
   - GTMSessionFetcher/Core (1.1.13)
+  - JSQMessagesViewController (7.3.5):
+    - JSQSystemSoundPlayer (~> 2.0.1)
+  - JSQSystemSoundPlayer (2.0.1)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (3.7.3)
   - nanopb (0.3.8):
@@ -76,6 +79,7 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
+  - JSQMessagesViewController
   - Mapbox-iOS-SDK (~> 3.7)
 
 SPEC CHECKSUMS:
@@ -92,11 +96,13 @@ SPEC CHECKSUMS:
   gRPC-ProtoRPC: 3eb74b3bdbd3b67ef8095f44043b478cbf8b39ab
   gRPC-RxLibrary: 4b9762497af0557201bba92abeef207c1bf3e3c8
   GTMSessionFetcher: 5bb1eae636127de695590f50e7d248483eb891e6
+  JSQMessagesViewController: 6587f56aedbcb150a8ba1d968e1ef58b1bc758b7
+  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 5304bd9605babe6da9050ea4cb23c1671420b737
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
 
-PODFILE CHECKSUM: 1c7d5b40265ecbcaee62980082a0c99b86f080a7
+PODFILE CHECKSUM: 22250289bf040c7a67ff6f694ae4e82fd97e90ef
 
 COCOAPODS: 1.4.0

@@ -19,15 +19,42 @@ class C: NSObject {
     static var goldishColor = UIColor(red:213.0/255.0, green:177.0/255.0, blue:132.0/255.0, alpha:1.0)
     static var blueishColor = UIColor(red:70.0/255.0, green:178.0/255.0, blue:199.0/255.0, alpha:1.0)
     static var regLibrary = Location()
+    static var th: CGFloat!
     static var user = User()
     static var events: [Event] = []
+    static var locations: [Location]!
     static var eventDarkBlueColor = UIColor(red:0/255.0, green:144.0/255.0, blue:170.0/255.0, alpha:1.0)
     static var eventLightBlueColor = UIColor(red:72.0/255.0, green:207.0/255.0, blue:231.0/255.0, alpha:1.0)
     static var eventDarkBrownColor = UIColor(red:155.0/255.0, green:99.0/255.0, blue:29.0/255.0, alpha:1.0)
     static var eventLightBrownColor = UIColor(red:246.0/255.0, green:194.0/255.0, blue:127.0/255.0, alpha:1.0)
     static var refid: String!
     static var userData: Dictionary<String, Any>!
+    static let databaseRoot = Auth.database().reference()
+    static let dbChat = databaseRoot.child("chats")
     
+    static func updateLocations()
+    {
+        var locationData: Dictionary<String, Any>!
+        C.locations = []
+        Firestore.firestore().collection("locations").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting Friend documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let location = Location()
+                    locationData = document.data()
+                    location.name = locationData["name"] as! String
+                    location.id = locationData["id"] as! Int
+                    location.latitude = locationData["latitude"] as! Double
+                    location.longitude = locationData["longitude"] as! Double
+                    location.friends_num = 11
+                    location.potentials = 11
+                    location.population_num = 123
+                    C.locations.append(location)
+                }
+            }
+        }
+    }
     static func updateUser()
     {
         C.user.name = C.userData["name"] as! String
@@ -64,7 +91,6 @@ class C: NSObject {
             C.user.hometown = C.userData["hometown"] as! String
         }
         C.user.major = C.userData["major"] as! String
-        
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
     }
     
@@ -114,7 +140,8 @@ class C: NSObject {
                             f.whoIam[2] = friend_userData["what3"] as! String
                         }
                         f.major = friend_userData["major"] as! String
-                        
+                        f.longitude = friend_userData["longitude"] as! Double
+                        f.latitude = friend_userData["latitude"] as! Double
                         //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
                     }
                     if (f.name != nil){

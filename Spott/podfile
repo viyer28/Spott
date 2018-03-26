@@ -3,4 +3,5 @@ target ‘Spott' do
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
+  pod 'JSQMessagesViewController'
 end

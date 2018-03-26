@@ -542,7 +542,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             self.present(alert, animated: true, completion: nil)
             return
         }
-        db.collection("user_info").document(C.refid).setData([
+        db.collection("user_info").document(C.refid).updateData([
             "gender" : self.genderField.text!,
             "name" : self.nameField.text!,
             "who1" : self.whoField1.text!,
@@ -552,12 +552,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             "hometown" : self.homeField.text!,
             "what2" : self.whatField2.text!,
             "what3" : self.whatField3.text!,
-            "major" : self.majorField.text!,
-            "level" : C.user.level,
-            "xp" : C.user.xp,
-            "num_friends" : C.user.numFriends,
-            "friends" : C.userData["friends"] as! [String],
-            "user_id" : Auth.auth().currentUser!.uid
+            "major" : self.majorField.text!
             ]) { err in
                 if let err = err {
                     print("Error writing document: \(err)")

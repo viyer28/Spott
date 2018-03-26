@@ -10,14 +10,15 @@ import Foundation
 import UIKit
 
 class Location : NSObject {
-    var latitude: CGFloat!
-    var longitude: CGFloat!
+    var latitude: Double!
+    var longitude: Double!
     var name: String!
     var friends_num: Int!
     var friends: [User]!
     var potentials: Int!
     var population_num: Int!
     var population: [User]!
+    var id: Int!
 }
 
 class Event : NSObject {
@@ -48,8 +49,8 @@ class User: NSObject {
     var gender: String!
     var age: Int!
     var friendsNum = 123
-    var latitude: CGFloat!
-    var longitude: CGFloat!
+    var latitude: Double!
+    var longitude: Double!
     var spotted: Bool!
 }
 
