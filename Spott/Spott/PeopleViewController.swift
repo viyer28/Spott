@@ -9,6 +9,8 @@
 import UIKit
 
 class PeopleViewController: UICollectionViewController {
+    var segControl = UISegmentedControl(items: ["Spott", "Spotted"])
+    var titleLabel: UILabel!
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
     }
@@ -31,11 +33,20 @@ class PeopleViewController: UICollectionViewController {
         self.view.addSubview(self.collectionView!)
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
          print(1)
-        let locationLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.1))
-        locationLabel.textAlignment = .center
-        locationLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
-        locationLabel.text = "regenstein library"
-        self.view.addSubview(locationLabel)
+        
+        segControl.frame = CGRect(x: C.w*0.3, y: C.h*0.11, width: C.w*0.4, height: C.h*0.03)
+        segControl.selectedSegmentIndex = 0
+        segControl.layer.cornerRadius = 5.0 
+        segControl.backgroundColor = C.darkColor
+        segControl.tintColor = C.goldishColor
+        // spotSegControl.addTarget(self, action: "action:", forControlEvents: .ValueChanged)
+        segControl.addTarget(self, action: #selector(changeView), for: UIControlEvents.valueChanged)
+        self.view.addSubview(segControl)
+        titleLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.02, width: C.w, height: C.h*0.1))
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
+        titleLabel.text = "Spott"
+        self.view.addSubview(titleLabel)
     }
     
     override func didReceiveMemoryWarning() {
@@ -116,6 +127,15 @@ class PeopleViewController: UICollectionViewController {
         }
         
         return closest_nonfriends
+    }
+    @objc func changeView(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 1:
+            self.titleLabel.text = "Spotted"
+        default:
+            self.titleLabel.text = "Spott"
+        }
+        self.collectionView?.reloadData()
     }
 //    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 //        targetContentOffset.pointee = scrollView.contentOffset

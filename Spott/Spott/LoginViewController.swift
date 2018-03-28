@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Firebase
 import FirebaseAuth
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     var usernameField: UITextField!
     var passwordField: UITextField!
     override func viewDidLoad() {
@@ -36,7 +36,10 @@ class LoginViewController: UIViewController {
         usernameField.keyboardType = UIKeyboardType.default
         usernameField.returnKeyType = UIReturnKeyType.done
         usernameField.clearButtonMode = UITextFieldViewMode.whileEditing
+        usernameField.autocorrectionType = UITextAutocorrectionType.no
+        usernameField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         usernameField.placeholder = "Enter email"
+        usernameField.delegate = self
         usernameField.font = UIFont(name: "FuturaPT-Light", size: 20.0)
         usernameField.backgroundColor = UIColor.white
         usernameField.borderStyle = UITextBorderStyle.roundedRect
@@ -44,8 +47,11 @@ class LoginViewController: UIViewController {
         
         passwordField = UITextField(frame:CGRect(x: cw*0.15, y: ch*0.65, width: cw*0.7, height: ch*0.05));
         passwordField.keyboardType = UIKeyboardType.default
+        passwordField.delegate = self
         passwordField.returnKeyType = UIReturnKeyType.done
         passwordField.clearButtonMode = UITextFieldViewMode.whileEditing;
+        usernameField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
+        usernameField.autocorrectionType = UITextAutocorrectionType.no
         passwordField.font = UIFont(name: "FuturaPT-Light", size: 20.0)
         passwordField.placeholder = "Enter password"
         passwordField.backgroundColor = UIColor.white
@@ -120,6 +126,32 @@ class LoginViewController: UIViewController {
                 }
             }
         }
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        moveTextField(textField, moveDistance: -216, up: true)
+    }
+    
+    // Finish Editing The Text Field
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        moveTextField(textField, moveDistance: -216, up: false)
+    }
+    
+    // Hide the keyboard when the return key pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // Move the text field in a pretty animation!
+    func moveTextField(_ textField: UITextField, moveDistance: Int, up: Bool) {
+        let moveDuration = 0.3
+        let movement: CGFloat = CGFloat(up ? moveDistance : -moveDistance)
+        
+        UIView.beginAnimations("animateTextField", context: nil)
+        UIView.setAnimationBeginsFromCurrentState(true)
+        UIView.setAnimationDuration(moveDuration)
+        self.view.frame = self.view.frame.offsetBy(dx: 0, dy: movement)
+        UIView.commitAnimations()
     }
     @objc func signup()
     {

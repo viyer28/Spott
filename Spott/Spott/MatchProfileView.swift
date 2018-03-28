@@ -20,6 +20,7 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
     override init (frame : CGRect) {
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         super.init(frame : frame)
+        
         self.layer.borderWidth = 1.0 as CGFloat
         self.layer.borderColor = C.goldishColor.cgColor
         self.tableView.backgroundColor = UIColor.white

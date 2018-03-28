@@ -535,7 +535,8 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 "user_id" : Auth.auth().currentUser!.uid,
                 "num_friends" : 0,
                 "level" : 1,
-                "xp" : 0
+                "xp" : 0,
+                "friends" : []
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")

@@ -14,6 +14,7 @@ let MapboxAccessToken = "pk.eyJ1IjoiYnJlbmRhbnNhbmRlcnNvbiIsImEiOiJjamQ2cWNubWkx
 class MapViewController: UIViewController, MGLMapViewDelegate {
     var mapView:MGLMapView!
     var tabBar:TabBarViewController!
+    var friendsButton = UIButton(type: UIButtonType.custom) as UIButton
     override func viewDidLoad() {
         super.viewDidLoad()
         MGLAccountManager.setAccessToken(MapboxAccessToken)
@@ -26,6 +27,16 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         mapView.isScrollEnabled = true
         mapView.center = view.center
         mapView.showsUserLocation = true;
+        mapView.logoView.isHidden = true
+        mapView.attributionButton.isHidden = true
+        
+//        let image = UIImage(named: "friendsIcon") as UIImage?
+//        friendsButton = UIButton(type: UIButtonType.custom) as UIButton
+//        friendsButton.frame = CGRect(x: C.w*0.95, y: C.w*0.1, width: C.w * 0.05, height: C.w * 0.05)
+//        friendsButton.setImage(image, for: .normal)
+//        friendsButton.addTarget(self, action: #selector(showFriends), for: UIControlEvents.touchUpInside)
+//        self.view.addSubview(friendsButton)
+        
         self.title = "Map";
         for location in C.locations {
             let point = MapAnnotation()
@@ -41,13 +52,6 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             point.type = 1
             mapView.addAnnotation(point)
         }
-//        let point = MapAnnotation()
-//        point.coordinate = CLLocationCoordinate2D(latitude:  41.792212, longitude:  -87.599573)
-//        point.title = "Regenstein Library"
-//        point.type = 0
-        
-        //mapView.addAnnotation(point)
-        //mapView.addAnnotation(myAnnotation)
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -79,20 +83,23 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         {
             mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
             return UserCalloutView(representedObject: annotation)
+            
         }
         return SpottCalloutView(representedObject: annotation)
     }
-    
-    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        // Optionally handle taps on the callout.
-        // Hide the callout.
-        mapView.deselectAnnotation(annotation, animated: true)
-    }
-    
+//    func mapView(_ mapView: MGLMapView, tapOnCalloutForAnnotation annotation: Any)
+//    {
+//
+//    }
+//
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         // Always allow callouts to popup when annotations are tapped.
         return true
     }
-
+    
+    @objc func showFriends ()
+    {
+        
+    }
 }
 

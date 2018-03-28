@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270A120E203A9DED009F6C6E /* GoogleService-Info.plist */; };
+		270F6F8A206B3E7600B55277 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270F6F89206B3E7600B55277 /* ChatViewController.swift */; };
 		27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA0203F4F150096AF34 /* LoginViewController.swift */; };
 		27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA2203F5A810096AF34 /* SignUpViewController.swift */; };
 		27441AA9205F599700718A07 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27441AA8205F599700718A07 /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 /* Begin PBXFileReference section */
 		157829373D4E0C06750FF66F /* Pods-Spott.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.release.xcconfig"; sourceTree = "<group>"; };
 		270A120E203A9DED009F6C6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		270F6F89206B3E7600B55277 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		27283FA0203F4F150096AF34 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		27283FA2203F5A810096AF34 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		27441AA8205F599700718A07 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				270A120E203A9DED009F6C6E /* GoogleService-Info.plist */,
 				27D26F272029052F00F585B5 /* AppDelegate.swift */,
 				27283FA0203F4F150096AF34 /* LoginViewController.swift */,
+				270F6F89206B3E7600B55277 /* ChatViewController.swift */,
 				27283FA2203F5A810096AF34 /* SignUpViewController.swift */,
 				2782E4242024F78100A3B2E8 /* MapViewController.swift */,
 				2782E4262024F78200A3B2E8 /* ProfileViewController.swift */,
@@ -478,6 +481,7 @@
 				2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */,
 				2782E42A2024F78200A3B2E8 /* FeedViewController.swift in Sources */,
 				2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */,
+				270F6F8A206B3E7600B55277 /* ChatViewController.swift in Sources */,
 				27B07FDE202BDC5B0002FE0B /* LocationProfileView.swift in Sources */,
 				2782E42B2024F78200A3B2E8 /* MapViewController.swift in Sources */,
 				27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */,
@@ -644,6 +648,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spott.Spott;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -666,6 +671,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spott.Spott;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

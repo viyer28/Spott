@@ -52,5 +52,6 @@ class User: NSObject {
     var latitude: Double!
     var longitude: Double!
     var spotted: Bool!
+    var refid: String!
 }
 

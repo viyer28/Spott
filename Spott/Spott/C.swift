@@ -29,8 +29,8 @@ class C: NSObject {
     static var eventLightBrownColor = UIColor(red:246.0/255.0, green:194.0/255.0, blue:127.0/255.0, alpha:1.0)
     static var refid: String!
     static var userData: Dictionary<String, Any>!
-//    static let databaseRoot = Auth.database().reference()
-//    static let dbChat = databaseRoot.child("chats")
+    static let db = Firestore.firestore()
+    static let dbChat = db.collection("chats")
     
     static func updateLocations()
     {
@@ -142,6 +142,7 @@ class C: NSObject {
                         f.major = friend_userData["major"] as! String
                         f.longitude = friend_userData["longitude"] as! Double
                         f.latitude = friend_userData["latitude"] as! Double
+                        f.refid = document.documentID
                         //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
                     }
                     if (f.name != nil){

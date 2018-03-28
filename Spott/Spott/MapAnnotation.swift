@@ -120,11 +120,12 @@ class SpottCalloutView: UIView, MGLCalloutView {
     required init(representedObject: MGLAnnotation) {
         self.representedObject = representedObject
         super.init(frame: .zero)
+        self.isUserInteractionEnabled = true
         backgroundView = UIButton(frame: CGRect(x: 0, y: 0, width: C.w*0.4, height: C.h*0.25))
         backgroundView.layer.cornerRadius = backgroundView.frame.size.width / 10
         backgroundView.backgroundColor = UIColor.blue
         self.addSubview(backgroundView)
-        
+        backgroundView.addTarget(self, action: #selector(calloutTapped), for: .touchUpInside)
         vw = backgroundView.frame.width
         vh = backgroundView.frame.height
     
@@ -189,6 +190,7 @@ class SpottCalloutView: UIView, MGLCalloutView {
     
     // callout view delegate: present callout
     func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+        view.isUserInteractionEnabled = true
 //        if !representedObject.responds(to: #selector(getter: MGLAnnotation.title)) {
 //            return
 //        }
@@ -208,9 +210,12 @@ class SpottCalloutView: UIView, MGLCalloutView {
         var mh = CGFloat(0.0)
         mw = (self.superview?.frame.width)!
         mh = (self.superview?.frame.height)!
-        print(C.h)
-        print(C.w)
-        self.superview?.addSubview(LocationProfileView(frame: CGRect(x: mw * 0.1, y: mh * 0.1, width: mw * 0.8, height: mh * 0.8)))
+        //self.superview?.addSubview(LocationProfileView(frame: CGRect(x: mw * 0.1, y: mh * 0.1, width: mw * 0.8, height: mh * 0.8)))
+    }
+    
+    func calloutViewTapped(_ calloutView: Any!)
+    {
+        
     }
     override var center: CGPoint {
         set {
@@ -230,7 +235,7 @@ class SpottCalloutView: UIView, MGLCalloutView {
 
 }
 
-class UserCalloutView: UIView, MGLCalloutView {
+class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     
     let dismissesAutomatically: Bool = true
     let isAnchoredToAnnotation: Bool = false
@@ -245,11 +250,13 @@ class UserCalloutView: UIView, MGLCalloutView {
     let numFriends = 3
     let numPotentials = 10
     let population = 100
-    
+    var messagingView: ChatViewController!
     required init(representedObject: MGLAnnotation) {
         self.representedObject = representedObject
         super.init(frame: .zero)
-        backgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.6-C.th, width: C.w, height: C.h*0.4))
+        self.isUserInteractionEnabled = true
+        self.delegate = self
+        backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h*0.4))
         backgroundView.backgroundColor = UIColor.white
         let rectShape = CAShapeLayer()
         rectShape.bounds = self.backgroundView.frame
@@ -257,9 +264,14 @@ class UserCalloutView: UIView, MGLCalloutView {
         rectShape.path = UIBezierPath(roundedRect: self.backgroundView.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: C.h*0.1, height: C.h*0.1)).cgPath
         backgroundView.layer.mask = rectShape
         self.addSubview(backgroundView)
-        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.7-C.th, width: C.w, height: C.h*0.3))
+        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.3))
         chatBackgroundView.backgroundColor = UIColor.gray
+        
+        messagingView = ChatViewController(pv: self)
+        messagingView.view.frame = chatBackgroundView.frame
+        self.parentViewController?.addChildViewController(messagingView)
         self.addSubview(chatBackgroundView)
+        self.addSubview(messagingView.view)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -271,26 +283,28 @@ class UserCalloutView: UIView, MGLCalloutView {
         //        if !representedObject.responds(to: #selector(getter: MGLAnnotation.title)) {
         //            return
         //        }
-        
+        view.isUserInteractionEnabled = true
+        frame = CGRect(x: 0, y: C.h*0.6-C.th, width: C.w, height: C.h*0.4)
         view.addSubview(self)
+        
 //
 //        let frameWidth = backgroundView.bounds.size.width
-//        let frameHeight = backgroundView.bounds.size.height
+//        let frameHeight = backgroundView.bounds   .size.height
 //        let frameOriginX = rect.origin.x + (rect.size.width/2.0) - (frameWidth/2.0)
 //        let frameOriginY = rect.origin.y - frameHeight
 //        frame = CGRect(x: frameOriginX, y: frameOriginY, width: frameWidth, height: frameHeight)
         
         
     }
-//    @objc func calloutTapped() {
-//        var mw = CGFloat(0.0)
-//        var mh = CGFloat(0.0)
-//        mw = (self.superview?.frame.width)!
-//        mh = (self.superview?.frame.height)!
-//        print(C.h)
-//        print(C.w)
-//        self.superview?.addSubview(LocationProfileView(frame: CGRect(x: mw * 0.1, y: mh * 0.1, width: mw * 0.8, height: mh * 0.8)))
-//    }
+    @objc func calloutTapped() {
+        let a = 1
+        
+    }
+    
+    private func calloutViewTapped(_ calloutView: Any!)
+    {
+        
+    }
     
     func dismissCallout(animated: Bool) {
         removeFromSuperview()
@@ -299,3 +313,15 @@ class UserCalloutView: UIView, MGLCalloutView {
     
 }
 
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
