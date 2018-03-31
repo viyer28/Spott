@@ -21,7 +21,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         super.viewDidLoad()
         
         MGLAccountManager.setAccessToken(MapboxAccessToken)
-        let url = MGLStyle.lightStyleURL(withVersion: 9)
+        let url = URL(string: "mapbox://styles/mapbox/satellite-streets-v9")
         mapView = MGLMapView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h), styleURL: url)
         mapView.delegate = self
         view.addSubview(mapView)
@@ -107,6 +107,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         return true
     }
     
+    
     @objc func showFriends ()
     {
         
@@ -150,7 +151,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             // Set the fill extrusion height to the value for the building height attribute.
             layer.fillExtrusionHeight = MGLStyleValue(interpolationMode: .identity, sourceStops: nil, attributeName: "height", options: nil)
             layer.fillExtrusionBase = MGLStyleValue(interpolationMode: .identity, sourceStops: nil, attributeName: "min_height", options: nil)
-            layer.fillExtrusionOpacity = MGLStyleValue(rawValue: 0.75)
+            layer.fillExtrusionOpacity = MGLStyleValue(rawValue: 0.05)
             layer.fillExtrusionColor = MGLStyleValue(rawValue: .white)
             
             // Insert the fill extrusion layer below a POI label layer. If you aren’t sure what the layer is called, you can view the style in Mapbox Studio or iterate over the style’s layers property, printing out each layer’s identifier.
