@@ -141,6 +141,84 @@ class C: NSObject {
         }
         C.user.major = C.userData["major"] as! String
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
+        updateSpotted(user: C.user, spotted: C.userData["spotted"] as! [String])
+    }
+    
+    static func updateSpotted(user: User, spotted: [String])
+    {
+        var spotted_userData: Dictionary<String, Any>!
+        C.user.spotted = []
+        for spott in spotted {
+            let f = User()
+            
+            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting spotted documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                        spotted_userData = document.data()
+                        
+                        f.name = spotted_userData["name"] as! String
+                        f.xp = spotted_userData["xp"] as! Int
+                        f.level = spotted_userData["level"] as! Int
+                        f.numFriends = spotted_userData["num_friends"] as! Int
+                        f.whoIam = ["", "", ""]
+                        f.whatIDo = ["", "", ""]
+                        if spotted_userData["who1"] != nil
+                        {
+                            f.whoIam[0] = spotted_userData["who1"] as! String
+                        }
+                        if spotted_userData["who2"] != nil
+                        {
+                            f.whoIam[1] = spotted_userData["who2"] as! String
+                        }
+                        if spotted_userData["who3"] != nil
+                        {
+                            f.whoIam[2] = spotted_userData["who3"] as! String
+                        }
+                        if spotted_userData["what1"] != nil
+                        {
+                            f.whoIam[0] = spotted_userData["what1"] as! String
+                        }
+                        if spotted_userData["what2"] != nil
+                        {
+                            f.whoIam[1] = spotted_userData["what2"] as! String
+                        }
+                        if spotted_userData["what3"] != nil
+                        {
+                            f.whoIam[2] = spotted_userData["what3"] as! String
+                        }
+                        f.major = spotted_userData["major"] as! String
+                        f.longitude = spotted_userData["longitude"] as! Double
+                        f.latitude = spotted_userData["latitude"] as! Double
+                        f.refid = document.documentID
+                        updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
+                        //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                    }
+                    if (f.name != nil){
+                        user.spotted.append(f)
+                    }
+                    print("Recieved Spotted documents")
+                }
+            }
+        }
+    }
+    
+    static func updateFriendsofFriend(user: User, friends: [String])
+    {
+        user.friends = []
+        for friend in friends
+        {
+            for friend2 in C.user.friends
+            {
+                if friend == friend2.refid
+                {
+                    user.friends.append(friend2)
+                }
+            }
+        }
+        
     }
     
     static func updateFriends(user: User, friends: [String])
