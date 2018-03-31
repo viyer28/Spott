@@ -8,12 +8,13 @@
 
 import UIKit
 
-class PeopleViewController: UICollectionViewController {
+class PeopleViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     var segControl = UISegmentedControl(items: ["Spott", "Spotted"])
     var titleLabel: UILabel!
     var mapButton: UIButton!
     var eventsButton: UIButton!
     var spottButton: UIButton!
+    var current: [User] = C.user.spotted
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
     }
@@ -34,7 +35,7 @@ class PeopleViewController: UICollectionViewController {
         self.collectionView!.delegate = self;
         self.collectionView!.dataSource = self;
         self.view.addSubview(self.collectionView!)
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+        self.collectionView!.register(CustomCell.self, forCellWithReuseIdentifier: "Cell")
          print(1)
         
         segControl.frame = CGRect(x: C.w*0.3, y: C.h*0.11, width: C.w*0.4, height: C.h*0.03)
@@ -65,80 +66,27 @@ class PeopleViewController: UICollectionViewController {
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 10
+        return current.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-        let profileView = MatchProflieView()
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CustomCell
+        let profileView = MatchProfileView(user: current[indexPath.row])
         cell.addSubview(profileView)
         return cell
         // Configure the cell
         
     }
     
-    func findClosestUsers(user: User, location: Location) -> [User]! {
-        var closest: [User]!
-        closest = nil
-        
-        for person in location.population {
-            let distance = sqrtf(powf(Float(person.latitude - user.latitude), 2) + powf(Float(person.longitude - user.longitude), 2))
-            if (closest == nil){
-                closest.insert(person, at: 0)
-            } else {
-                for (index, p) in closest.enumerated() {
-                    let pdist = sqrtf(powf(Float(p.latitude - user.latitude), 2) + powf(Float(p.longitude - user.longitude),2))
-                    if (distance <= pdist){
-                        closest.insert(person, at: index)
-                    }
-                }
-            }
-        }
-        
-        return closest
-    }
-    
-    func findClosestFriends(user: User, location: Location) -> [User]! {
-        var closest: [User]!
-        closest = nil
-        
-        for person in location.friends {
-            let distance = sqrtf(powf(Float(person.latitude - user.latitude), 2) + powf(Float(person.longitude - user.longitude), 2))
-            if (closest == nil){
-                closest.insert(person, at: 0)
-            } else {
-                for (index, p) in closest.enumerated() {
-                    let pdist = sqrtf(powf(Float(p.latitude - user.latitude), 2) + powf(Float(p.longitude - user.longitude),2))
-                    if (distance <= pdist){
-                        closest.insert(person, at: index)
-                    }
-                }
-            }
-        }
-        
-        return closest
-    }
-    
-    func findClosestNonFriends(user: User, location: Location) -> [User]! {
-        var closest_people = findClosestUsers(user: user, location: location)
-        let closest_friends = findClosestFriends(user: user, location: location)
-        var closest_nonfriends: [User]!
-        closest_nonfriends = nil
-        
-        for (index, person) in closest_people!.enumerated() {
-            if (!closest_friends!.contains(person)) {
-                closest_nonfriends.append(closest_people!.remove(at: index))
-            }
-        }
-        
-        return closest_nonfriends
-    }
     @objc func changeView(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 1:
             self.titleLabel.text = "Spotted"
-            
+            current = C.user.spotted
+            self.collectionView?.reloadData()
         default:
             self.titleLabel.text = "Spott"
+            current = C.user.spotted
+            self.collectionView?.reloadData()
         }
         self.collectionView?.reloadData()
     }

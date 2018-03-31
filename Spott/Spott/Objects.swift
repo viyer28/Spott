@@ -52,7 +52,8 @@ class User: NSObject {
     var friendsNum = 123
     var latitude: Double!
     var longitude: Double!
-    var spotted: Bool!
+    var spotted: [User]!
+    var acquaintances: [User]!
     var refid: String!
     var imageter: UIImage!
 }

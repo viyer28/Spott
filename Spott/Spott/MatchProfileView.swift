@@ -9,13 +9,17 @@
 import Foundation
 import UIKit
 
-class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
+class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     var tableView: UITableView
     var tw = C.w * 0.8
     var th = C.h * 0.8
-    var location = "Chicago, IL"
-    var age = 21
-    var friends = 123
+    var user = User()
+    
+    convenience init (user: User)
+    {
+        self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
+        self.user = user
+    }
     
     override init (frame : CGRect) {
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
@@ -31,10 +35,6 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.addSubview(tableView)
-    }
-    
-    convenience init () {
-        self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -63,31 +63,31 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
             
             let nameLabel = UILabel(frame: CGRect(x: tw*0.02, y: tw*0.7, width: tw * 0.28, height: tw * 0.13))
             nameLabel.font = UIFont(name: "FuturaPT-Light", size: 28.0)
-            nameLabel.text="Griffin"
+            nameLabel.text = self.user.name
             cell.addSubview(nameLabel)
             
             let levelLabel = UILabel(frame: CGRect(x: tw*0.03, y: tw*0.83, width: tw * 0.28, height: tw * 0.08))
             levelLabel.textColor = C.goldishColor
             levelLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            levelLabel.text="lvl 14"
+            levelLabel.text="lvl \(self.user.level)"
             cell.addSubview(levelLabel)
             
             let majorLabel = UILabel(frame: CGRect(x: tw*0.05, y: tw*0.925, width: tw * 0.45, height: tw * 0.05))
             majorLabel.textColor = C.blueishColor
             majorLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            majorLabel.text="Computer Science, Economics"
+            majorLabel.text = self.user.major
             cell.addSubview(majorLabel)
             
             let locationLabel = UILabel(frame: CGRect(x: tw*0.6, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
             locationLabel.textColor = C.blueishColor
             locationLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            locationLabel.text = location
+            locationLabel.text = self.user.hometown
             cell.addSubview(locationLabel)
             
             let ageLabel = UILabel(frame: CGRect(x: tw*0.9, y: tw*0.925, width: tw * 0.05, height: tw * 0.05))
             ageLabel.textColor = C.blueishColor
             ageLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            ageLabel.text = "\(age)"
+            ageLabel.text = "\(self.user.age)"
             cell.addSubview(ageLabel)
             
         }
@@ -99,17 +99,17 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
             numFriendsLabel.textColor = C.blueishColor
             numFriendsLabel.textAlignment = .right
             numFriendsLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
-            numFriendsLabel.text = "\(friends)"
+            numFriendsLabel.text = "\(self.user.numFriends)"
             cell.addSubview(numFriendsLabel)
             
             let friendsLabel = UILabel(frame: CGRect(x: tw*0.26, y: th*0.025, width: tw * 0.18, height: th * 0.05))
             friendsLabel.numberOfLines = 2
             friendsLabel.baselineAdjustment = .alignCenters
             friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 8.0)
-            friendsLabel.text="friends in common"
+            friendsLabel.text = "friends in common"
             cell.addSubview(friendsLabel)
             
-            if friends > 0
+            if self.user.friends.count > 0
             {
                 let friendImage1 = UIImageView(frame:CGRect(x: tw * 0.45, y: th*0.02, width: th * 0.06, height: th * 0.06))
                 friendImage1.layer.cornerRadius = friendImage1.frame.size.width / 2;
@@ -117,7 +117,7 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
                 friendImage1.image = UIImage(named: "sample_prof")
                 cell.addSubview(friendImage1)
             }
-            if friends > 1
+            if self.user.friends.count > 1
             {
                 let friendImage2 = UIImageView(frame:CGRect(x: tw * 0.475 + th * 0.06, y: th*0.02 , width: th * 0.06, height: th * 0.06))
                 friendImage2.layer.cornerRadius = friendImage2.frame.size.width / 2;
@@ -125,7 +125,7 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
                 friendImage2.image = UIImage(named: "sample_prof")
                 cell.addSubview(friendImage2)
             }
-            if friends > 2
+            if self.user.friends.count > 2
             {
                 let friendImage3 = UIImageView(frame:CGRect(x: tw * 0.5 + th * 0.12, y: th*0.02 , width: th * 0.06, height: th * 0.06))
                 friendImage3.layer.cornerRadius = friendImage3.frame.size.width / 2;
@@ -133,7 +133,7 @@ class MatchProflieView : UIView, UITableViewDelegate, UITableViewDataSource {
                 friendImage3.image = UIImage(named: "sample_prof")
                 cell.addSubview(friendImage3)
             }
-            if friends > 3
+            if self.user.friends.count > 3
             {
                 let dotLabel = UILabel(frame:CGRect(x: tw * 0.55 + th * 0.18, y: th*0.02 , width: th * 0.06, height: th * 0.06))
                 dotLabel.textColor = UIColor.black
