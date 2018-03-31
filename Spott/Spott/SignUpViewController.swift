@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var emailField: UITextField!
@@ -17,7 +18,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     var passwordField: UITextField!
     var rePasswordField: UITextField!
     var majorField: UITextField!
-    var genderField: UITextField!
+    //var genderField: UITextField!
     var whoField1: UITextField!
     var whoField2: UITextField!
     var whoField3: UITextField!
@@ -60,7 +61,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 9
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
@@ -210,30 +211,30 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             homeField.autocapitalizationType = .none
             cell.addSubview(homeField)
         }
+//        else if indexPath.row == 6
+//        {
+//            let genderLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
+//            genderLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
+//            genderLabel.textColor = C.darkColor
+//            genderLabel.text="Gender:"
+//            genderLabel.textAlignment = .right
+//            cell.addSubview(genderLabel)
+//
+//            genderField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
+//            genderField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
+//            genderField.returnKeyType = UIReturnKeyType.done
+//            genderField.text = "None"
+//            genderField.tintColor = .clear
+//            genderField.delegate = self
+//            genderField.backgroundColor = UIColor.white
+//            genderField.borderStyle = UITextBorderStyle.roundedRect
+//
+//            let pickerView = SignUpPickerView(frame: CGRect.zero, field:genderField, type: 2)
+//            genderField.inputView = pickerView
+//
+//            cell.addSubview(genderField)
+//        }
         else if indexPath.row == 6
-        {
-            let genderLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
-            genderLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            genderLabel.textColor = C.darkColor
-            genderLabel.text="Gender:"
-            genderLabel.textAlignment = .right
-            cell.addSubview(genderLabel)
-            
-            genderField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
-            genderField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
-            genderField.returnKeyType = UIReturnKeyType.done
-            genderField.text = "None"
-            genderField.tintColor = .clear
-            genderField.delegate = self
-            genderField.backgroundColor = UIColor.white
-            genderField.borderStyle = UITextBorderStyle.roundedRect
-            
-            let pickerView = SignUpPickerView(frame: CGRect.zero, field:genderField, type: 2)
-            genderField.inputView = pickerView
-            
-            cell.addSubview(genderField)
-        }
-        else if indexPath.row == 7
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.25, y: ch*0.01, width: cw * 0.5, height: ch * 0.06))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
@@ -269,7 +270,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             profileImageView.layer.borderWidth = 1.0 as CGFloat
             profileImageView.layer.borderColor = C.goldishColor.cgColor
         }
-        else if indexPath.row == 8
+        else if indexPath.row == 7
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.4, height: ch * 0.04))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 16.0)
@@ -358,7 +359,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             cell.addSubview(whoField3)
             
         }
-        else if indexPath.row == 9
+        else if indexPath.row == 8
         {
             let signUpButton = UIButton(type: .system)
             signUpButton.frame = cell.frame
@@ -377,11 +378,11 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             return ch*0.2
         }
-        if indexPath.row == 8
+        if indexPath.row == 7
         {
             return ch*0.25
         }
-        if indexPath.row == 7
+        if indexPath.row == 6
         {
             return ch*0.5
         }
@@ -445,6 +446,16 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         }
         
     }
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            profileImageView.contentMode = .scaleAspectFit
+            profileImageView.image = pickedImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
     
     @objc func signUpClick()
     {
@@ -522,7 +533,6 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             var ref: DocumentReference? = nil
             ref = self.db.collection("user_info").addDocument(data: [
-                "gender" : self.genderField.text!,
                 "hometown" : self.homeField.text!,
                 "name" : self.nameField.text!,
                 "who1" : self.whoField1.text!,
@@ -536,7 +546,10 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 "num_friends" : 0,
                 "level" : 1,
                 "xp" : 0,
-                "friends" : []
+                "friends" : [],
+                "curLoc" : -1,
+                "longitude" : 0,
+                "latitude" : 0
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -553,14 +566,40 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                     for document in querySnapshot!.documents {
                         print("\(document.documentID) => \(document.data())")
                         C.refid = document.documentID
+                        self.uploadProfilePicture(ref: document.documentID)
                         C.userData = document.data()
                         C.updateUser()
-                        let tabCont = TabBarViewController()
+                        C.updateLocations()
                         //initialViewController.view.backgroundColor = C.darkColor
-                        self.present(tabCont, animated: false, completion: nil)
+                        let con = NavigationViewController(transitionStyle: UIPageViewControllerTransitionStyle.scroll,
+                                                           navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal,
+                                                           options: nil)
+                        C.navigationViewController = con
+                        self.present(con, animated: false, completion: nil)
                     }
                 }
             }
+        }
+    }
+    
+    func uploadProfilePicture(ref: String)
+    {
+        let profileRef = C.stoRef.child("profilePictures/\(ref).jpg")
+        var data = Data()
+        data = UIImageJPEGRepresentation(profileImageView.image!, 0.8)!
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        let uploadTask = profileRef.putData(data, metadata: metaData){(metaData,error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }else{
+                //store downloadURL
+                let downloadURL = metaData!.downloadURL()!.absoluteString
+                //store downloadURL at database
+                C.db.collection("user_info").document(C.refid).updateData(["profilePicture": downloadURL])
+            }
+            
         }
     }
 }

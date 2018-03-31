@@ -19,6 +19,7 @@ class Location : NSObject {
     var population_num: Int!
     var population: [User]!
     var id: Int!
+    var refid: String!
 }
 
 class Event : NSObject {
@@ -53,5 +54,6 @@ class User: NSObject {
     var longitude: Double!
     var spotted: Bool!
     var refid: String!
+    var imageter: UIImage!
 }
 

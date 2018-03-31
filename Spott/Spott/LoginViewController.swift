@@ -119,7 +119,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         C.refid = document.documentID
                         C.userData = document.data()
                         C.updateUser()
-                        let initialViewController = TabBarViewController()
+                        C.updateLocations()
+                        let initialViewController = C.navigationViewController
                         //initialViewController.view.backgroundColor = C.darkColor
                         self.present(initialViewController, animated: false, completion: nil)
                     }

@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedStringKey.font: UIFont(name: "FuturaPT-Light", size: 10)!], for: [])
         
         
-        C.updateLocations()
         C.regLibrary.latitude = 41.792212
         C.regLibrary.longitude = -87.599573
         C.regLibrary.name = "Reg Library"
@@ -80,6 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             C.refid = document.documentID
                             C.userData = document.data()
                             C.updateUser()
+                            C.updateLocations()
                             //initialViewController.view.backgroundColor = C.darkColor
                             self.window = UIWindow(frame: UIScreen.main.bounds)
                             C.w = self.window?.frame.width

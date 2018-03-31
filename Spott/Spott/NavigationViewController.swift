@@ -40,10 +40,10 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         mapButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
         mapButton.center = CGPoint(x: C.w*0.5, y: C.h*0.95)
         mapButton.layer.borderColor = C.goldishColor.cgColor
-        mapButton.layer.borderWidth = 1.0
+        //mapButton.layer.borderWidth = 1.0
         mapButton.setImage(mImage, for: .normal)
-        mapButton.backgroundColor = UIColor.white
-        mapButton.imageView?.tintColor = C.goldishColor
+        mapButton.backgroundColor = C.goldishColor
+        mapButton.imageView?.tintColor = UIColor.black
         mapButton.layer.cornerRadius = mapButton.frame.width/2
         mapButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
         mapButton.clipsToBounds = true
@@ -55,10 +55,10 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         eventsButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
         eventsButton.center = CGPoint(x: C.w*0.25, y: C.h*0.95)
         eventsButton.setImage(eImage, for: .normal)
-        eventsButton.layer.borderColor = UIColor.black.cgColor
-        eventsButton.layer.borderWidth = 1.0
-        eventsButton.backgroundColor = UIColor.white
-        eventsButton.imageView?.tintColor = UIColor.black
+       // eventsButton.layer.borderColor = UIColor.
+        eventsButton.imageView?.tintColor = C.goldishColor
+        //eventsButton.layer.borderWidth = 1.0
+        eventsButton.backgroundColor = UIColor.black
         eventsButton.layer.cornerRadius = mapButton.frame.width/2
         eventsButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
         eventsButton.clipsToBounds = true
@@ -69,10 +69,10 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         sImage = sImage?.withRenderingMode(.alwaysTemplate)
         spottButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
         spottButton.center = CGPoint(x: C.w*0.75, y: C.h*0.95)
-        spottButton.backgroundColor = UIColor.white
+        spottButton.backgroundColor = UIColor.black
         spottButton.layer.borderColor = UIColor.black.cgColor
-        spottButton.layer.borderWidth = 1.0
-        spottButton.imageView?.tintColor = UIColor.black
+        spottButton.imageView?.tintColor = C.goldishColor
+        //spottButton.layer.borderWidth = 1.0
         spottButton.layer.cornerRadius = mapButton.frame.width/2
         spottButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
         spottButton.setImage(sImage, for: .normal)
@@ -88,12 +88,12 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         case 2:
             selected = 2
         default:
-            mapButton.imageView?.tintColor = C.goldishColor
-            spottButton.imageView?.tintColor = UIColor.black
-            eventsButton.imageView?.tintColor =  UIColor.black
-            mapButton.layer.borderColor = C.goldishColor.cgColor
-            spottButton.layer.borderColor = UIColor.black.cgColor
-            eventsButton.layer.borderColor = UIColor.black.cgColor
+            mapButton.imageView?.tintColor = UIColor.black
+            mapButton.backgroundColor = C.goldishColor
+            spottButton.imageView?.tintColor = C.goldishColor
+            spottButton.backgroundColor = UIColor.black
+            eventsButton.imageView?.tintColor = C.goldishColor
+            eventsButton.backgroundColor = UIColor.black
             if selected == 1
             { setViewControllers([mapViewController], direction: .forward, animated: true, completion: nil) }
             else
@@ -111,12 +111,12 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         case 3:
             selected = 3
         default:
-            mapButton.imageView?.tintColor = UIColor.black
-            spottButton.imageView?.tintColor = C.goldishColor
-            eventsButton.imageView?.tintColor = UIColor.black
-            mapButton.layer.borderColor = UIColor.black.cgColor
-            spottButton.layer.borderColor = C.goldishColor.cgColor
-            eventsButton.layer.borderColor = UIColor.black.cgColor
+            spottButton.imageView?.tintColor = UIColor.black
+            spottButton.backgroundColor = C.goldishColor
+            mapButton.imageView?.tintColor = C.goldishColor
+            mapButton.backgroundColor = UIColor.black
+            eventsButton.imageView?.tintColor = C.goldishColor
+            eventsButton.backgroundColor = UIColor.black
             selected = 3
             setViewControllers([peopleViewController], direction: .forward, animated: true, completion: nil)
             self.view.bringSubview(toFront: mapButton)
@@ -131,12 +131,12 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         case 1:
             selected = 1
         default:
-            mapButton.imageView?.tintColor = UIColor.black
-            eventsButton.imageView?.tintColor = C.goldishColor
-            spottButton.imageView?.tintColor = UIColor.black
-            mapButton.layer.borderColor = UIColor.black.cgColor
-            spottButton.layer.borderColor = UIColor.black.cgColor
-            eventsButton.layer.borderColor = C.goldishColor.cgColor
+            eventsButton.imageView?.tintColor = UIColor.black
+            eventsButton.backgroundColor = C.goldishColor
+            spottButton.imageView?.tintColor = C.goldishColor
+            spottButton.backgroundColor = UIColor.black
+            mapButton.imageView?.tintColor = C.goldishColor
+            mapButton.backgroundColor = UIColor.black
             selected = 1
             setViewControllers([eventsViewController], direction: .reverse, animated: true, completion: nil)
             self.view.bringSubview(toFront: mapButton)
@@ -165,6 +165,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         // other wise this function will be called every time when user location changes.
         //manager.stopUpdatingLocation()
         NavigationViewController.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
+        
         
         var curLoc = -1
         if (NSDate().timeIntervalSince(lastUpdate as Date) > 30)

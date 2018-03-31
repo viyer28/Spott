@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 import Firebase
+import FirebaseStorage
 import GEOSwift
 
 class C: NSObject {
@@ -32,7 +33,11 @@ class C: NSObject {
     static var userData: Dictionary<String, Any>!
     static let db = Firestore.firestore()
     static let dbChat = db.collection("chats")
-    static let navigationViewController = NavigationViewController()
+    static let storage = Storage.storage()
+    static let stoRef = Storage.storage().reference()
+    static var navigationViewController = NavigationViewController(transitionStyle: UIPageViewControllerTransitionStyle.scroll,
+                                                                   navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal,
+                                                                   options: nil)
     static var features: [Feature]!
     
     static func updateLocations()
@@ -53,18 +58,51 @@ class C: NSObject {
                     location.friends_num = 11
                     location.potentials = 11
                     location.population_num = 123
+                    location.refid = document.documentID
                     C.locations.append(location)
                 }
                 C.navigationViewController.mapViewController.updateAnnotations()
+                //C.changeLocations()
             }
         }
     }
+    
+//    static func changeLocations()
+//    {
+//        for feature in C.features
+//        {
+//            let id = feature.properties!["id"] as! Int
+//            var l = Location()
+//            for location in C.locations
+//            {
+//                if location.id == id
+//                {
+//                    l = location
+//                }
+//            }
+//
+//            let center = feature.geometries?.first?.centroid()
+//            Firestore.firestore().collection("locations").document(l.refid).updateData([
+//                "longitude": center?.coordinate.x,
+//                "latitude": center?.coordinate.y
+//            ]) { err in
+//                if let err = err {
+//                    print("Error updating document: \(err)")
+//                } else {
+//                    print("Document successfully updated")
+//                }
+//            }
+//
+//
+//
+//        }
+//    }
+    
     static func updateUser()
     {
         C.user.name = C.userData["name"] as! String
         C.user.xp = C.userData["xp"] as! Int
         C.user.level = C.userData["level"] as! Int
-        C.user.gender = C.userData["gender"] as! String
         C.user.numFriends = C.userData["num_friends"] as! Int
         if C.userData["who1"] != nil
         {

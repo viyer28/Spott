@@ -18,9 +18,9 @@
 		2744A4502037718600DAB7CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2744A44D2037718600DAB7CF /* Info.plist */; };
 		2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744A45120379B8300DAB7CF /* MatchProfileView.swift */; };
 		2751CD492025545E000A38B0 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2751CD472025545D000A38B0 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		27658B11206F043E0035F004 /* map.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 27658B10206F043E0035F004 /* map.geojson */; };
 		276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */; };
 		277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 277D980F20380B14007A0811 /* FuturaPTBook.otf */; };
+		27810BBB206F283600E1FC1A /* map.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 27810BBA206F283500E1FC1A /* map.geojson */; };
 		278203CD2066F9D000410E9F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278203CC2066F9D000410E9F /* SettingsViewController.swift */; };
 		2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E3F72024F6B700A3B2E8 /* ViewController.swift */; };
 		2782E40B2024F6B700A3B2E8 /* SpottTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E40A2024F6B700A3B2E8 /* SpottTests.swift */; };
@@ -86,9 +86,9 @@
 		2744A44D2037718600DAB7CF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2744A45120379B8300DAB7CF /* MatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfileView.swift; sourceTree = "<group>"; };
 		2751CD472025545D000A38B0 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = Spott/frameworks/Mapbox.framework; sourceTree = "<group>"; };
-		27658B10206F043E0035F004 /* map.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map.geojson; sourceTree = "<group>"; };
 		276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableCell.swift; sourceTree = "<group>"; };
 		277D980F20380B14007A0811 /* FuturaPTBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTBook.otf; sourceTree = "<group>"; };
+		27810BBA206F283500E1FC1A /* map.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = map.geojson; path = ../../../../map.geojson; sourceTree = "<group>"; };
 		278203CC2066F9D000410E9F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2782E3F22024F6B700A3B2E8 /* Spott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spott.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2782E3F72024F6B700A3B2E8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -176,6 +176,7 @@
 				27283FA0203F4F150096AF34 /* LoginViewController.swift */,
 				270F6F89206B3E7600B55277 /* ChatViewController.swift */,
 				27283FA2203F5A810096AF34 /* SignUpViewController.swift */,
+				27810BBA206F283500E1FC1A /* map.geojson */,
 				2782E4242024F78100A3B2E8 /* MapViewController.swift */,
 				279AE458206EDDED008F5801 /* NavigationViewController.swift */,
 				2782E4262024F78200A3B2E8 /* ProfileViewController.swift */,
@@ -192,7 +193,6 @@
 				ACF074E42029067F00818884 /* Info.plist */,
 				2782E4252024F78200A3B2E8 /* EventsViewController.swift */,
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
-				27658B10206F043E0035F004 /* map.geojson */,
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
 				27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */,
 				27441AA8205F599700718A07 /* Assets.xcassets */,
@@ -362,7 +362,7 @@
 				2744A448203770CF00DAB7CF /* Fonts in Resources */,
 				2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */,
 				27441AA9205F599700718A07 /* Assets.xcassets in Resources */,
-				27658B11206F043E0035F004 /* map.geojson in Resources */,
+				27810BBB206F283600E1FC1A /* map.geojson in Resources */,
 				2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */,
 				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
 			);
