@@ -42,7 +42,7 @@ class ProfileViewController: UITableViewController {
         {
             
             let profileImageView = UIImageView(frame:CGRect(x: 0, y: 0, width: C.w, height: C.w))
-            profileImageView.image = UIImage(named: C.user.profilePictureURL)
+            profileImageView.image = C.user.image
             let view = UIView(frame: profileImageView.frame)
             let gradient = CAGradientLayer()
             gradient.frame = CGRect(x: 0, y: 0, width: C.w, height: C.w)

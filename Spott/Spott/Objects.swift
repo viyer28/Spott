@@ -54,6 +54,6 @@ class User: NSObject {
     var longitude: Double!
     var spotted: Bool!
     var refid: String!
-    var imageter: UIImage!
+    var image: UIImage!
 }
 

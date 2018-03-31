@@ -71,10 +71,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
         {
-            var view: MapUserAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: "mapUserAnnotation") as? MapUserAnnotationView
-            if view == nil {
-                view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation")
-            }
+            let view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation", user: (annotation as! MapAnnotation).user)
             return view
         }
         
@@ -134,6 +131,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             let point = MapAnnotation()
             point.coordinate = CLLocationCoordinate2D(latitude:  friend.latitude, longitude:  friend.longitude)
             point.title = friend.name
+            point.user = friend
             point.type = 1
             mapView.addAnnotation(point)
         }
