@@ -11,6 +11,9 @@ import UIKit
 class PeopleViewController: UICollectionViewController {
     var segControl = UISegmentedControl(items: ["Spott", "Spotted"])
     var titleLabel: UILabel!
+    var mapButton: UIButton!
+    var eventsButton: UIButton!
+    var spottButton: UIButton!
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
     }
@@ -47,6 +50,7 @@ class PeopleViewController: UICollectionViewController {
         titleLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
         titleLabel.text = "Spott"
         self.view.addSubview(titleLabel)
+        addNav()
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,11 +136,70 @@ class PeopleViewController: UICollectionViewController {
         switch sender.selectedSegmentIndex {
         case 1:
             self.titleLabel.text = "Spotted"
+            
         default:
             self.titleLabel.text = "Spott"
         }
         self.collectionView?.reloadData()
     }
+    
+    
+    func addNav()
+    {
+        self.spottButton = UIButton(type: UIButtonType.custom) as UIButton
+        self.mapButton = UIButton(type: UIButtonType.custom) as UIButton
+        self.eventsButton = UIButton(type: UIButtonType.custom) as UIButton
+        let mImage = UIImage(named: "MapIcon") as UIImage?
+        mapButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
+        mapButton.center = CGPoint(x: C.w*0.5, y: C.h*0.95)
+        mapButton.setImage(mImage, for: .normal)
+        mapButton.backgroundColor = UIColor.white
+        mapButton.layer.cornerRadius = mapButton.frame.width/2
+        mapButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
+        mapButton.clipsToBounds = true
+        mapButton.addTarget(self, action: #selector(clickMap), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(mapButton)
+        
+        let eImage = UIImage(named: "EventsIcon") as UIImage?
+        eventsButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
+        eventsButton.center = CGPoint(x: C.w*0.25, y: C.h*0.95)
+        eventsButton.setImage(eImage, for: .normal)
+        eventsButton.backgroundColor = UIColor.white
+        eventsButton.layer.cornerRadius = mapButton.frame.width/2
+        eventsButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+        eventsButton.clipsToBounds = true
+        eventsButton.addTarget(self, action: #selector(clickEvents), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(eventsButton)
+        
+        var sImage = UIImage(named: "PeopleIcon") as UIImage?
+        sImage = sImage?.withRenderingMode(.alwaysTemplate)
+        spottButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
+        spottButton.center = CGPoint(x: C.w*0.75, y: C.h*0.95)
+        spottButton.backgroundColor = UIColor.white
+        spottButton.layer.cornerRadius = mapButton.frame.width/2
+        spottButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
+        spottButton.tintColor = C.eventLightBlueColor
+        spottButton.setImage(sImage, for: .normal)
+        spottButton.clipsToBounds = true
+        spottButton.addTarget(self, action: #selector(clickSpott), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(spottButton)
+        
+    }
+    
+    @objc func clickMap ()
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc func clickSpott()
+    {
+    }
+    
+    @objc func clickEvents()
+    {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
 //    override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
 //        targetContentOffset.pointee = scrollView.contentOffset
 //        var factor: CGFloat = 0.5

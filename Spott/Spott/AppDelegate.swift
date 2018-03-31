@@ -9,11 +9,11 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import GEOSwift
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -47,7 +47,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.events.append(physStudyGroup)
         C.events.append(physStudyGroup)
         C.events.append(physStudyGroup)
-        
         C.user.name = "Griffon"
         C.user.numFriends = 123
         //C.user.friends
@@ -59,6 +58,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.user.major = "Economics"
         C.user.hometown = "Washington DC"
         C.user.age = 20
+        
+        let geoJSONURL = Bundle.main.url(forResource: "map", withExtension: "geojson")
+        C.features = try! Features.fromGeoJSON(geoJSONURL!)
+        
         
 //        if Auth.auth().currentUser != nil
 //        {
@@ -77,12 +80,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             C.refid = document.documentID
                             C.userData = document.data()
                             C.updateUser()
-                            let initialViewController = TabBarViewController()
                             //initialViewController.view.backgroundColor = C.darkColor
                             self.window = UIWindow(frame: UIScreen.main.bounds)
                             C.w = self.window?.frame.width
                             C.h = self.window?.frame.height
-                            self.window?.rootViewController = initialViewController
+                            self.window?.rootViewController = C.navigationViewController
                             self.window?.makeKeyAndVisible()
                         }
                     }

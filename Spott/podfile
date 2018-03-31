@@ -4,4 +4,6 @@ target ‘Spott' do
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
   pod 'JSQMessagesViewController'
+  use_frameworks!
+  pod 'GEOSwift'
 end

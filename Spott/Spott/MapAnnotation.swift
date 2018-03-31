@@ -284,7 +284,7 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         //            return
         //        }
         view.isUserInteractionEnabled = true
-        frame = CGRect(x: 0, y: C.h*0.6-C.th, width: C.w, height: C.h*0.4)
+        frame = CGRect(x: 0, y: C.h*0.6, width: C.w, height: C.h*0.4)
         view.addSubview(self)
         
 //

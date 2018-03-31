@@ -18,6 +18,7 @@
 		2744A4502037718600DAB7CF /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2744A44D2037718600DAB7CF /* Info.plist */; };
 		2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744A45120379B8300DAB7CF /* MatchProfileView.swift */; };
 		2751CD492025545E000A38B0 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2751CD472025545D000A38B0 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		27658B11206F043E0035F004 /* map.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 27658B10206F043E0035F004 /* map.geojson */; };
 		276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */; };
 		277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 277D980F20380B14007A0811 /* FuturaPTBook.otf */; };
 		278203CD2066F9D000410E9F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278203CC2066F9D000410E9F /* SettingsViewController.swift */; };
@@ -32,12 +33,13 @@
 		2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4292024F78200A3B2E8 /* TabBarViewController.swift */; };
 		2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */; };
 		278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D306A202CB2B700B0B941 /* EventProfileView.swift */; };
+		279AE459206EDDED008F5801 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279AE458206EDDED008F5801 /* NavigationViewController.swift */; };
 		27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A4DE5920250A6900AAC8A8 /* C.swift */; };
 		27A4DE5C2025125B00AAC8A8 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */; };
 		27B07FDE202BDC5B0002FE0B /* LocationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */; };
 		27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9C4792030EF5B000D0BB1 /* Objects.swift */; };
 		27D26F282029053000F585B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D26F272029052F00F585B5 /* AppDelegate.swift */; };
-		3341E0F44488F219F871F621 /* libPods-Spott.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */; };
+		7E02BF0667D0EC593DFF58CF /* Pods_Spott.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22E63EC619DE93731B8B90A3 /* Pods_Spott.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +75,7 @@
 
 /* Begin PBXFileReference section */
 		157829373D4E0C06750FF66F /* Pods-Spott.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.release.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.release.xcconfig"; sourceTree = "<group>"; };
+		22E63EC619DE93731B8B90A3 /* Pods_Spott.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spott.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		270A120E203A9DED009F6C6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		270F6F89206B3E7600B55277 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		27283FA0203F4F150096AF34 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +86,7 @@
 		2744A44D2037718600DAB7CF /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2744A45120379B8300DAB7CF /* MatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfileView.swift; sourceTree = "<group>"; };
 		2751CD472025545D000A38B0 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = Spott/frameworks/Mapbox.framework; sourceTree = "<group>"; };
+		27658B10206F043E0035F004 /* map.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map.geojson; sourceTree = "<group>"; };
 		276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableCell.swift; sourceTree = "<group>"; };
 		277D980F20380B14007A0811 /* FuturaPTBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTBook.otf; sourceTree = "<group>"; };
 		278203CC2066F9D000410E9F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -102,6 +106,7 @@
 		2782E4292024F78200A3B2E8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		278D306A202CB2B700B0B941 /* EventProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProfileView.swift; sourceTree = "<group>"; };
+		279AE458206EDDED008F5801 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		27A4DE5920250A6900AAC8A8 /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 		27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
 		27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProfileView.swift; sourceTree = "<group>"; };
@@ -109,7 +114,6 @@
 		27D26F272029052F00F585B5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACF074E22029067600818884 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACF074E42029067F00818884 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Spott.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD4B8D4F6B2FD522BD76A68E /* Pods-Spott.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,7 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3341E0F44488F219F871F621 /* libPods-Spott.a in Frameworks */,
+				7E02BF0667D0EC593DFF58CF /* Pods_Spott.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +177,7 @@
 				270F6F89206B3E7600B55277 /* ChatViewController.swift */,
 				27283FA2203F5A810096AF34 /* SignUpViewController.swift */,
 				2782E4242024F78100A3B2E8 /* MapViewController.swift */,
+				279AE458206EDDED008F5801 /* NavigationViewController.swift */,
 				2782E4262024F78200A3B2E8 /* ProfileViewController.swift */,
 				278203CC2066F9D000410E9F /* SettingsViewController.swift */,
 				2744A45120379B8300DAB7CF /* MatchProfileView.swift */,
@@ -187,6 +192,7 @@
 				ACF074E42029067F00818884 /* Info.plist */,
 				2782E4252024F78200A3B2E8 /* EventsViewController.swift */,
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
+				27658B10206F043E0035F004 /* map.geojson */,
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
 				27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */,
 				27441AA8205F599700718A07 /* Assets.xcassets */,
@@ -235,7 +241,7 @@
 		A60CC47FF5DB9112725798B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E0CA42D0BB5147EC88F5E397 /* libPods-Spott.a */,
+				22E63EC619DE93731B8B90A3 /* Pods_Spott.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -356,6 +362,7 @@
 				2744A448203770CF00DAB7CF /* Fonts in Resources */,
 				2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */,
 				27441AA9205F599700718A07 /* Assets.xcassets in Resources */,
+				27658B11206F043E0035F004 /* map.geojson in Resources */,
 				2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */,
 				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
 			);
@@ -400,13 +407,41 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Spott/Pods-Spott-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/GEOSwift/GEOSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/geos/geos.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GEOSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/geos.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -475,6 +510,7 @@
 				2782E42D2024F78200A3B2E8 /* ProfileViewController.swift in Sources */,
 				2782E42E2024F78200A3B2E8 /* PeopleViewController.swift in Sources */,
 				27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */,
+				279AE459206EDDED008F5801 /* NavigationViewController.swift in Sources */,
 				27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */,
 				276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */,
 				2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */,

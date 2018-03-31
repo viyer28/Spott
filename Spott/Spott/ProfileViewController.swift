@@ -15,6 +15,7 @@ class ProfileViewController: UITableViewController {
     var age = 21
     var location = "Chicago, IL"
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.tableView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
         tableView.allowsSelection = false;
@@ -39,6 +40,7 @@ class ProfileViewController: UITableViewController {
         
         if indexPath.row == 0
         {
+            
             let profileImageView = UIImageView(frame:CGRect(x: 0, y: 0, width: C.w, height: C.w))
             profileImageView.image = UIImage(named: C.user.profilePictureURL)
             let view = UIView(frame: profileImageView.frame)
@@ -85,6 +87,14 @@ class ProfileViewController: UITableViewController {
             settingsButton.setImage(image, for: .normal)
              settingsButton.addTarget(self, action: #selector(goToSettings), for: UIControlEvents.touchUpInside)
             self.view.addSubview(settingsButton)
+            
+            let backButton = UIButton(frame: CGRect(x: C.w*0.05, y: C.w * 0.1, width: C.w * 0.1, height:  C.w * 0.1))
+            backButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 28.0)
+            backButton.titleLabel?.text = "<"
+            backButton.setTitleColor(C.goldishColor, for: .normal)
+            backButton.setTitle("<", for: .normal)
+            backButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
+            self.view.addSubview(backButton)
             
         }
         else if indexPath.row == 1
@@ -206,6 +216,11 @@ class ProfileViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         
+    }
+    
+    @objc func backClick()
+    {
+        dismiss(animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {

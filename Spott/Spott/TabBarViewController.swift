@@ -13,23 +13,21 @@ import MapKit
 import Firebase
 class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
     var locationManager:CLLocationManager!
-    let feednc = UINavigationController(rootViewController: FeedViewController())
     let eventsnc = UINavigationController(rootViewController: EventsViewController())
     let peoplevc = PeopleViewController()
-    let profilevc = ProfileViewController()
     var lastUpdate = NSDate()
-    static var userLocation = CLLocation(latitude: 0, longitude: 0)
     var mapvc = MapViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        C.th = self.tabBar.frame.size.height
-        self.tabBar.barTintColor = C.darkColor
-        viewControllers = [feednc, eventsnc, mapvc, peoplevc, profilevc]
-        feednc.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "FeedIcon"), tag: 1)
+        //self.tabBar.unselectedItemTintColor = UIColor.clear
+        self.tabBar.backgroundColor = UIColor.clear
+        self.tabBar.barTintColor = UIColor.clear
+        viewControllers = [eventsnc, mapvc, peoplevc]
+        //feednc.tabBarItem = UITabBarItem(title: "Feed", image: UIImage(named: "FeedIcon"), tag: 1)
         eventsnc.tabBarItem = UITabBarItem(title: "Events", image: UIImage(named: "EventsIcon"), tag: 1)
         mapvc.tabBarItem = UITabBarItem(title: "Map", image: UIImage(named: "MapIcon"), tag: 1)
         peoplevc.tabBarItem = UITabBarItem(title: "People", image: UIImage(named: "PeopleIcon"), tag: 1)
-        profilevc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "ProfileIcon"), tag: 1)
+        //profilevc.tabBarItem = UITabBarItem(title: "Profile", image: UIImage(named: "ProfileIcon"), tag: 1)
         determineCurrentLocation()
     }
     
@@ -49,13 +47,15 @@ class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let uLoc:CLLocation = locations[0] as CLLocation
         
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
         //manager.stopUpdatingLocation()
-        TabBarViewController.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
+        NavigationViewController.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
         
         
         if (NSDate().timeIntervalSince(lastUpdate as Date) > 30)

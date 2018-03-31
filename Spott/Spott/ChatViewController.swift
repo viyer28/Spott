@@ -9,6 +9,7 @@
 import Foundation
 import Firebase
 import FirebaseAuth
+import JSQMessagesViewController
 class ChatViewController: JSQMessagesViewController
 {
     var messages: [JSQMessage]!

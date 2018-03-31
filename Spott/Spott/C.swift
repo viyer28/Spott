@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import MapKit
 import Firebase
+import GEOSwift
+
 class C: NSObject {
     static var w: CGFloat!
     static var h: CGFloat!
@@ -19,10 +21,9 @@ class C: NSObject {
     static var goldishColor = UIColor(red:213.0/255.0, green:177.0/255.0, blue:132.0/255.0, alpha:1.0)
     static var blueishColor = UIColor(red:70.0/255.0, green:178.0/255.0, blue:199.0/255.0, alpha:1.0)
     static var regLibrary = Location()
-    static var th: CGFloat!
     static var user = User()
     static var events: [Event] = []
-    static var locations: [Location]!
+    static var locations: [Location] = []
     static var eventDarkBlueColor = UIColor(red:0/255.0, green:144.0/255.0, blue:170.0/255.0, alpha:1.0)
     static var eventLightBlueColor = UIColor(red:72.0/255.0, green:207.0/255.0, blue:231.0/255.0, alpha:1.0)
     static var eventDarkBrownColor = UIColor(red:155.0/255.0, green:99.0/255.0, blue:29.0/255.0, alpha:1.0)
@@ -31,15 +32,17 @@ class C: NSObject {
     static var userData: Dictionary<String, Any>!
     static let db = Firestore.firestore()
     static let dbChat = db.collection("chats")
+    static let navigationViewController = NavigationViewController()
+    static var features: [Feature]!
     
     static func updateLocations()
     {
         var locationData: Dictionary<String, Any>!
-        C.locations = []
         Firestore.firestore().collection("locations").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting Friend documents: \(err)")
             } else {
+                C.locations = []
                 for document in querySnapshot!.documents {
                     let location = Location()
                     locationData = document.data()
@@ -52,6 +55,7 @@ class C: NSObject {
                     location.population_num = 123
                     C.locations.append(location)
                 }
+                C.navigationViewController.mapViewController.updateAnnotations()
             }
         }
     }
@@ -144,11 +148,11 @@ class C: NSObject {
                         f.latitude = friend_userData["latitude"] as! Double
                         f.refid = document.documentID
                         //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                        if (f.name != nil){
+                            user.friends.append(f)
+                        }
                     }
-                    if (f.name != nil){
-                        user.friends.append(f)
-                    }
-                    print("Recieved Friend documents")
+                    C.navigationViewController.mapViewController.updateAnnotations()
                 }
             }
         }
