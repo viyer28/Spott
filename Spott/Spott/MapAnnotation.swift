@@ -13,6 +13,7 @@ import Mapbox
 
 class MapAnnotation : MGLPointAnnotation {
     var type: Int?
+    var user: User!
     override init() {
         super.init()
     }
@@ -74,6 +75,14 @@ class MapAnnotationView: MGLAnnotationView {
 
 class MapUserAnnotationView: MGLAnnotationView {
     private var imageView: UIImageView!
+    var user : User!
+    var img: UIImageView!
+    convenience init(reuseIdentifier: String, user: User)
+    {
+        self.init(reuseIdentifier: reuseIdentifier)
+        self.user = user
+        self.img.image = user.image
+    }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -83,7 +92,7 @@ class MapUserAnnotationView: MGLAnnotationView {
         self.layer.cornerRadius = self.frame.size.width / 2
         self.clipsToBounds = true
         self.backgroundColor = UIColor.clear
-        let img = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
+        img = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         img.image = UIImage(named: "sample_prof")
         self.addSubview(img)
         self.layer.borderWidth = 2.0 as CGFloat
@@ -251,6 +260,7 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     let numPotentials = 10
     let population = 100
     var messagingView: ChatViewController!
+    
     required init(representedObject: MGLAnnotation) {
         self.representedObject = representedObject
         super.init(frame: .zero)

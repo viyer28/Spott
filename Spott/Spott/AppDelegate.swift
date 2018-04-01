@@ -57,6 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.user.major = "Economics"
         C.user.hometown = "Washington DC"
         C.user.age = 20
+        C.user.image = UIImage(named: "sample_prof")
         
         let geoJSONURL = Bundle.main.url(forResource: "map", withExtension: "geojson")
         C.features = try! Features.fromGeoJSON(geoJSONURL!)

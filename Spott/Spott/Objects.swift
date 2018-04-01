@@ -55,6 +55,6 @@ class User: NSObject {
     var spotted: [User]!
     var acquaintances: [User]!
     var refid: String!
-    var imageter: UIImage!
+    var image: UIImage!
 }
 

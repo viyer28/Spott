@@ -132,6 +132,13 @@ class C: NSObject {
         {
             C.user.hometown = C.userData["hometown"] as! String
         }
+        if C.userData["profilePicture"] != nil
+        {
+            if let filePath = Bundle.main.path(forResource: "imageName", ofType: "jpg"), let image = UIImage(contentsOfFile: C.userData["profilePicture"] as! String)
+            {
+                    C.user.image = image
+            }
+        }
         C.user.major = C.userData["major"] as! String
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
         updateSpotted(user: C.user, spotted: C.userData["spotted"] as! [String])
