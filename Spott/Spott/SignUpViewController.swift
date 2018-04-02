@@ -549,7 +549,8 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 "friends" : [],
                 "curLoc" : -1,
                 "longitude" : 0,
-                "latitude" : 0
+                "latitude" : 0,
+                "spotted" : []
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -595,8 +596,9 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 return
             }else{
                 //store downloadURL
-                let downloadURL = metaData!.downloadURL()!.absoluteString
+                let downloadURL = "gs://"+metaData!.bucket+"/profilePictures/"+metaData!.name!
                 //store downloadURL at database
+                C.user.image = self.profileImageView.image!
                 C.db.collection("user_info").document(C.refid).updateData(["profilePicture": downloadURL])
             }
             

@@ -57,6 +57,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         profileButton.setImage(image1, for: .normal)
         profileButton.addTarget(self, action: #selector(showProfile), for: UIControlEvents.touchUpInside)
         profileButton.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3);
+        NotificationCenter.default.addObserver(self, selector: #selector(updateAnnotations), name: .update, object: nil)
         self.view.addSubview(profileButton)
         
         
@@ -107,33 +108,36 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     
     @objc func showFriends ()
     {
-        
+        self.mapView.addSubview(FriendsView())
     }
     
     @objc func showProfile ()
     {
         self.present(ProfileViewController(), animated: true, completion: nil)
     }
-    func updateAnnotations()
+    @objc func updateAnnotations()
     {
-        if mapView.annotations != nil
+        if mapView != nil
         {
-            mapView.removeAnnotations(mapView.annotations!)
-        }
-        for location in C.locations {
-            let point = MapAnnotation()
-            point.coordinate = CLLocationCoordinate2D(latitude:  location.latitude, longitude:  location.longitude)
-            point.title = location.name
-            point.type = 0
-            mapView.addAnnotation(point)
-        }
-        for friend in C.user.friends {
-            let point = MapAnnotation()
-            point.coordinate = CLLocationCoordinate2D(latitude:  friend.latitude, longitude:  friend.longitude)
-            point.title = friend.name
-            point.user = friend
-            point.type = 1
-            mapView.addAnnotation(point)
+            if mapView.annotations != nil
+            {
+                mapView.removeAnnotations(mapView.annotations!)
+            }
+            for location in C.locations {
+                let point = MapAnnotation()
+                point.coordinate = CLLocationCoordinate2D(latitude:  location.latitude, longitude:  location.longitude)
+                point.title = location.name
+                point.type = 0
+                mapView.addAnnotation(point)
+            }
+            for friend in C.user.friends {
+                let point = MapAnnotation()
+                point.coordinate = CLLocationCoordinate2D(latitude:  friend.latitude, longitude:  friend.longitude)
+                point.title = friend.name
+                point.user = friend
+                point.type = 1
+                mapView.addAnnotation(point)
+            }
         }
     }
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {

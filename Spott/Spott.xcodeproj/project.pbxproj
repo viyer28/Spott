@@ -19,6 +19,7 @@
 		2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744A45120379B8300DAB7CF /* MatchProfileView.swift */; };
 		2751CD492025545E000A38B0 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2751CD472025545D000A38B0 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */; };
+		276CBDC220706FAC0067904F /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CBDC120706FAC0067904F /* FriendsView.swift */; };
 		277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 277D980F20380B14007A0811 /* FuturaPTBook.otf */; };
 		278203CD2066F9D000410E9F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278203CC2066F9D000410E9F /* SettingsViewController.swift */; };
 		2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E3F72024F6B700A3B2E8 /* ViewController.swift */; };
@@ -39,6 +40,7 @@
 		27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9C4792030EF5B000D0BB1 /* Objects.swift */; };
 		27D26F282029053000F585B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D26F272029052F00F585B5 /* AppDelegate.swift */; };
 		27F41C3D206F37A20054D3D7 /* map.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 27F41C3C206F37A10054D3D7 /* map.geojson */; };
+		27F41C3F206F3D2C0054D3D7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */; };
 		7E02BF0667D0EC593DFF58CF /* Pods_Spott.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22E63EC619DE93731B8B90A3 /* Pods_Spott.framework */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +89,7 @@
 		2744A45120379B8300DAB7CF /* MatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfileView.swift; sourceTree = "<group>"; };
 		2751CD472025545D000A38B0 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = Spott/frameworks/Mapbox.framework; sourceTree = "<group>"; };
 		276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableCell.swift; sourceTree = "<group>"; };
+		276CBDC120706FAC0067904F /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		277D980F20380B14007A0811 /* FuturaPTBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTBook.otf; sourceTree = "<group>"; };
 		278203CC2066F9D000410E9F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2782E3F22024F6B700A3B2E8 /* Spott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spott.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -112,6 +115,7 @@
 		27B9C4792030EF5B000D0BB1 /* Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		27D26F272029052F00F585B5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27F41C3C206F37A10054D3D7 /* map.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map.geojson; sourceTree = "<group>"; };
+		27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		ACF074E22029067600818884 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACF074E42029067F00818884 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FD4B8D4F6B2FD522BD76A68E /* Pods-Spott.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spott.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Spott/Pods-Spott.debug.xcconfig"; sourceTree = "<group>"; };
@@ -177,6 +181,7 @@
 				270F6F89206B3E7600B55277 /* ChatViewController.swift */,
 				27283FA2203F5A810096AF34 /* SignUpViewController.swift */,
 				2782E4242024F78100A3B2E8 /* MapViewController.swift */,
+				27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */,
 				279AE458206EDDED008F5801 /* NavigationViewController.swift */,
 				2782E4262024F78200A3B2E8 /* ProfileViewController.swift */,
 				278203CC2066F9D000410E9F /* SettingsViewController.swift */,
@@ -187,6 +192,7 @@
 				27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */,
 				279C80692025518700F3950C /* Fonts */,
 				27A4DE5920250A6900AAC8A8 /* C.swift */,
+				276CBDC120706FAC0067904F /* FriendsView.swift */,
 				2782E4232024F78100A3B2E8 /* FeedViewController.swift */,
 				ACF074E22029067600818884 /* Assets.xcassets */,
 				2782E4272024F78200A3B2E8 /* PeopleViewController.swift */,
@@ -514,6 +520,7 @@
 				27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */,
 				276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */,
 				2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */,
+				276CBDC220706FAC0067904F /* FriendsView.swift in Sources */,
 				2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */,
 				2782E42A2024F78200A3B2E8 /* FeedViewController.swift in Sources */,
 				2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */,
@@ -524,6 +531,7 @@
 				278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */,
 				27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */,
 				2782E42C2024F78200A3B2E8 /* EventsViewController.swift in Sources */,
+				27F41C3F206F3D2C0054D3D7 /* CustomCell.swift in Sources */,
 				278203CD2066F9D000410E9F /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

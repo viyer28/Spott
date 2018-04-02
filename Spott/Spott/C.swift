@@ -133,12 +133,16 @@ class C: NSObject {
             C.user.hometown = C.userData["hometown"] as! String
         }
         if C.userData["profilePicture"] != nil
+            
         {
-            if let filePath = Bundle.main.path(forResource: "imageName", ofType: "jpg"), let image = UIImage(contentsOfFile: C.userData["profilePicture"] as! String)
-            {
-                    C.user.image = image
-            }
+            C.storage.reference(forURL: C.userData["profilePicture"] as! String).getData(maxSize: 1024*1024, completion: {(data, error) -> Void in
+                // Create a UIImage, add it to the array
+                C.user.image = UIImage(data: data!)
+            
+        
+            })
         }
+    
         C.user.major = C.userData["major"] as! String
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
         updateSpotted(user: C.user, spotted: C.userData["spotted"] as! [String])
@@ -193,7 +197,12 @@ class C: NSObject {
                         f.longitude = spotted_userData["longitude"] as! Double
                         f.latitude = spotted_userData["latitude"] as! Double
                         f.refid = document.documentID
+                        C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 1024*1024, completion: {(data, error) -> Void in
+                            // Create a UIImage, add it to the array
+                            f.image = UIImage(data: data!)
+                        })
                         updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
+                        
                         //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
                     }
                     if (f.name != nil){
@@ -216,6 +225,7 @@ class C: NSObject {
                 {
                     user.friends.append(friend2)
                 }
+                
             }
         }
         
@@ -232,6 +242,7 @@ class C: NSObject {
                 if let err = err {
                     print("Error getting Friend documents: \(err)")
                 } else {
+                    var i = 0
                     for document in querySnapshot!.documents {
                         print("\(document.documentID) => \(document.data())")
                         friend_userData = document.data()
@@ -270,14 +281,24 @@ class C: NSObject {
                         f.longitude = friend_userData["longitude"] as! Double
                         f.latitude = friend_userData["latitude"] as! Double
                         f.refid = document.documentID
-                        //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
-                        if (f.name != nil){
+                        C.storage.reference(forURL: friend_userData["profilePicture"] as! String).getData(maxSize: 1024*1024, completion: {(data, error) -> Void in
+                            // Create a UIImage, add it to the array
+                            f.image = UIImage(data: data!)
                             user.friends.append(f)
-                        }
+                            i = i + 1
+                            if i == querySnapshot!.documents.count
+                            {
+                                NotificationCenter.default.post(name: .update, object: nil)
+
+                            }
+                        })
+                        updateFriendsofFriend(user: f, friends: friend_userData["friends"] as! [String])
                     }
-                    C.navigationViewController.mapViewController.updateAnnotations()
                 }
             }
         }
     }
+}
+extension Notification.Name {
+    static let update = Notification.Name("update")
 }
