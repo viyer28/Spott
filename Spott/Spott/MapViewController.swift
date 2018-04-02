@@ -11,7 +11,7 @@ import MapKit
 import Firebase
 import Mapbox
 
-let MapboxAccessToken = "pk.eyJ1IjoiYnJlbmRhbnNhbmRlcnNvbiIsImEiOiJjamQ2cWNubWkxNWNvMndsYjhrdXp1M2F2In0.eci8-9HsaFn0aAEVn-K8Uw"
+let MapboxAccessToken = "pk.eyJ1Ijoic3BvdHRpeWVyIiwiYSI6ImNqZmQyZnVkejIwbGgyd29iZnR3bGVvMXUifQ.fVrLRiLoyIoPfAGm5ozmMg"
 class MapViewController: UIViewController, MGLMapViewDelegate {
     var mapView:MGLMapView!
     var tabBar:TabBarViewController!
@@ -21,7 +21,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         super.viewDidLoad()
         
         MGLAccountManager.setAccessToken(MapboxAccessToken)
-        let url = URL(string: "mapbox://styles/mapbox/satellite-streets-v9")
+        let url = URL(string: "mapbox://styles/spottiyer/cjfgeobk2aztz2rk98ke0awx4")
         mapView = MGLMapView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h), styleURL: url)
         mapView.delegate = self
         view.addSubview(mapView)
@@ -153,8 +153,8 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             // Set the fill extrusion height to the value for the building height attribute.
             layer.fillExtrusionHeight = MGLStyleValue(interpolationMode: .identity, sourceStops: nil, attributeName: "height", options: nil)
             layer.fillExtrusionBase = MGLStyleValue(interpolationMode: .identity, sourceStops: nil, attributeName: "min_height", options: nil)
-            layer.fillExtrusionOpacity = MGLStyleValue(rawValue: 0.05)
-            layer.fillExtrusionColor = MGLStyleValue(rawValue: .white)
+            layer.fillExtrusionOpacity = MGLStyleValue(rawValue: 0.1)
+            layer.fillExtrusionColor = MGLStyleValue(rawValue: .black)
             
             // Insert the fill extrusion layer below a POI label layer. If you aren’t sure what the layer is called, you can view the style in Mapbox Studio or iterate over the style’s layers property, printing out each layer’s identifier.
             if let symbolLayer = style.layer(withIdentifier: "poi-scalerank3") {
