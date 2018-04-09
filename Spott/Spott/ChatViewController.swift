@@ -21,9 +21,11 @@ class ChatViewController: JSQMessagesViewController
     var parentView: UIView!
     var messagesDict: [Dictionary<String, Any>]!
     
-    convenience init (pv: UIView)
+    convenience init (pv: UIView, u2: User)
     {
         self.init()
+        self.user_id2 = u2.id
+        self.name2 = u2.name
         self.parentView = pv
     }
     
@@ -133,7 +135,7 @@ class ChatViewController: JSQMessagesViewController
             {
                 name = name1!
             }
-            let m = JSQMessage(senderId: senderId, displayName: name, text: message)
+            let m = JSQMessage(senderId: sender, displayName: name, text: message)
             messages.append(m!)
         }
         self.collectionView.collectionViewLayout.invalidateLayout()
@@ -161,7 +163,7 @@ class ChatViewController: JSQMessagesViewController
         super.textViewDidBeginEditing(textView)
     }
     lazy var outgoingBubble: JSQMessagesBubbleImage = {
-        return JSQMessagesBubbleImageFactory()!.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
+        return JSQMessagesBubbleImageFactory()!.outgoingMessagesBubbleImage(with: C.goldishColor)
     }()
     
     lazy var incomingBubble: JSQMessagesBubbleImage = {

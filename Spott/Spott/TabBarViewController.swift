@@ -55,7 +55,7 @@ class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
         // Call stopUpdatingLocation() to stop listening for location updates,
         // other wise this function will be called every time when user location changes.
         //manager.stopUpdatingLocation()
-        NavigationViewController.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
+        //self.userLocation = CLLocation(latitude: uLoc.coordinate.latitude, longitude: uLoc.coordinate.longitude)
         
         
         if (NSDate().timeIntervalSince(lastUpdate as Date) > 30)

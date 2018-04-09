@@ -14,6 +14,7 @@ import Mapbox
 class MapAnnotation : MGLPointAnnotation {
     var type: Int?
     var user: User!
+    var location: Location!
     override init() {
         super.init()
     }
@@ -25,51 +26,57 @@ class MapAnnotation : MGLPointAnnotation {
 
 class MapAnnotationView: MGLAnnotationView {
     private var imageView: UIImageView!
+    var percent: CGFloat!
+    var location: Location!
+    var borderView = UIView()
+    convenience init (reuseIdentifier: String?, location: Location)
+    {
+        self.init(reuseIdentifier: reuseIdentifier)
+        self.location = location
+        self.percent = min(3*CGFloat(location.numPopulation) / CGFloat(C.totalPopulation) * 100,100)
+        self.frame = CGRect(x: 0, y: 0, width: Int(5 + (percent/5.0)), height: Int(5 + (percent/5.0)))
+        self.borderView.frame  = self.frame
+        self.layer.cornerRadius = self.frame.size.width / 2
+        self.borderView.layer.cornerRadius = self.borderView.frame.width / 2
+        self.clipsToBounds = true
+        
+        
+    }
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
         //self.layer.borderWidth = 3.0 as CGFloat
-        self.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        self.frame = CGRect(x: 0, y: 0, width: 5, height: 5)
+        self.borderView.frame = self.frame
+        self.borderView.layer.cornerRadius = self.borderView.frame.width/2
+        self.layer.borderColor = C.darkColor.cgColor
+        self.layer.borderWidth = 1  
         self.layer.cornerRadius = self.frame.size.width / 2
         self.clipsToBounds = true
-        self.backgroundColor = UIColor.clear
-        
-        let gradient = CAGradientLayer()
-        gradient.frame =  CGRect(origin: CGPoint.zero, size: self.frame.size)
-        gradient.colors = [C.eventDarkBlueColor.cgColor, C.eventLightBlueColor.cgColor]
-        let shape = CAShapeLayer()
-        shape.lineWidth = 5
-        //shape.path = UIBezierPath(rect: self.bounds).cgPath
-        shape.path = UIBezierPath(roundedRect: CGRect(x: 2.5, y: 2.5, width: self.frame.width-5, height: self.frame.height-5), cornerRadius: self.frame.size.width).cgPath
-        shape.strokeColor = UIColor.black.cgColor
-        shape.fillColor = UIColor.clear.cgColor
-        //shape.cornerRadius = self.layer.cornerRadius
-        gradient.mask = shape
-        //gradient.cornerRadius = self.layer.cornerRadius
-        let gradient2 = CAGradientLayer()
-        gradient.frame = CGRect(origin: CGPoint.zero, size: self.frame.size)
-        gradient2.frame =  CGRect(origin: CGPoint.zero, size: self.frame.size)
-        gradient2.colors = [C.eventLightBrownColor.cgColor, C.eventDarkBrownColor.cgColor]
-        self.layer.insertSublayer(gradient2, at: 0)
-        self.layer.insertSublayer(gradient, at: 1)
-        //self.clipsToBounds = true
-        //self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 45, height: 45))
-        //imageView.layer.cornerRadius = imageView.frame.size.width / 2;
-//        let pointsLabel = UILabel(frame: CGRect(x:5, y: 5, width: 20, height: 20))
-//        pointsLabel.textColor = UIColor.black
-//        pointsLabel.textAlignment = .center
-        //imageView.clipsToBounds = true;
-        //imageView.layer.borderWidth = 3.0 as CGFloat
-        //imageView.layer.borderColor = UIColor.white.cgColor
-        //self.addSubview(self.imageView)
-//        pointsLabel.font = UIFont(name: "FuturaPTLight", size: 4)
-//        pointsLabel.textColor = UIColor.white
-       // self.addSubview(pointsLabel)
+        self.backgroundColor = C.darkColor
+        self.borderView.backgroundColor = UIColor.clear
+        self.addSubview(borderView)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func draw(_ rect: CGRect) {
+        drawSlice(rect: rect, startPercent: 0, endPercent: percent, color: C.goldishColor)
+    }
+    
+    func drawSlice(rect: CGRect, startPercent: CGFloat, endPercent: CGFloat, color: UIColor) {
+        let center = CGPoint(x: rect.origin.x + rect.width / 2, y: rect.origin.y + rect.height / 2)
+        let radius = min(rect.width, rect.height) / 2
+        let startAngle = startPercent / 100 * CGFloat(Double.pi) * 2 - CGFloat(Double.pi)
+        let endAngle = endPercent / 100 * CGFloat(Double.pi) * 2 - CGFloat(Double.pi)
+        let path = UIBezierPath()
+        path.move(to: center)
+        path.addArc(withCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        path.close()
+        color.setFill()
+        path.fill()
     }
 }
 
@@ -105,7 +112,6 @@ class MapUserAnnotationView: MGLAnnotationView {
 }
 
 class SpottCalloutView: UIView, MGLCalloutView {
-    
     let dismissesAutomatically: Bool = true
     let isAnchoredToAnnotation: Bool = false
     lazy var leftAccessoryView = UIView()
@@ -113,84 +119,92 @@ class SpottCalloutView: UIView, MGLCalloutView {
     weak var delegate: MGLCalloutViewDelegate?
     var representedObject: MGLAnnotation
     var backgroundView: UIButton!
+    var potentialsImage: UIImageView!
     var titleView: UIView!
     var titleLabel: UILabel!
     var friendsLabel: UILabel!
+    var friendsImage: UIImageView!
     var potentialsLabel: UILabel!
-    var scoreLabel: UILabel!
-    var kingLabel: UILabel!
-    var populationLabel: UILabel!
-    var vw: CGFloat!
-    var vh: CGFloat!
-    let numFriends = 3
-    let numPotentials = 10
-    let population = 100
     
+//    required init(representedObject: MGLAnnotation) {
+//        self.representedObject = representedObject
+//        super.init(frame: .zero)
+//        self.isUserInteractionEnabled = true
+//        self.frame = CGRect(x: 0, y: 0, width: C.w*0.2, height: C.h*0.05)
+//
+//        titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: C.w * 0.2, height: C.h*0.025))
+//        titleLabel.textColor = UIColor.black
+//        titleLabel.textAlignment = .center
+//        titleLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
+//
+//
+//        friendsImage = UIImageView(frame: CGRect(x: 0, y: C.h*0.025, width: C.h*0.025, height: C.h*0.025))
+//        friendsImage.image = UIImage(named: "PeopleIcon")
+//
+//
+//        friendsLabel = UILabel(frame: CGRect(x: C.h*0.025, y: C.h*0.025, width: C.h*0.025, height: C.h*0.025))
+//        friendsLabel.textColor = UIColor.black
+//        friendsLabel.textAlignment = .left
+//        friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
+//        friendsLabel.text = String(numFriends)
+//
+//        potentialsLabel = UILabel(frame: CGRect(x: C.w*0.2-C.h*0.025, y: C.h*0.025, width: C.h*0.025, height: C.h*0.025))
+//        potentialsLabel.textColor = UIColor.black
+//        potentialsLabel.textAlignment = .left
+//        potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
+//        potentialsLabel.text = String(numPotentials)
+//
+//        potentialsImage = UIImageView(frame: CGRect(x: C.w*0.2-C.h*0.05, y: C.h*0.025, width: C.h*0.025, height: C.h*0.025))
+//        potentialsImage.image = UIImage(named: "PeopleIcon")
+//
+//        titleLabel.text = representedObject.title!
+//        self.addSubview(titleLabel)
+//        self.addSubview(friendsLabel)
+//        self.addSubview(friendsImage)
+//        self.addSubview(potentialsImage)
+//        self.addSubview(potentialsLabel)
+//
+//    }
+    convenience init (representedObject: MGLAnnotation, location: Location)
+    {
+        self.init(representedObject: representedObject)
+        self.frame = CGRect(x: 0, y: C.h*0.8, width: C.w, height: C.h*0.2)
+        self.titleLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.5, height: C.h*0.1))
+        titleLabel.textColor = UIColor.black
+        titleLabel.textAlignment = .left
+        titleLabel.font = UIFont(name: "FuturaPT-Light", size: 36)
+        titleLabel.text = representedObject.title!
+        
+        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5, titleLabel.intrinsicContentSize.width + C.w*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
+        friendsLabel.textColor = UIColor.green
+        friendsLabel.textAlignment = .left
+        friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
+        friendsLabel.text = String(location.numFriends)
+        
+        potentialsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5, titleLabel.intrinsicContentSize.width + C.w*0.02), y: friendsLabel.intrinsicContentSize.height, width: C.w*0.2, height: C.h*0.05))
+        potentialsLabel.textColor = UIColor.red
+        potentialsLabel.textAlignment = .left
+        potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
+        potentialsLabel.text = String(location.numPotentials)
+        
+        self.addSubview(titleLabel)
+        self.addSubview(friendsLabel)
+        self.addSubview(potentialsLabel)
+        
+    }
     required init(representedObject: MGLAnnotation) {
         self.representedObject = representedObject
         super.init(frame: .zero)
-        self.isUserInteractionEnabled = true
-        backgroundView = UIButton(frame: CGRect(x: 0, y: 0, width: C.w*0.4, height: C.h*0.25))
-        backgroundView.layer.cornerRadius = backgroundView.frame.size.width / 10
-        backgroundView.backgroundColor = UIColor.blue
-        self.addSubview(backgroundView)
-        backgroundView.addTarget(self, action: #selector(calloutTapped), for: .touchUpInside)
-        vw = backgroundView.frame.width
-        vh = backgroundView.frame.height
+        
+    }
     
-        titleView = UIView(frame: CGRect(x: 0, y: vh*0.1, width: vw*0.7, height: vh*0.2))
-        titleView.backgroundColor = UIColor.white
+    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+        view.addSubview(self)
+    }
+    
+    func dismissCallout(animated: Bool) {
+        removeFromSuperview()
         
-        let rectShape = CAShapeLayer()
-        rectShape.bounds = self.titleView.frame
-        rectShape.position = self.titleView.center
-        rectShape.path = UIBezierPath(roundedRect: self.titleView.bounds, byRoundingCorners: [.topRight , .bottomRight], cornerRadii: CGSize(width: backgroundView.frame.size.width / 10, height: backgroundView.frame.size.width / 10)).cgPath
-        
-        titleView.layer.mask = rectShape
-        
-        titleLabel = UILabel(frame: CGRect(x: 0, y: 0, width: vw * 0.7, height: vh*0.2))
-        titleLabel.textColor = UIColor.black
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
-        
-        populationLabel = UILabel(frame: CGRect(x: vw*0.02, y: vh*0.3, width: vw*0.68, height: vh*0.2))
-        populationLabel.textColor = UIColor.white
-        populationLabel.textAlignment = .left
-        populationLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
-        populationLabel.text = "Population: " + String(population)
-        
-        friendsLabel = UILabel(frame: CGRect(x: vw*0.02, y: vh*0.45, width: vw*0.48, height: vh*0.1))
-        friendsLabel.textColor = UIColor.white
-        friendsLabel.textAlignment = .left
-        friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
-        friendsLabel.text = "Friends: " + String(numFriends)
-        
-        potentialsLabel = UILabel(frame: CGRect(x: vw*0.02, y: vh*0.55, width: vw*0.48, height: vh*0.1))
-        potentialsLabel.textColor = UIColor.white
-        potentialsLabel.textAlignment = .left
-        potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 12)
-        potentialsLabel.text="Potentials: " + String(numPotentials)
-        
-        titleLabel.text = representedObject.title!
-        
-        
-        let blueGradient = CAGradientLayer()
-        blueGradient.frame = backgroundView.bounds
-        blueGradient.startPoint = CGPoint(x: 0.0, y: 0.5)
-        blueGradient.endPoint = CGPoint(x: 1.0, y: 0.5)
-        blueGradient.colors = [C.eventDarkBlueColor.cgColor, C.eventLightBlueColor.cgColor]
-        backgroundView.layer.addSublayer(blueGradient)
-        backgroundView.clipsToBounds = true
-        
-//
-//        backgroundView.addTarget(self, action: #selector(SpottCalloutView.calloutTapped), for: .touchUpInside)
-//
-        
-        backgroundView.addSubview(titleView)
-        titleView.addSubview(titleLabel)
-        backgroundView.addSubview(populationLabel)
-        backgroundView.addSubview(friendsLabel)
-        backgroundView.addSubview(potentialsLabel)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -198,49 +212,37 @@ class SpottCalloutView: UIView, MGLCalloutView {
     }
     
     // callout view delegate: present callout
-    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
-        view.isUserInteractionEnabled = true
-//        if !representedObject.responds(to: #selector(getter: MGLAnnotation.title)) {
-//            return
+//    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+//        view.isUserInteractionEnabled = true
+////        if !representedObject.responds(to: #selector(getter: MGLAnnotation.title)) {
+////            return
+////        }
+//
+//        view.addSubview(self)
+//
+//        let frameWidth = self.bounds.size.width
+//        let frameHeight = self.bounds.size.height/2
+//        let frameOriginX = rect.origin.x + (rect.size.width/2.0) - (frameWidth/2.0)
+//        let frameOriginY = rect.origin.y - frameHeight
+//        frame = CGRect(x: frameOriginX, y: frameOriginY, width: frameWidth, height: frameHeight)
+//
+//
+//    }
+    
+//    func calloutViewTapped(_ calloutView: Any!)
+//    {
+//
+//    }
+//    override var center: CGPoint {
+//        set {
+//            var newCenter = newValue
+//            newCenter.y = newCenter.y - bounds.midY
+//            super.center = newCenter
 //        }
-        
-        view.addSubview(self)
-        
-        let frameWidth = backgroundView.bounds.size.width
-        let frameHeight = backgroundView.bounds.size.height
-        let frameOriginX = rect.origin.x + (rect.size.width/2.0) - (frameWidth/2.0)
-        let frameOriginY = rect.origin.y - frameHeight
-        frame = CGRect(x: frameOriginX, y: frameOriginY, width: frameWidth, height: frameHeight)
-        
-        
-    }
-    @objc func calloutTapped() {
-        var mw = CGFloat(0.0)
-        var mh = CGFloat(0.0)
-        mw = (self.superview?.frame.width)!
-        mh = (self.superview?.frame.height)!
-        //self.superview?.addSubview(LocationProfileView(frame: CGRect(x: mw * 0.1, y: mh * 0.1, width: mw * 0.8, height: mh * 0.8)))
-    }
-    
-    func calloutViewTapped(_ calloutView: Any!)
-    {
-        
-    }
-    override var center: CGPoint {
-        set {
-            var newCenter = newValue
-            newCenter.y = newCenter.y - bounds.midY
-            super.center = newCenter
-        }
-        get {
-            return super.center
-        }
-    }
-    
-    func dismissCallout(animated: Bool) {
-        removeFromSuperview()
-
-    }
+//        get {
+//            return super.center
+//        }
+//    }
 
 }
 
@@ -277,7 +279,7 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.3))
         chatBackgroundView.backgroundColor = UIColor.gray
         
-        messagingView = ChatViewController(pv: self)
+        messagingView = ChatViewController(pv: self, u2: (representedObject as! MapAnnotation).user)
         messagingView.view.frame = chatBackgroundView.frame
         self.parentViewController?.addChildViewController(messagingView)
         self.addSubview(chatBackgroundView)
@@ -296,6 +298,7 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         view.isUserInteractionEnabled = true
         frame = CGRect(x: 0, y: C.h*0.6, width: C.w, height: C.h*0.4)
         view.addSubview(self)
+    }
         
 //
 //        let frameWidth = backgroundView.bounds.size.width
@@ -303,22 +306,11 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
 //        let frameOriginX = rect.origin.x + (rect.size.width/2.0) - (frameWidth/2.0)
 //        let frameOriginY = rect.origin.y - frameHeight
 //        frame = CGRect(x: frameOriginX, y: frameOriginY, width: frameWidth, height: frameHeight)
-        
-        
-    }
-    @objc func calloutTapped() {
-        let a = 1
-        
-    }
-    
-    private func calloutViewTapped(_ calloutView: Any!)
-    {
-        
-    }
-    
     func dismissCallout(animated: Bool) {
+        C.navigationViewController.eventsButton.isHidden = false
+        C.navigationViewController.spottButton.isHidden = false
+        C.navigationViewController.mapViewController.centerButton.isHidden = false
         removeFromSuperview()
-        
     }
     
 }
@@ -334,4 +326,32 @@ extension UIView {
         }
         return nil
     }
+}
+
+class EmptyCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
+    var representedObject: MGLAnnotation
+    
+    lazy var leftAccessoryView = UIView()
+    lazy var rightAccessoryView = UIView()
+    
+    var delegate: MGLCalloutViewDelegate?
+    
+    
+    required init(representedObject: MGLAnnotation) {
+        self.representedObject = representedObject
+        super.init(frame: .zero)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // callout view delegate: present callout
+    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+        
+    }
+    
+    func dismissCallout(animated: Bool) {
+    }
+    
 }

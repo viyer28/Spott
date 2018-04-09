@@ -135,7 +135,7 @@ class EventTableCell: UITableViewCell {
         
         let loccord = CLLocation(latitude: Double(event.location.latitude), longitude: Double(event.location.longitude))
         
-        let distanceInMeters = NavigationViewController.userLocation.distance(from: loccord)
+        let distanceInMeters = C.navigationViewController.userLocation.distance(from: loccord)
         let distance = distanceInMeters/1609.344
         
         distanceLabel = UILabel(frame: CGRect(x: rw*0.8, y: rh * 0.9-rw*0.075, width: rw * 0.15, height: rw * 0.15))

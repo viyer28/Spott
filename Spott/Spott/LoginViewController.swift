@@ -102,6 +102,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 self.loginSuccess()
             } else {
                 print("boo")
+                let alert = UIAlertController(title: "Login Failed", message: "Could not login with email and password combination.", preferredStyle: .alert)
+                
+                alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+                
+                self.present(alert, animated: true)
             }
         }
     }
@@ -119,8 +124,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         C.refid = document.documentID
                         C.userData = document.data()
                         C.updateUser()
-                        C.updateLocations()
                         C.navigationViewController = NavigationViewController()
+                        C.profileViewController = ProfileViewController()
                         let initialViewController = C.navigationViewController
                         //initialViewController.view.backgroundColor = C.darkColor
                         self.present(initialViewController, animated: false, completion: nil)

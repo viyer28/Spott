@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "profile_user.jpg",
+      "filename" : "default-profilex1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "profile_user-2.jpg",
+      "filename" : "default-profilex2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "profile_user-1.jpg",
+      "filename" : "default-profilex3.png",
       "scale" : "3x"
     }
   ],

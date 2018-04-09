@@ -14,10 +14,12 @@ class ProfileViewController: UITableViewController {
     var friends = 123
     var age = 21
     var location = "Chicago, IL"
+    let centerButton = UIButton(type: UIButtonType.custom) as UIButton
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        self.tableView.contentInset = UIEdgeInsets(top: -20, left: 0, bottom: 0, right: 0)
+        //self.head
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.allowsSelection = false;
         self.tableView.separatorColor = C.goldishColor
         tableView.separatorInset = UIEdgeInsets.zero;
@@ -25,6 +27,12 @@ class ProfileViewController: UITableViewController {
         tableView.dataSource = self
         //self.tableView.rowHeight = C.h*0.5
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        centerButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
+        centerButton.center = CGPoint(x: C.w*0.5, y: C.h*0.9)
+        centerButton.setImage(UIImage(named: "centerUser"), for: .normal)
+        centerButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
+        self.tableView.addSubview(centerButton)
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -57,11 +65,11 @@ class ProfileViewController: UITableViewController {
             nameLabel.text=C.user.name
             cell.addSubview(nameLabel)
             
-            let levelLabel = UILabel(frame: CGRect(x: C.w*0.03, y: C.w*0.83, width: C.w * 0.28, height: C.w * 0.08))
-            levelLabel.textColor = C.goldishColor
-            levelLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
-            levelLabel.text = "Lvl: \(C.user.level!)"
-            cell.addSubview(levelLabel)
+//            let levelLabel = UILabel(frame: CGRect(x: C.w*0.03, y: C.w*0.83, width: C.w * 0.28, height: C.w * 0.08))
+//            levelLabel.textColor = C.goldishColor
+//            levelLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
+//            levelLabel.text = "Lvl: \(C.user.level!)"
+//            cell.addSubview(levelLabel)
             
             let majorLabel = UILabel(frame: CGRect(x: C.w*0.05, y: C.w*0.925, width: C.w * 0.45, height: C.w * 0.05))
             majorLabel.textColor = C.blueishColor
@@ -94,7 +102,7 @@ class ProfileViewController: UITableViewController {
             backButton.setTitleColor(C.goldishColor, for: .normal)
             backButton.setTitle("<", for: .normal)
             backButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
-            self.view.addSubview(backButton)
+            //self.view.addSubview(backButton)
             
         }
         else if indexPath.row == 1
@@ -120,7 +128,7 @@ class ProfileViewController: UITableViewController {
                 let friendImage1 = UIImageView(frame:CGRect(x: C.w * 0.45, y: C.h * 0.02, width: C.h * 0.06, height: C.h * 0.06))
                 friendImage1.layer.cornerRadius = friendImage1.frame.size.width / 2;
                 friendImage1.clipsToBounds = true;
-                friendImage1.image = UIImage(named: "sample_prof")
+                //friendImage1.image = UIImage(named: "sample_prof")
                 cell.addSubview(friendImage1)
             }
             if C.user.numFriends > 1
@@ -128,7 +136,7 @@ class ProfileViewController: UITableViewController {
                 let friendImage2 = UIImageView(frame:CGRect(x: C.w * 0.475 + C.h * 0.06, y: C.h * 0.02, width: C.h * 0.06, height: C.h * 0.06))
                 friendImage2.layer.cornerRadius = friendImage2.frame.size.width / 2;
                 friendImage2.clipsToBounds = true;
-                friendImage2.image = UIImage(named: "sample_prof")
+                //friendImage2.image = UIImage(named: "sample_prof")
                 cell.addSubview(friendImage2)
             }
             if C.user.numFriends > 2
@@ -136,7 +144,7 @@ class ProfileViewController: UITableViewController {
                 let friendImage3 = UIImageView(frame:CGRect(x: C.w * 0.5 + C.h * 0.12, y: C.h * 0.02, width: C.h * 0.06, height: C.h * 0.06))
                 friendImage3.layer.cornerRadius = friendImage3.frame.size.width / 2;
                 friendImage3.clipsToBounds = true;
-                friendImage3.image = UIImage(named: "sample_prof")
+                //friendImage3.image = UIImage(named: "sample_prof")
                 cell.addSubview(friendImage3)
             }
             if C.user.numFriends > 3
@@ -217,6 +225,11 @@ class ProfileViewController: UITableViewController {
     {
         
     }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 0.0
+    }
+    
     
     @objc func backClick()
     {

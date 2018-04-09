@@ -10,9 +10,6 @@ import UIKit
 
 class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     var tableView: UITableView!
-    var mapButton: UIButton!
-    var eventsButton: UIButton!
-    var spottButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView = UITableView(frame: CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.85))
@@ -22,13 +19,19 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.tableView.rowHeight = C.h*0.2
         tableView.allowsSelection = false;
         self.tableView.separatorColor = UIColor.white
-        self.view.addSubview(tableView)
+        //self.view.addSubview(tableView)
         let locationLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.1))
         locationLabel.textAlignment = .center
         locationLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
-        locationLabel.text = "friday, march 3"
+        locationLabel.text = "events"
         self.view.addSubview(locationLabel)
-        addNav()
+        
+        let comingSoonLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        comingSoonLabel.center = CGPoint(x: C.w*0.5, y: C.h*0.5)
+        comingSoonLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
+        comingSoonLabel.text = "events are coming soon."
+        comingSoonLabel.textAlignment = .center
+        self.view.addSubview(comingSoonLabel)
         
         //        self.navigationController?.navigationBar.titleTextAttributes =
         //            [NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 27)!,
@@ -52,62 +55,7 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func addNav()
-    {
-        self.spottButton = UIButton(type: UIButtonType.custom) as UIButton
-        self.mapButton = UIButton(type: UIButtonType.custom) as UIButton
-        self.eventsButton = UIButton(type: UIButtonType.custom) as UIButton
-        let mImage = UIImage(named: "MapIcon") as UIImage?
-        mapButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
-        mapButton.center = CGPoint(x: C.w*0.5, y: C.h*0.95)
-        mapButton.setImage(mImage, for: .normal)
-        mapButton.backgroundColor = UIColor.white
-        mapButton.layer.cornerRadius = mapButton.frame.width/2
-        mapButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
-        mapButton.clipsToBounds = true
-        mapButton.addTarget(self, action: #selector(clickMap), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(mapButton)
-        
-        var eImage = UIImage(named: "EventsIcon") as UIImage?
-        eImage = eImage?.withRenderingMode(.alwaysTemplate)
-        eventsButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
-        eventsButton.center = CGPoint(x: C.w*0.25, y: C.h*0.95)
-        eventsButton.setImage(eImage, for: .normal)
-        eventsButton.backgroundColor = UIColor.white
-        eventsButton.imageView?.tintColor = C.eventLightBlueColor
-        eventsButton.layer.cornerRadius = mapButton.frame.width/2
-        eventsButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
-        eventsButton.clipsToBounds = true
-        eventsButton.addTarget(self, action: #selector(clickEvents), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(eventsButton)
-        
-        let sImage = UIImage(named: "PeopleIcon") as UIImage?
-        spottButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.1, height: C.w * 0.1)
-        spottButton.center = CGPoint(x: C.w*0.75, y: C.h*0.95)
-        spottButton.backgroundColor = UIColor.white
-        spottButton.layer.cornerRadius = mapButton.frame.width/2
-        spottButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
-        spottButton.setImage(sImage, for: .normal)
-        spottButton.clipsToBounds = true
-        spottButton.addTarget(self, action: #selector(clickSpott), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(spottButton)
-        
-    }
-    
-    @objc func clickMap ()
-    {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func clickSpott()
-    {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func clickEvents()
-    {
-    }
+   
     
 }
 

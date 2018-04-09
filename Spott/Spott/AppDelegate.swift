@@ -30,9 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         C.regLibrary.latitude = 41.792212
         C.regLibrary.longitude = -87.599573
         C.regLibrary.name = "Reg Library"
-        C.regLibrary.friends_num = 11
-        C.regLibrary.potentials = 11
-        C.regLibrary.population_num = 123
+        C.regLibrary.numFriends = 11
+        C.regLibrary.numPotentials = 11
+        C.regLibrary.numPopulation = 123
         
         let physStudyGroup = Event()
         physStudyGroup.potentials = 7
@@ -62,17 +62,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let geoJSONURL = Bundle.main.url(forResource: "map", withExtension: "geojson")
         C.features = try! Features.fromGeoJSON(geoJSONURL!)
         
+        if Auth.auth().currentUser != nil
+        {
+            try! Auth.auth().signOut()
+        }
         
-//        if Auth.auth().currentUser != nil
-//        {
-//            try! Auth.auth().signOut()
-//        }
-//
         if Auth.auth().currentUser != nil
         {
             Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
+                        try! Auth.auth().signOut()
+                        let initialViewController = LoginViewController()
+                        //initialViewController.view.backgroundColor = C.darkColor
+                        self.window = UIWindow(frame: UIScreen.main.bounds)
+                        C.w = self.window?.frame.width
+                        C.h = self.window?.frame.height
+                        self.window?.rootViewController = initialViewController
+                        self.window?.makeKeyAndVisible()
                     } else {
                         print("Recieved documents")
                         for document in querySnapshot!.documents {

@@ -18,7 +18,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     var passwordField: UITextField!
     var rePasswordField: UITextField!
     var majorField: UITextField!
-    //var genderField: UITextField!
+    var ageField: UITextField!
     var whoField1: UITextField!
     var whoField2: UITextField!
     var whoField3: UITextField!
@@ -28,6 +28,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     var whatField3: UITextField!
     var ch: CGFloat!
     var cw: CGFloat!
+    var dateFormate = Bool()
     var profileImageView: UIImageView!
     var majors = ["Computer Science", "Economics"]
     let db = Firestore.firestore()
@@ -61,7 +62,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 9
+        return 10
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
@@ -211,30 +212,28 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             homeField.autocapitalizationType = .none
             cell.addSubview(homeField)
         }
-//        else if indexPath.row == 6
-//        {
-//            let genderLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
-//            genderLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-//            genderLabel.textColor = C.darkColor
-//            genderLabel.text="Gender:"
-//            genderLabel.textAlignment = .right
-//            cell.addSubview(genderLabel)
-//
-//            genderField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
-//            genderField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
-//            genderField.returnKeyType = UIReturnKeyType.done
-//            genderField.text = "None"
-//            genderField.tintColor = .clear
-//            genderField.delegate = self
-//            genderField.backgroundColor = UIColor.white
-//            genderField.borderStyle = UITextBorderStyle.roundedRect
-//
-//            let pickerView = SignUpPickerView(frame: CGRect.zero, field:genderField, type: 2)
-//            genderField.inputView = pickerView
-//
-//            cell.addSubview(genderField)
-//        }
         else if indexPath.row == 6
+        {
+            let ageLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
+            ageLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
+            ageLabel.textColor = C.darkColor
+            ageLabel.text="DOB:"
+            ageLabel.textAlignment = .right
+            cell.addSubview(ageLabel)
+
+            ageField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
+            ageField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
+            ageField.placeholder = "MM-DD-YY"
+            ageField.returnKeyType = UIReturnKeyType.done
+            ageField.tintColor = .black
+            ageField.delegate = self
+            ageField.backgroundColor = UIColor.white
+            ageField.borderStyle = UITextBorderStyle.roundedRect
+            ageField.tag = 1
+
+            cell.addSubview(ageField)
+        }
+        else if indexPath.row == 7
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.25, y: ch*0.01, width: cw * 0.5, height: ch * 0.06))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
@@ -270,7 +269,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             profileImageView.layer.borderWidth = 1.0 as CGFloat
             profileImageView.layer.borderColor = C.goldishColor.cgColor
         }
-        else if indexPath.row == 7
+        else if indexPath.row == 8
         {
             let titleLabel = UILabel(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.4, height: ch * 0.04))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 16.0)
@@ -359,7 +358,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             cell.addSubview(whoField3)
             
         }
-        else if indexPath.row == 8
+        else if indexPath.row == 9
         {
             let signUpButton = UIButton(type: .system)
             signUpButton.frame = cell.frame
@@ -378,11 +377,11 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         {
             return ch*0.2
         }
-        if indexPath.row == 7
+        if indexPath.row == 8
         {
             return ch*0.25
         }
-        if indexPath.row == 6
+        if indexPath.row == 7
         {
             return ch*0.5
         }
@@ -527,6 +526,8 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         })
 
     }
+    
+    
     func addUserInfo()
     {
         if Auth.auth().currentUser != nil
@@ -550,7 +551,8 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 "curLoc" : -1,
                 "longitude" : 0,
                 "latitude" : 0,
-                "spotted" : []
+                "spotted" : [],
+                "dob" : self.ageField.text!
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -590,6 +592,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         data = UIImageJPEGRepresentation(profileImageView.image!, 0.8)!
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpg"
+        
         let uploadTask = profileRef.putData(data, metadata: metaData){(metaData,error) in
             if let error = error {
                 print(error.localizedDescription)
@@ -599,7 +602,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 let downloadURL = "gs://"+metaData!.bucket+"/profilePictures/"+metaData!.name!
                 //store downloadURL at database
                 C.user.image = self.profileImageView.image!
-                C.db.collection("user_info").document(C.refid).updateData(["profilePicture": downloadURL])
+                C.db.collection("user_info").document(ref).updateData(["profilePicture": downloadURL])
             }
             
         }
@@ -607,9 +610,43 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
 }
 
 extension SignUpViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        if textField.tag == 1 {
+            //2. this one helps to make sure that user enters only numeric characters and '-' in fields
+            let numbersOnly = CharacterSet(charactersIn: "1234567890-")
+            
+            let Validate = string.rangeOfCharacter(from: numbersOnly.inverted) == nil ? true : false
+            if !Validate {
+                return false;
+            }
+            if range.length + range.location > (textField.text?.characters.count)! {
+                return false
+            }
+            let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+            if newLength == 3 || newLength == 6 {
+                let  char = string.cString(using: String.Encoding.utf8)!
+                let isBackSpace = strcmp(char, "\\b")
+                
+                if (isBackSpace == -92) {
+                    dateFormate = false;
+                }else{
+                    dateFormate = true;
+                }
+                
+                if dateFormate {
+                    let textContent:String!
+                    textContent = textField.text
+                    //3.Here we add '-' on overself.
+                    let textWithHifen:String = "\(textContent!)-" as String
+                    textField.text = textWithHifen
+                    dateFormate = false
+                }
+            }
+            //4. this one helps to make sure only 8 character is added in textfield .(ie: dd-mm-yy)
+            return newLength <= 8;
+            
+        }
         if textField.tintColor == .clear
         {
             return false
@@ -621,16 +658,17 @@ extension SignUpViewController: UITextFieldDelegate {
                 return false
             }
             let newLength = currentCharacterCount + string.count - range.length
-            return newLength <= 16
+            return newLength <= 30
         }
     }
     
 }
 
-class SignUpPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource{
+class SignUpPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource {
     
     
-    var majors = ["Computer Science", "Economics"]
+    var majors =
+        ["American Sign Language", "Anthropology", "Art History", "Arts", "Astronomy and Astrophysics", "Big Problems", "Biological Chemistry", "Biological Sciences", "Cancer Biology", "Cellular and Molecular Biology", "Ecology and Evolution", "Endocrinology", "Genetics", "Immunology", "Microbiology", "Neuroscience", "Chemistry", "Chicago Studies", "Cinema and Media Studies", "Classical Studies", "Language and Literature", "Language Intensive", "Greek and Roman Cultures", "Comparative Human Development", "Comparative Literature", "Comparative Race and Ethnic Studies", "Computational Neuroscience", "Computer Science", "Creative Writing", "Early Christian Literature", "East Asian Languages and Civilizations", "Chinese", "Japanese", "Korean", "Economics", "Education", "Education Profession", "English and Creative Writing", "English Language and Literature", "Environmental Science", "Environmental and Urban Studies", "Fundamentals: Issues and Texts", "Gender and Sexuality Studies", "Geographical Studies", "Geophysical Sciences", "Germanic Studies", "Health Professions", "History", "History", "Philosophy", "Social Studies of Science and Medicine", "(HIPS)", "Human Rights", "Humanities", "International Studies", "Jewish Studies", "Journalism", "Latin American Studies", "Law", "Letters", "and Society", "Linguistics", "Languages in Linguistics", "Swahili", "Mathematics", "Applied Mathematics", "Mathematics with a Specialization in Economics", "Medicine", "Medieval Studies", "Molecular Engineering", "Music", "Near Eastern Languages and Civilizations", "Near Eastern Art and Archaeology", "Near Eastern History and Civilization", "Norwegian Studies", "Philosophy", "Philosophy and Allied Fields", "Physics", "Political Science", "Psychology", "Public Policy Studies", "Public and Social Service", "Religion and the Humanities", "Religious Studies", "Romance Languages and Literatures", "Science and Technology", "Slavic Languages and Literatures", "Social Service Administration", "Sociology", "South Asian Languages and Civilizations", "Statistics", "BA/MS", "Theater and Performance Studies", "Tutorial Studies", "Visual Arts"]
     var genders = ["Male", "Female", "Other"]
     var field: UITextField!
     var type: Int!

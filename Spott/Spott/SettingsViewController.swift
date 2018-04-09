@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import FirebaseAuth
 import Firebase
+import FirebaseStorage
 class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIPickerViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var emailField: UITextField!
@@ -17,7 +18,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
     var passwordField: UITextField!
     var rePasswordField: UITextField!
     var majorField: UITextField!
-    var genderField: UITextField!
+    var ageField: UITextField!
     var whoField1: UITextField!
     var whoField2: UITextField!
     var whoField3: UITextField!
@@ -26,7 +27,9 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
     var whatField2: UITextField!
     var whatField3: UITextField!
     var ch: CGFloat!
+    var changedPic = 0
     var cw: CGFloat!
+    var dateFormate = Bool()
     var profileImageView: UIImageView!
     var majors = ["Computer Science", "Economics"]
     let db = Firestore.firestore()
@@ -56,11 +59,13 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
         whoField3 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.18, width: cw*0.4, height: ch*0.04));
         profileImageView = UIImageView(frame: CGRect(x: cw*0.5 - ch * 0.15, y: ch*0.15, width: ch*0.3, height: ch*0.3))
         homeField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
+        ageField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        changedPic = 0
         self.tableView.reloadData()
     }
     
@@ -230,27 +235,24 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
         }
         else if indexPath.row == 6
         {
-            let genderLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
-            genderLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            genderLabel.textColor = C.darkColor
-            genderLabel.text="Gender:"
-            genderLabel.textAlignment = .right
-            cell.addSubview(genderLabel)
+            let ageLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
+            ageLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
+            ageLabel.textColor = C.darkColor
+            ageLabel.text="DOB:"
+            ageLabel.textAlignment = .right
+            cell.addSubview(ageLabel)
             
-            genderField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
-            genderField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
-            genderField.returnKeyType = UIReturnKeyType.done
-            genderField.text = "None"
-            genderField.tintColor = .clear
-            genderField.delegate = self
-            genderField.backgroundColor = UIColor.white
-            genderField.borderStyle = UITextBorderStyle.roundedRect
-            genderField.text = C.user.gender
+            ageField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
+            ageField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
+            ageField.returnKeyType = UIReturnKeyType.done
+            ageField.tintColor = .black
+            ageField.delegate = self
+            ageField.text = C.user.dob
+            ageField.backgroundColor = UIColor.white
+            ageField.borderStyle = UITextBorderStyle.roundedRect
+            ageField.tag = 1
             
-            let pickerView = SignUpPickerView(frame: CGRect.zero, field:genderField, type: 2)
-            genderField.inputView = pickerView
-            
-            cell.addSubview(genderField)
+            cell.addSubview(ageField)
         }
         else if indexPath.row == 7
         {
@@ -283,7 +285,10 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             cameraRollButton.addTarget(self, action: #selector(cameraRollClick), for: UIControlEvents.touchUpInside)
             cell.addSubview(cameraRollButton)
             
-            profileImageView.image = UIImage(named: "sample_prof")
+            if changedPic == 0
+            {
+                    profileImageView.image = C.user.image
+            }
             cell.addSubview(profileImageView)
             profileImageView.layer.borderWidth = 1.0 as CGFloat
             profileImageView.layer.borderColor = C.goldishColor.cgColor
@@ -461,6 +466,16 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
         }
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            profileImageView.contentMode = .scaleAspectFit
+            profileImageView.image = pickedImage
+            changedPic = 1
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc func logoutClick()
     {
         if Auth.auth().currentUser != nil
@@ -542,8 +557,14 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             self.present(alert, animated: true, completion: nil)
             return
         }
+        
+        if changedPic == 1
+        {
+            uploadProfilePicture(ref: C.refid)
+        }
+        
         db.collection("user_info").document(C.refid).updateData([
-            "gender" : self.genderField.text!,
+            "dob" : self.ageField.text!,
             "name" : self.nameField.text!,
             "who1" : self.whoField1.text!,
             "who2" : self.whoField2.text!,
@@ -563,6 +584,29 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
         }
         
     }
+    
+    func uploadProfilePicture(ref: String)
+    {
+        let profileRef = C.stoRef.child("profilePictures/\(ref).jpg")
+        var data = Data()
+        data = UIImageJPEGRepresentation(profileImageView.image!, 0.8)!
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        let uploadTask = profileRef.putData(data, metadata: metaData){(metaData,error) in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }else{
+                //store downloadURL
+                let downloadURL = "gs://"+metaData!.bucket+"/profilePictures/"+metaData!.name!
+                //store downloadURL at database
+                C.user.image = self.profileImageView.image!
+                C.db.collection("user_info").document(C.refid).updateData(["profilePicture": downloadURL])
+            }
+            
+        }
+    }
+    
     func updateUserData()
     {
         let docRef = db.collection("user_info").document(C.refid)
@@ -581,9 +625,43 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
 }
 
 extension SettingsViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        if textField.tag == 1 {
+            //2. this one helps to make sure that user enters only numeric characters and '-' in fields
+            let numbersOnly = CharacterSet(charactersIn: "1234567890-")
+            
+            let Validate = string.rangeOfCharacter(from: numbersOnly.inverted) == nil ? true : false
+            if !Validate {
+                return false;
+            }
+            if range.length + range.location > (textField.text?.characters.count)! {
+                return false
+            }
+            let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+            if newLength == 3 || newLength == 6 {
+                let  char = string.cString(using: String.Encoding.utf8)!
+                let isBackSpace = strcmp(char, "\\b")
+                
+                if (isBackSpace == -92) {
+                    dateFormate = false;
+                }else{
+                    dateFormate = true;
+                }
+                
+                if dateFormate {
+                    let textContent:String!
+                    textContent = textField.text
+                    //3.Here we add '-' on overself.
+                    let textWithHifen:String = "\(textContent!)-" as String
+                    textField.text = textWithHifen
+                    dateFormate = false
+                }
+            }
+            //4. this one helps to make sure only 8 character is added in textfield .(ie: dd-mm-yy)
+            return newLength <= 8;
+            
+        }
         if textField.tintColor == .clear
         {
             return false
@@ -595,15 +673,17 @@ extension SettingsViewController: UITextFieldDelegate {
                 return false
             }
             let newLength = currentCharacterCount + string.count - range.length
-            return newLength <= 16
+            return newLength <= 30
         }
     }
     
 }
+
 class SettingsPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSource{
     
     
-    var majors = ["Computer Science", "Economics"]
+    var majors =
+        ["American Sign Language", "Anthropology", "Art History", "Arts", "Astronomy and Astrophysics", "Big Problems", "Biological Chemistry", "Biological Sciences", "Cancer Biology", "Cellular and Molecular Biology", "Ecology and Evolution", "Endocrinology", "Genetics", "Immunology", "Microbiology", "Neuroscience", "Chemistry", "Chicago Studies", "Cinema and Media Studies", "Classical Studies", "Language and Literature", "Language Intensive", "Greek and Roman Cultures", "Comparative Human Development", "Comparative Literature", "Comparative Race and Ethnic Studies", "Computational Neuroscience", "Computer Science", "Creative Writing", "Early Christian Literature", "East Asian Languages and Civilizations", "Chinese", "Japanese", "Korean", "Economics", "Education", "Education Profession", "English and Creative Writing", "English Language and Literature", "Environmental Science", "Environmental and Urban Studies", "Fundamentals: Issues and Texts", "Gender and Sexuality Studies", "Geographical Studies", "Geophysical Sciences", "Germanic Studies", "Health Professions", "History", "History", "Philosophy", "Social Studies of Science and Medicine", "(HIPS)", "Human Rights", "Humanities", "International Studies", "Jewish Studies", "Journalism", "Latin American Studies", "Law", "Letters", "and Society", "Linguistics", "Languages in Linguistics", "Swahili", "Mathematics", "Applied Mathematics", "Mathematics with a Specialization in Economics", "Medicine", "Medieval Studies", "Molecular Engineering", "Music", "Near Eastern Languages and Civilizations", "Near Eastern Art and Archaeology", "Near Eastern History and Civilization", "Norwegian Studies", "Philosophy", "Philosophy and Allied Fields", "Physics", "Political Science", "Psychology", "Public Policy Studies", "Public and Social Service", "Religion and the Humanities", "Religious Studies", "Romance Languages and Literatures", "Science and Technology", "Slavic Languages and Literatures", "Social Service Administration", "Sociology", "South Asian Languages and Civilizations", "Statistics", "BA/MS", "Theater and Performance Studies", "Tutorial Studies", "Visual Arts"]
     var genders = ["Male", "Female", "Other"]
     var field: UITextField!
     var type: Int!
