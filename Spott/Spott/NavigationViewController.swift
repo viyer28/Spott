@@ -241,6 +241,12 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             }
             
         }
+        
+        if (NSDate().timeIntervalSince(C.lastLocationUpdate as Date) > 30)
+        {
+            C.updateLocations()
+            C.lastLocationUpdate = NSDate()
+        }
         //let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         
         //mapvc.mapView.setRegion(region, animated: false)

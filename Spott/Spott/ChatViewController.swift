@@ -60,7 +60,7 @@ class ChatViewController: JSQMessagesViewController
                 }
                 for document in querySnapshot!.documents {
                     self.docid = document.documentID
-                    let query = C.dbChat.document(self.docid).addSnapshotListener { documentSnapshot, error in
+                    let _ = C.dbChat.document(self.docid).addSnapshotListener { documentSnapshot, error in
                         guard let document = documentSnapshot else {
                             print("Error fetching document: \(error!)")
                             return
@@ -85,7 +85,7 @@ class ChatViewController: JSQMessagesViewController
                 }
                 for document in querySnapshot!.documents {
                     self.docid = document.documentID
-                    let query = C.dbChat.document(self.docid).addSnapshotListener { documentSnapshot, error in
+                    _ = C.dbChat.document(self.docid).addSnapshotListener { documentSnapshot, error in
                         guard let document = documentSnapshot else {
                             print("Error fetching document: \(error!)")
                             return
@@ -113,7 +113,7 @@ class ChatViewController: JSQMessagesViewController
         }
         self.messagesDict = []
         self.docid = ref?.documentID
-        let query = C.dbChat.document(docid).addSnapshotListener { documentSnapshot, error in
+        let _ = C.dbChat.document(docid).addSnapshotListener { documentSnapshot, error in
             guard let document = documentSnapshot else {
                 print("Error fetching document: \(error!)")
                 return
@@ -192,7 +192,7 @@ class ChatViewController: JSQMessagesViewController
     {
         
         let message = ["sender": senderId, "message": text]
-        messagesDict.append(message)
+        messagesDict.append(message as Any as! [String : Any])
         
         C.dbChat.document(docid).updateData(["messages":messagesDict])
         

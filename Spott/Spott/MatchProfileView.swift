@@ -61,7 +61,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             view.layer.insertSublayer(gradient, at: 0)
             cell.addSubview(profileImageView)
             
-            let nameLabel = UILabel(frame: CGRect(x: tw*0.02, y: tw*0.7, width: tw * 0.28, height: tw * 0.13))
+            let nameLabel = UILabel(frame: CGRect(x: tw*0.02, y: tw*0.75, width: tw * 0.48, height: tw * 0.2))
             nameLabel.font = UIFont(name: "FuturaPT-Light", size: 28.0)
             nameLabel.text = self.user.name
             cell.addSubview(nameLabel)

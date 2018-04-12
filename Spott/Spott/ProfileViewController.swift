@@ -9,17 +9,19 @@
 
 import UIKit
 
-class ProfileViewController: UITableViewController {
+class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var top: CGFloat!
     var friends = 123
     var age = 21
     var location = "Chicago, IL"
+    var tableView: UITableView!
     let centerButton = UIButton(type: UIButtonType.custom) as UIButton
     override func viewDidLoad() {
         
         super.viewDidLoad()
         //self.head
-        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h))
+        //self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tableView.allowsSelection = false;
         self.tableView.separatorColor = C.goldishColor
         tableView.separatorInset = UIEdgeInsets.zero;
@@ -32,17 +34,18 @@ class ProfileViewController: UITableViewController {
         centerButton.center = CGPoint(x: C.w*0.5, y: C.h*0.9)
         centerButton.setImage(UIImage(named: "centerUser"), for: .normal)
         centerButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
-        self.tableView.addSubview(centerButton)
+        self.view.addSubview(tableView)
+        self.view.addSubview(centerButton)
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.tableView.reloadData()
     }
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
         cell.separatorInset = UIEdgeInsets.zero;
         
@@ -60,7 +63,7 @@ class ProfileViewController: UITableViewController {
             view.layer.insertSublayer(gradient, at: 0)
             cell.addSubview(profileImageView)
             
-            let nameLabel = UILabel(frame: CGRect(x: C.w*0.02, y: C.w*0.75, width: C.w * 0.28, height: C.w * 0.08))
+            let nameLabel = UILabel(frame: CGRect(x: C.w*0.02, y: C.w*0.75, width: C.w * 0.48, height: C.w * 0.2))
             nameLabel.font = UIFont(name: "FuturaPT-Light", size: 32.0)
             nameLabel.text=C.user.name
             cell.addSubview(nameLabel)
@@ -195,7 +198,7 @@ class ProfileViewController: UITableViewController {
         //cell.textLabel!.text = "foo"
         return cell
     }
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0
         {
             return C.w
@@ -210,7 +213,7 @@ class ProfileViewController: UITableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0
         {
             return C.h*0.5
@@ -221,12 +224,12 @@ class ProfileViewController: UITableViewController {
         }
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 0.0
     }
     

@@ -130,7 +130,14 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     }
     func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
         // Instantiate and return our custom callout view.
-        mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).move == 1
+        {
+            mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        }
+        else if annotation.isKind(of: MapAnnotation.self)
+        {
+            (annotation as! MapAnnotation).move = 1
+        }
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
         {
             C.navigationViewController.eventsButton.isHidden = true
@@ -163,6 +170,27 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     {
         mapView.centerCoordinate = C.navigationViewController.userLocation.coordinate
         self.centerButton.isHidden = true
+        
+        
+        var anno: MGLAnnotation! = nil
+        if (C.user.curLoc != -1)
+        {
+            for a in self.mapView.annotations!
+            {
+                if a.isKind(of: MapAnnotation.self) && (a as! MapAnnotation).type == 0 && (a as! MapAnnotation).location.id == C.user.curLoc
+                {
+                    anno = a
+                }
+            }
+        }
+        if anno.isKind(of: MapAnnotation.self)
+        {
+            (anno as! MapAnnotation).move = 0
+        }
+        if anno != nil
+        {
+            self.mapView.selectAnnotation(anno, animated: true)
+        }
     }
     
     @objc func showFriends ()

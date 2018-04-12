@@ -124,6 +124,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         C.refid = document.documentID
                         C.userData = document.data()
                         C.updateUser()
+                        C.updateLocations()
+                        //C.addUserListener()
                         C.navigationViewController = NavigationViewController()
                         C.profileViewController = ProfileViewController()
                         let initialViewController = C.navigationViewController

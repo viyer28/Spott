@@ -61,11 +61,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let geoJSONURL = Bundle.main.url(forResource: "map", withExtension: "geojson")
         C.features = try! Features.fromGeoJSON(geoJSONURL!)
-        
-        if Auth.auth().currentUser != nil
-        {
-            try! Auth.auth().signOut()
-        }
+//        
+//        if Auth.auth().currentUser != nil
+//        {
+//            try! Auth.auth().signOut()
+//        }
         
         if Auth.auth().currentUser != nil
         {
@@ -88,6 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             C.userData = document.data()
                             C.updateUser()
                             C.updateLocations()
+                            //C.addUserListener()
                             //initialViewController.view.backgroundColor = C.darkColor
                             self.window = UIWindow(frame: UIScreen.main.bounds)
                             C.w = self.window?.frame.width

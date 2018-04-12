@@ -13,6 +13,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     var titleLabel: UILabel!
     var current: [User] = []
     var sliderInt = 0
+    var noOneLabel : UILabel!
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
     }
@@ -26,6 +27,12 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: self.view.frame.width * 0.1, bottom: 0, right: self.view.frame.width * 0.1)
         flowLayout.itemSize = CGSize(width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3)
 
+        self.noOneLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        noOneLabel.center = CGPoint(x: C.w*0.5, y: C.h*0.5)
+        noOneLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
+        noOneLabel.text = "There is no one to spott here."
+        noOneLabel.textAlignment = .center
+        
         self.collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         self.collectionView!.backgroundColor = UIColor.white.withAlphaComponent(0)
         self.collectionView!.showsHorizontalScrollIndicator = false;
@@ -33,6 +40,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         self.collectionView!.delegate = self;
         self.collectionView!.dataSource = self;
         self.view.addSubview(self.collectionView!)
+        self.view.addSubview(noOneLabel)
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
          print(1)
         
@@ -53,6 +61,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     
     override func viewDidAppear(_ animated: Bool) {
         C.updateSpottsAtUserLoc()
+        C.updateUserSpotted()
     }
     
     override func didReceiveMemoryWarning() {
@@ -67,6 +76,14 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
+        if current.count == 0
+        {
+            self.noOneLabel.isHidden = false
+        }
+        else
+        {
+            self.noOneLabel.isHidden = true
+        }
         return current.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -87,26 +104,44 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     @objc func touch(_ button: UIButton)
     {
         let path = button.tag
-        if self.sliderInt == 1
+        let userSpotted = C.user.spotted
+        if self.sliderInt != 0
         {
+            if C.user.spotted.count <= path
+            {
+                return
+            }
             C.db.collection("user_info").document(C.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
-                    friends.append(C.user.spotted[path].id)
-                    C.db.collection("user_info").document(C.refid).updateData(["friends" : friends])
-                    C.user.friends.append((C.user.spotted[path]))
-                    C.user.spotted.remove(at: path)
+                    friends.append(userSpotted![path].id)
+                    var spotted : [String] = data!["friends"] as! [String]
+                    var i = -1
+                    for s in spotted
+                    {
+                        if s == userSpotted![path].id
+                        {
+                            i = spotted.index(of: s)!
+                        }
+                    }
+                    if i > -1
+                    {
+                        spotted.remove(at: i)
+                    }
+                    C.db.collection("user_info").document(C.refid).updateData(["friends" : friends, "spotted" : spotted])
+                    C.user.friends.append((userSpotted![path]))
                 } else {
                     print("Document does not exist")
                 }
             }
             let f = C.user.spotted[path]
+            C.user.spotted.remove(at: path)
             C.db.collection("user_info").document(f.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
-                    friends.append(C.user.spotted[path].id)
+                    friends.append(C.user.id)
                     C.db.collection("user_info").document(f.refid).updateData(["friends" : friends])
                 } else {
                     print("Document does not exist")
@@ -120,7 +155,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                 if let document = document {
                     let data = document.data()
                     var spotted : [String] = data!["spotted"] as! [String]
-                    spotted.append(C.currentLocation.spotts[path].id)
+                    spotted.append(C.user.id)
                     C.currentLocation.spotts.remove(at: path)
                     C.db.collection("user_info").document(f.refid).updateData(["spotted" : spotted])
                 } else {
@@ -141,7 +176,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
-                    friends.append(C.user.spotted[indexPath.row].id)
+                    friends.append(C.user.spotted[indexPath.section].id)
                     C.db.collection("user_info").document(C.refid).updateData(["friends" : friends])
                     C.user.friends.append((C.user.spotted[indexPath.row]))
                     C.user.spotted.remove(at: indexPath.row)
@@ -154,7 +189,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
-                    friends.append(C.user.spotted[indexPath.row].id)
+                    friends.append(C.user.spotted[indexPath.section].id)
                     C.db.collection("user_info").document(f.refid).updateData(["friends" : friends, "spotted": C.user.spotted])
                 } else {
                     print("Document does not exist")
@@ -169,8 +204,8 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                 if let document = document {
                     let data = document.data()
                     var spotted : [String] = data!["spotted"] as! [String]
-                    spotted.append(C.currentLocation.spotts[indexPath.row].id)
-                    C.currentLocation.spotts.remove(at: indexPath.row)
+                    spotted.append(C.currentLocation.spotts[indexPath.section].id)
+                    C.currentLocation.spotts.remove(at: indexPath.section)
                     C.db.collection("user_info").document(f.refid).updateData(["spotted" : spotted])
                 } else {
                     print("Document does not exist")
@@ -189,8 +224,10 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
             current = C.user.spotted
             self.sliderInt = 1
             self.collectionView?.reloadData()
+            self.noOneLabel.text = "No one has spotted you."
         default:
             self.titleLabel.text = "Spott"
+            self.noOneLabel.text = "There is no one to spott here."
             current = C.currentLocation.spotts
             self.sliderInt = 0
             self.collectionView?.reloadData()

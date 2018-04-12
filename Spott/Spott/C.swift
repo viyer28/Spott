@@ -21,10 +21,13 @@ class C: NSObject {
     static var lightColor = UIColor(red:232.0/255.0, green:233.0/255.0, blue:235.0/255.0, alpha:1.0)
     static var goldishColor = UIColor(red:213.0/255.0, green:177.0/255.0, blue:132.0/255.0, alpha:1.0)
     static var blueishColor = UIColor(red:70.0/255.0, green:178.0/255.0, blue:199.0/255.0, alpha:1.0)
+    static var greenishColor = UIColor(red:58.0/255.0, green:215.0/255.0, blue:197.0/255.0, alpha:1.0)
+    static var redishColor = UIColor(red:222.0/255.0, green:43.0/255.0, blue:105.0/255.0, alpha:1.0)
     static var regLibrary = Location()
     static var currentLocation = Location()
     static var totalPopulation = 1
     static var user = User()
+    static var lastLocationUpdate = NSDate()
     static var events: [Event] = []
     static var locations: [Location] = []
     static var eventDarkBlueColor = UIColor(red:0/255.0, green:144.0/255.0, blue:170.0/255.0, alpha:1.0)
@@ -40,8 +43,7 @@ class C: NSObject {
     static var navigationViewController = NavigationViewController(transitionStyle: UIPageViewControllerTransitionStyle.scroll,
                                                                    navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal,
                                                                    options: nil)
-    static var
-    profileViewController = ProfileViewController()
+    static var profileViewController = ProfileViewController()
     static var features: [Feature]!
     
     static func updateLocations()
@@ -127,7 +129,7 @@ class C: NSObject {
                 else if document.documentID as! String != C.refid
                 {
                     potentials += 1
-                    sp.append(parseUser(document: document))
+                    //sp.append(parseUser(document: document))
                 }
             }
         }
@@ -197,6 +199,19 @@ class C: NSObject {
         return false
     }
     
+//    static func addUserListener()
+//    {
+//        db.collection("user_info").document(C.refid)
+//            .addSnapshotListener { documentSnapshot, error in
+//                guard let document = documentSnapshot else {
+//                    print("Error fetching document: \(error!)")
+//                    return
+//                }
+//                C.userData = document.data()
+//                C.updateUser()
+//        }
+//    }
+    
     static func updateUser()
     {
         C.user.name = C.userData["name"] as! String
@@ -218,7 +233,8 @@ class C: NSObject {
         {
             yearString = "19" + yearString
         }
-        let birthdayString = C.user.dob[0..<6] + yearString
+        var birthdayString = C.user.dob[0..<6] + yearString
+        birthdayString = birthdayString.replacingOccurrences(of: "-", with: "–")
         let birthdate = dateFormatter.date(from: birthdayString)
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)
@@ -252,7 +268,7 @@ class C: NSObject {
         {
             C.user.hometown = C.userData["hometown"] as! String
         }
-        if C.userData["profilePicture"] != nil
+        if C.userData["profilePicture"] != nil && C.user.profilePictureURL != C.userData["profilePicture"] as! String
             
         {
             C.storage.reference(forURL: C.userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
@@ -267,38 +283,78 @@ class C: NSObject {
         C.user.spotted = []
         C.user.major = C.userData["major"] as! String
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
-        updateSpotted(user: C.user, spotted: C.userData["spotted"] as! [String])
+        updateSpotted(spotted: C.userData["spotted"] as! [String])
     }
     
-    static func updateSpotted(user: User, spotted: [String])
+    static func updateSpotted(spotted: [String])
     {
         var spotted_userData: Dictionary<String, Any>!
+        let oldSpotted = C.user.spotted
         C.user.spotted = []
         for spott in spotted {
             var f = User()
-            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
-                if let err = err {
-                    print("Error getting spotted documents: \(err)")
-                } else {
-                    for document in querySnapshot!.documents {
-                        print("\(document.documentID) => \(document.data())")
-                        spotted_userData = document.data()
-                        f = C.parseUser(document: document)
-                        C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
-                            // Create a UIImage, add it to the array
-                            f.image = UIImage(data: data!)
-                        })
-                        updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
-                        
-                        //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+            var old = 0
+            if oldSpotted != nil
+            {
+                for s in oldSpotted!
+                {
+                    if s.id == spott
+                    {
+                        old = 1
+                        C.user.spotted.append(s)
                     }
-                    if (f.name != nil){
-                        user.spotted.append(f)
+                }
+            }
+            if old == 0
+            {
+                Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
+                    if let err = err {
+                        print("Error getting spotted documents: \(err)")
+                    } else {
+                        for document in querySnapshot!.documents {
+                            print("\(document.documentID) => \(document.data())")
+                            spotted_userData = document.data()
+                            f = C.parseUser(document: document)
+                            C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                                // Create a UIImage, add it to the array
+                                f.image = UIImage(data: data!)
+                                if C.navigationViewController.peopleViewController.sliderInt == 1
+                                {
+                                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                }
+                            })
+                            C.user.spotted.append(f)
+                            updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
+                            
+                            //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                        }
+                        if C.navigationViewController.peopleViewController.sliderInt == 1
+                        {
+                            C.navigationViewController.peopleViewController.current = C.user.spotted
+                            C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                        }
+                        print("Recieved Spotted documents")
                     }
-                    print("Recieved Spotted documents")
                 }
             }
         }
+    }
+    
+    
+    static func updateUserSpotted()
+    {
+        let oldSpotted = C.user.spotted
+        C.user.spotted = []
+        Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting user spotted documents: \(err)")
+            } else {
+                let document = querySnapshot!.documents[0]
+                let spottsData = document.data()["spotted"] as! [String]
+                C.updateSpotted(spotted: spottsData)
+            }
+        }
+        
     }
     
     static func updateFriendsofFriend(user: User, friends: [String])
@@ -339,9 +395,26 @@ class C: NSObject {
                             add = 0
                         }
                     }
+                    for s in (data["spotted"] as! [String])
+                    {
+                        if s == C.user.id
+                        {
+                            add = 0
+                        }
+                    }
                     if add == 1
                     {
-                        spotts.append(parseUser(document: document))
+                        let f = parseUser(document: document)
+                        C.storage.reference(forURL: data["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                            // Create a UIImage, add it to the array
+                            f.image = UIImage(data: data!)
+                            spotts.append(f)
+                            if C.navigationViewController.peopleViewController.sliderInt == 0
+                            {
+                                C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                            }
+                        })
+                        spotts.append(f)
                     }
                 }
                 for l in C.locations
@@ -352,8 +425,11 @@ class C: NSObject {
                     }
                 }
                 C.currentLocation.spotts = spotts
-                C.navigationViewController.peopleViewController.current = spotts
-                C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                if C.navigationViewController.peopleViewController.sliderInt == 0
+                {
+                    C.navigationViewController.peopleViewController.current = spotts
+                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                }
             }
         }
     }
@@ -448,7 +524,9 @@ class C: NSObject {
         {
             yearString = "19" + yearString
         }
-        let birthdayString = C.user.dob[0..<6] + yearString
+        
+        var birthdayString = C.user.dob[0..<6] + yearString
+        birthdayString = birthdayString.replacingOccurrences(of: "-", with: "–")
         let birthdate = dateFormatter.date(from: birthdayString)
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)

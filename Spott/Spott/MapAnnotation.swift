@@ -15,6 +15,7 @@ class MapAnnotation : MGLPointAnnotation {
     var type: Int?
     var user: User!
     var location: Location!
+    var move = 1
     override init() {
         super.init()
     }
@@ -175,14 +176,14 @@ class SpottCalloutView: UIView, MGLCalloutView {
         titleLabel.font = UIFont(name: "FuturaPT-Light", size: 36)
         titleLabel.text = representedObject.title!
         
-        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5, titleLabel.intrinsicContentSize.width + C.w*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
-        friendsLabel.textColor = UIColor.green
+        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5,             titleLabel.intrinsicContentSize.width + C.w*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
+        friendsLabel.textColor = C.greenishColor
         friendsLabel.textAlignment = .left
         friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
         friendsLabel.text = String(location.numFriends)
         
         potentialsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5, titleLabel.intrinsicContentSize.width + C.w*0.02), y: friendsLabel.intrinsicContentSize.height, width: C.w*0.2, height: C.h*0.05))
-        potentialsLabel.textColor = UIColor.red
+        potentialsLabel.textColor = C.redishColor
         potentialsLabel.textAlignment = .left
         potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
         potentialsLabel.text = String(location.numPotentials)
@@ -314,6 +315,8 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     }
     
 }
+
+
 
 extension UIView {
     var parentViewController: UIViewController? {

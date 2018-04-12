@@ -448,6 +448,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profileImageView.contentMode = .scaleAspectFit
+            //profileImageView.frame = CGRect(x: cw*0.5 - ch * 0.15, y: ch*0.15, width: ch*0.3, height: ch*0.3)
             profileImageView.image = pickedImage
         }
         
@@ -516,6 +517,40 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             self.present(alert, animated: true, completion: nil)
             return
         }
+        else if ageField.text?.count != 8
+        {
+            let alert = UIAlertController(title: "Cannot Update Information", message: "You have not filled out your age!", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        else if ageField.text?.count == 8
+        {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM–dd–yyyy"
+            var yearString = ageField.text![6...7]
+            let year = Int(yearString)
+            if year! < 18
+            {
+                yearString = "20" + yearString
+            }
+            else
+            {
+                yearString = "19" + yearString
+            }
+            
+            var birthdayString = ageField.text![0..<6] + yearString
+            birthdayString = birthdayString.replacingOccurrences(of: "-", with: "–")
+            let birthdate = dateFormatter.date(from: birthdayString)
+            if birthdate == nil
+            {
+                let alert = UIAlertController(title: "Cannot Update Information", message: "You have entered an invalid age!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+        }
+        
         Auth.auth().createUser(withEmail: emailField.text!, password: passwordField.text!, completion: { (user, error) in
             if error == nil {
                 self.addUserInfo()
@@ -552,7 +587,8 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 "longitude" : 0,
                 "latitude" : 0,
                 "spotted" : [],
-                "dob" : self.ageField.text!
+                "dob" : self.ageField.text!,
+                "profilePicture" : "gs://spott-f60d4.appspot.com/profilePictures/default-profilex3.png"
             ]) { err in
                 if let err = err {
                     print("Error adding document: \(err)")
@@ -573,6 +609,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                         C.userData = document.data()
                         C.updateUser()
                         C.updateLocations()
+                       // C.addUserListener()
                         //initialViewController.view.backgroundColor = C.darkColor
                         let con = NavigationViewController(transitionStyle: UIPageViewControllerTransitionStyle.scroll,
                                                            navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal,
@@ -668,7 +705,7 @@ class SignUpPickerView : UIPickerView, UIPickerViewDelegate, UIPickerViewDataSou
     
     
     var majors =
-        ["American Sign Language", "Anthropology", "Art History", "Arts", "Astronomy and Astrophysics", "Big Problems", "Biological Chemistry", "Biological Sciences", "Cancer Biology", "Cellular and Molecular Biology", "Ecology and Evolution", "Endocrinology", "Genetics", "Immunology", "Microbiology", "Neuroscience", "Chemistry", "Chicago Studies", "Cinema and Media Studies", "Classical Studies", "Language and Literature", "Language Intensive", "Greek and Roman Cultures", "Comparative Human Development", "Comparative Literature", "Comparative Race and Ethnic Studies", "Computational Neuroscience", "Computer Science", "Creative Writing", "Early Christian Literature", "East Asian Languages and Civilizations", "Chinese", "Japanese", "Korean", "Economics", "Education", "Education Profession", "English and Creative Writing", "English Language and Literature", "Environmental Science", "Environmental and Urban Studies", "Fundamentals: Issues and Texts", "Gender and Sexuality Studies", "Geographical Studies", "Geophysical Sciences", "Germanic Studies", "Health Professions", "History", "History", "Philosophy", "Social Studies of Science and Medicine", "(HIPS)", "Human Rights", "Humanities", "International Studies", "Jewish Studies", "Journalism", "Latin American Studies", "Law", "Letters", "and Society", "Linguistics", "Languages in Linguistics", "Swahili", "Mathematics", "Applied Mathematics", "Mathematics with a Specialization in Economics", "Medicine", "Medieval Studies", "Molecular Engineering", "Music", "Near Eastern Languages and Civilizations", "Near Eastern Art and Archaeology", "Near Eastern History and Civilization", "Norwegian Studies", "Philosophy", "Philosophy and Allied Fields", "Physics", "Political Science", "Psychology", "Public Policy Studies", "Public and Social Service", "Religion and the Humanities", "Religious Studies", "Romance Languages and Literatures", "Science and Technology", "Slavic Languages and Literatures", "Social Service Administration", "Sociology", "South Asian Languages and Civilizations", "Statistics", "BA/MS", "Theater and Performance Studies", "Tutorial Studies", "Visual Arts"]
+        ["American Sign Language", "Anthropology", "Art History", "Arts", "Astronomy and Astrophysics", "Big Problems", "Biological Chemistry", "Biological Sciences", "Cancer Biology", "Cellular and Molecular Biology", "Ecology and Evolution", "Endocrinology", "Genetics", "Immunology", "Microbiology", "Neuroscience", "Chemistry", "Chicago Studies", "Cinema and Media Studies", "Classical Studies", "Language and Literature", "Language Intensive", "Greek and Roman Cultures", "Comparative Human Development", "Comparative Literature", "Comparative Race and Ethnic Studies", "Computational Neuroscience", "Computer Science", "Creative Writing", "Early Christian Literature", "East Asian Languages and Civilizations", "Chinese", "Japanese", "Korean", "Economics", "Education", "Education Profession", "English and Creative Writing", "English Language and Literature", "Environmental Science", "Environmental and Urban Studies", "Fundamentals: Issues and Texts", "Gender and Sexuality Studies", "Geographical Studies", "Geophysical Sciences", "Germanic Studies", "Health Professions", "History", "History", "Philosophy", "Social Studies of Science and Medicine", "(HIPS)", "Human Rights", "Humanities", "International Studies", "Jewish Studies", "Journalism", "Latin American Studies", "Law", "Letters", "and Society", "Linguistics", "Languages in Linguistics", "Swahili", "Mathematics", "Applied Mathematics", "Mathematics with a Specialization in Economics", "Medicine", "Medieval Studies", "Molecular Engineering", "Music", "Near Eastern Languages and Civilizations", "Near Eastern Art and Archaeology", "Near Eastern History and Civilization", "Norwegian Studies", "Philosophy", "Philosophy and Allied Fields", "Physics", "Political Science", "Psychology", "Public Policy Studies", "Public and Social Service", "Religion and the Humanities", "Religious Studies", "Romance Languages and Literatures", "Science and Technology", "Slavic Languages and Literatures", "Social Service Administration", "Sociology", "South Asian Languages and Civilizations", "Statistics", "BA/MS", "Theater and Performance Studies", "Tutorial Studies", "Visual Arts"].sorted()
     var genders = ["Male", "Female", "Other"]
     var field: UITextField!
     var type: Int!
