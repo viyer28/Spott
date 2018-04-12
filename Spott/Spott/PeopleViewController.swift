@@ -60,8 +60,8 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        C.updateSpottsAtUserLoc()
         C.updateUserSpotted()
+        C.updateSpottsAtUserLoc()
     }
     
     override func didReceiveMemoryWarning() {

@@ -294,57 +294,76 @@ class C: NSObject {
         for spott in spotted {
             var f = User()
             var old = 0
-            if oldSpotted != nil
+            var previous = 0
+            for f in C.user.friends
             {
-                for s in oldSpotted!
+                if f.id == spott
                 {
-                    if s.id == spott
-                    {
-                        old = 1
-                        C.user.spotted.append(s)
-                    }
+                    previous = 1
                 }
             }
-            if old == 0
+            for s in C.user.spotted
             {
-                Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
-                    if let err = err {
-                        print("Error getting spotted documents: \(err)")
-                    } else {
-                        for document in querySnapshot!.documents {
-                            print("\(document.documentID) => \(document.data())")
-                            spotted_userData = document.data()
-                            f = C.parseUser(document: document)
-                            if spotted_userData["profilePicture"] != nil
-                            {
-                                C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
-                                    // Create a UIImage, add it to the array
-                                    f.image = UIImage(data: data!)
-                                    if C.navigationViewController.peopleViewController.sliderInt == 1
-                                    {
-                                        C.navigationViewController.peopleViewController.collectionView?.reloadData()
-                                    }
-                                })
-                            }
-                            else
-                            {
-                                f.image = UIImage(named: "sample_prof")
-                            }
-                            C.user.spotted.append(f)
-                            updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
-                            
-                            //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
-                        }
-                        if C.navigationViewController.peopleViewController.sliderInt == 1
+                if s.id == spott
+                {
+                    previous = 1
+                }
+            }
+            if previous == 0
+            {
+                if oldSpotted != nil
+                {
+                    for s in oldSpotted!
+                    {
+                        if s.id == spott
                         {
-                            C.navigationViewController.peopleViewController.current = C.user.spotted
-                            C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                            old = 1
+                            C.user.spotted.append(s)
                         }
-                        print("Recieved Spotted documents")
+                    }
+                }
+                if old == 0
+                {
+                    Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting spotted documents: \(err)")
+                        } else {
+                            for document in querySnapshot!.documents {
+                                print("\(document.documentID) => \(document.data())")
+                                spotted_userData = document.data()
+                                f = C.parseUser(document: document)
+                                if spotted_userData["profilePicture"] != nil
+                                {
+                                    C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                                        // Create a UIImage, add it to the array
+                                        f.image = UIImage(data: data!)
+                                        if C.navigationViewController.peopleViewController.sliderInt == 1
+                                        {
+                                            C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                        }
+                                    })
+                                }
+                                else
+                                {
+                                    f.image = UIImage(named: "sample_prof")
+                                }
+                                C.user.spotted.append(f)
+                                updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
+                                
+                                //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
+                            }
+                            if C.navigationViewController.peopleViewController.sliderInt == 1
+                            {
+                                C.navigationViewController.peopleViewController.current = C.user.spotted
+                                C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                            }
+                            print("Recieved Spotted documents")
+                        }
                     }
                 }
             }
         }
+        C.updateSpottsAtUserLoc()
     }
     
     
@@ -491,7 +510,18 @@ class C: NSObject {
                             {
                                 f.image = UIImage(data: data!)
                             }
-                            newFriends.append(f)
+                            var added = 0
+                            for fr in newFriends
+                            {
+                                if fr.name == f.name
+                                {
+                                    added = 1
+                                }
+                            }
+                            if added == 0
+                            {
+                                newFriends.append(f)
+                            }
                             i = i + 1
                             if i == querySnapshot!.documents.count
                             {

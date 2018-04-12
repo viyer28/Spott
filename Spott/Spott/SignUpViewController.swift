@@ -361,12 +361,13 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         else if indexPath.row == 9
         {
             let signUpButton = UIButton(type: .system)
-            signUpButton.frame = cell.frame
+            signUpButton.frame = CGRect(x: 0, y: 0, width: cw, height: ch*0.1)
             signUpButton.backgroundColor = C.goldishColor
+            //signUpButton.center = CGPoint(x: cw*0.5, y: signUpButton.frame.height/2)
             signUpButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            signUpButton.titleLabel?.text = "Create Account"
+            signUpButton.titleLabel?.text = "create account"
             signUpButton.setTitleColor(C.darkColor, for: .normal)
-            signUpButton.setTitle("Create Account", for: .normal)
+            signUpButton.setTitle("create account", for: .normal)
             signUpButton.addTarget(self, action: #selector(signUpClick), for: UIControlEvents.touchUpInside)
             cell.addSubview(signUpButton)
         }

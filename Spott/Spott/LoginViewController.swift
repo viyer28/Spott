@@ -68,9 +68,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = button.frame.size.width / 10;
         button.backgroundColor = C.goldishColor
         button.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-        button.titleLabel?.text = "Login"
+        button.titleLabel?.text = "login"
         button.setTitleColor(C.darkColor, for: .normal)
-        button.setTitle("Login", for: .normal)
+        button.setTitle("log in", for: .normal)
         button.addTarget(self, action: #selector(login), for: UIControlEvents.touchUpInside)
         self.view.addSubview(button)
         
@@ -80,9 +80,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         rbutton.layer.cornerRadius = button.frame.size.width / 10;
         rbutton.backgroundColor = C.goldishColor
         rbutton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-        rbutton.titleLabel?.text = "Sign Up"
+        rbutton.titleLabel?.text = "sign up"
         rbutton.setTitleColor(C.darkColor, for: .normal)
-        rbutton.setTitle("Signup", for: .normal)
+        rbutton.setTitle("sign up", for: .normal)
         rbutton.addTarget(self, action: #selector(signup), for: UIControlEvents.touchUpInside)
         self.view.addSubview(rbutton)
         
