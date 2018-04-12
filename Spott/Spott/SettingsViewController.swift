@@ -159,13 +159,14 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             passwordField.keyboardType = UIKeyboardType.default
             passwordField.returnKeyType = UIReturnKeyType.done
             passwordField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            passwordField.placeholder = "Enter your password"
+            passwordField.placeholder = "Changing your password is disabled"
             passwordField.backgroundColor = UIColor.white
             passwordField.borderStyle = UITextBorderStyle.roundedRect
             passwordField.delegate = self
             passwordField.isSecureTextEntry = true
             passwordField.tintColor = UIColor.black
             passwordField.autocapitalizationType = .none
+            passwordField.tintColor = .clear
             cell.addSubview(passwordField)
             
             let title2Label = UILabel(frame: CGRect(x: 0, y: ch*0.11, width: cw * 0.28, height: ch * 0.08))
@@ -178,8 +179,9 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             rePasswordField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             rePasswordField.keyboardType = UIKeyboardType.default
             rePasswordField.returnKeyType = UIReturnKeyType.done
+            rePasswordField.tintColor = .clear
             rePasswordField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            rePasswordField.placeholder = "Enter your password again"
+            rePasswordField.placeholder = "Changing your password is disabled"
             rePasswordField.backgroundColor = UIColor.white
             rePasswordField.delegate = self
             rePasswordField.tintColor = UIColor.black
@@ -456,21 +458,25 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
     {
         dismiss(animated: true, completion: nil)
     }
+    
     @objc func cameraClick() {
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .camera;
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+        //        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+        //            let imagePicker = UIImagePickerController()
+        //            imagePicker.delegate = self
+        //            imagePicker.sourceType = .camera;
+        //            imagePicker.allowsEditing = false
+        //            self.present(imagePicker, animated: true, completion: nil)
+        //        }
+        let alert = UIAlertController(title: "Cannot Use Camera", message: "Camera Roll Functionality is Disabled.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             profileImageView.contentMode = .scaleAspectFit
+            //profileImageView.frame = CGRect(x: cw*0.5 - ch * 0.15, y: ch*0.15, width: ch*0.3, height: ch*0.3)
             profileImageView.image = pickedImage
-            changedPic = 1
         }
         
         dismiss(animated: true, completion: nil)

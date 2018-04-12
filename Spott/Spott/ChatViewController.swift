@@ -153,14 +153,30 @@ class ChatViewController: JSQMessagesViewController
         return messages.count
     }
     override func textViewDidBeginEditing(_ textView: UITextView) {
-        parentView.frame = CGRect(x: 0, y: 0, width: C.w, height: C.h)
-        self.view.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.9)
+        parentView.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.9)
+        if parentView.isKind(of: UserAtLocCalloutView.self)
+        {
+            self.view.frame = CGRect(x: 0, y: C.h*0.2, width: C.w, height: C.h*0.7)
+        }
+        else
+        {
+            self.view.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.8)
+        }
+        //C.navigationViewController.sea
         super.textViewDidBeginEditing(textView)
     }
     override func textViewDidEndEditing(_ textView: UITextView) {
-        parentView.frame = CGRect(x: 0, y: C.h*0.5, width: C.w, height: C.h*0.5)
-        self.view.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.4)
-        super.textViewDidBeginEditing(textView)
+        if parentView.isKind(of: UserAtLocCalloutView.self)
+        {
+            parentView.frame = CGRect(x: 0, y: C.h*0.5, width: C.w, height: C.h*0.5)
+            self.view.frame = CGRect(x: 0, y: C.h*0.2, width: C.w, height: C.h*0.3)
+        }
+        else
+        {
+            parentView.frame = CGRect(x: 0, y: C.h*0.6, width: C.w, height: C.h*0.4)
+            self.view.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.3)
+        }
+        super.textViewDidEndEditing(textView)
     }
     lazy var outgoingBubble: JSQMessagesBubbleImage = {
         return JSQMessagesBubbleImageFactory()!.outgoingMessagesBubbleImage(with: C.goldishColor)

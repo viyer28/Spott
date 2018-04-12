@@ -39,7 +39,7 @@ class Event : NSObject {
 class User: NSObject {
     var name: String!
     var numFriends: Int!
-    var friends: [User]!
+    var friends: [User] = []
     var profilePictureURL: String!
     var whoIam: [String]!
     var whatIDo: [String]!

@@ -50,12 +50,12 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         passwordField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
         rePasswordField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.125, width: cw*0.6, height: ch*0.05));
         majorField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
-        whatField1 = UITextField(frame:CGRect(x: cw*0.05, y: ch*0.06, width: cw*0.4, height: ch*0.04));
-        whatField2 = UITextField(frame:CGRect(x: cw*0.05, y: ch*0.12, width: cw*0.4, height: ch*0.04));
-        whatField3 = UITextField(frame:CGRect(x: cw*0.05, y: ch*0.18, width: cw*0.4, height: ch*0.04));
-        whoField1 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.06, width: cw*0.4, height: ch*0.04))
-        whoField2 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.12, width: cw*0.4, height: ch*0.04));
-        whoField3 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.18, width: cw*0.4, height: ch*0.04));
+        whatField1 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.06, width: cw*0.4, height: ch*0.04));
+        whatField2 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.12, width: cw*0.4, height: ch*0.04));
+        whatField3 = UITextField(frame:CGRect(x: cw*0.55, y: ch*0.18, width: cw*0.4, height: ch*0.04));
+        whoField1 = UITextField(frame:CGRect(x: cw*0.05, y: ch*0.06, width: cw*0.4, height: ch*0.04))
+        whoField2 = UITextField(frame:CGRect(x: cw*0.05, y: ch*0.12, width: cw*0.4, height: ch*0.04));
+        whoField3 = UITextField(frame:CGRect(x: cw*0.05, y: ch*0.18, width: cw*0.4, height: ch*0.04));
         profileImageView = UIImageView(frame: CGRect(x: cw*0.5 - ch * 0.15, y: ch*0.15, width: ch*0.3, height: ch*0.3))
         homeField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
         
@@ -427,13 +427,16 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         dismiss(animated: true, completion: nil)
     }
     @objc func cameraClick() {
-        if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .camera;
-            imagePicker.allowsEditing = false
-            self.present(imagePicker, animated: true, completion: nil)
-        }
+//        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+//            let imagePicker = UIImagePickerController()
+//            imagePicker.delegate = self
+//            imagePicker.sourceType = .camera;
+//            imagePicker.allowsEditing = false
+//            self.present(imagePicker, animated: true, completion: nil)
+//        }
+        let alert = UIAlertController(title: "Cannot Use Camera", message: "Camera Roll Functionality is Disabled.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     @objc func cameraRollClick() {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -446,10 +449,10 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         
     }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             profileImageView.contentMode = .scaleAspectFit
             //profileImageView.frame = CGRect(x: cw*0.5 - ch * 0.15, y: ch*0.15, width: ch*0.3, height: ch*0.3)
-            profileImageView.image = pickedImage
+            profileImageView.image = C.resizeImage(image: pickedImage, newWidth: 750)
         }
         
         dismiss(animated: true, completion: nil)
@@ -512,14 +515,14 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         }
         else if homeField.text?.count == 0
         {
-            let alert = UIAlertController(title: "Cannot Update Information", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Sign Up", message: "Must pick 3 adjectives to describe who you are!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
         }
         else if ageField.text?.count != 8
         {
-            let alert = UIAlertController(title: "Cannot Update Information", message: "You have not filled out your age!", preferredStyle: UIAlertControllerStyle.alert)
+            let alert = UIAlertController(title: "Cannot Sign Up", message: "You have not filled out your age!", preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
             return
@@ -544,7 +547,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let birthdate = dateFormatter.date(from: birthdayString)
             if birthdate == nil
             {
-                let alert = UIAlertController(title: "Cannot Update Information", message: "You have entered an invalid age!", preferredStyle: UIAlertControllerStyle.alert)
+                let alert = UIAlertController(title: "Cannot Sign Up", message: "You have entered an invalid age!", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 return
@@ -557,6 +560,10 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             }
             else{
                 print("fail")
+                let alert = UIAlertController(title: "Cannot", message: "You have entered an invalid age!", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
             }
         })
 
@@ -567,8 +574,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     {
         if Auth.auth().currentUser != nil
         {
-            var ref: DocumentReference? = nil
-            ref = self.db.collection("user_info").addDocument(data: [
+            let _ = self.db.collection("user_info").addDocument(data: [
                 "hometown" : self.homeField.text!,
                 "name" : self.nameField.text!,
                 "who1" : self.whoField1.text!,
@@ -596,7 +602,6 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                     print("Added Document succesfully")
                 }
             }
-            let tabCont = TabBarViewController()
             Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
@@ -630,7 +635,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpg"
         
-        let uploadTask = profileRef.putData(data, metadata: metaData){(metaData,error) in
+        let _ = profileRef.putData(data, metadata: metaData){(metaData,error) in
             if let error = error {
                 print(error.localizedDescription)
                 return
@@ -647,6 +652,12 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
 }
 
 extension SignUpViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         if textField.tag == 1 {
@@ -657,10 +668,10 @@ extension SignUpViewController: UITextFieldDelegate {
             if !Validate {
                 return false;
             }
-            if range.length + range.location > (textField.text?.characters.count)! {
+            if range.length + range.location > (textField.text?.count)! {
                 return false
             }
-            let newLength = (textField.text?.characters.count)! + string.characters.count - range.length
+            let newLength = (textField.text?.count)! + string.characters.count - range.length
             if newLength == 3 || newLength == 6 {
                 let  char = string.cString(using: String.Encoding.utf8)!
                 let isBackSpace = strcmp(char, "\\b")

@@ -40,6 +40,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        C.updateUserFriends()
         self.tableView.reloadData()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,7 +117,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             numFriendsLabel.textColor = C.blueishColor
             numFriendsLabel.textAlignment = .right
             numFriendsLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
-            numFriendsLabel.text = "\(C.user.numFriends!)"
+            numFriendsLabel.text = "\(C.user.friends.count)"
             cell.addSubview(numFriendsLabel)
             
             let friendsLabel = UILabel(frame: CGRect(x: C.w*0.26, y: C.h*0.025, width: C.w * 0.18, height: C.h * 0.05))

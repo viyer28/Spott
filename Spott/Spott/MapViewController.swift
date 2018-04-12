@@ -120,10 +120,13 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
         {
-            let view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation", user: (annotation as! MapAnnotation).user)
+            let view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation1=", user: (annotation as! MapAnnotation).user)
             return view
         }
-        
+        else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
+        {
+            return UserAtLocationAnnotationView(reuseIdentifier: "mapAnnotation2", user: (annotation as! MapAnnotation).user)
+        }
         let view = MapAnnotationView(reuseIdentifier: "mapAnnotation",  location: (annotation as! MapAnnotation).location)
         
         return view
@@ -144,6 +147,14 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             C.navigationViewController.spottButton.isHidden = true
             self.centerButton.isHidden = true
             return UserCalloutView(representedObject: annotation)
+            
+        }
+        else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
+        {
+            C.navigationViewController.eventsButton.isHidden = true
+            C.navigationViewController.spottButton.isHidden = true
+            self.centerButton.isHidden = true
+            return UserAtLocCalloutView(representedObject: annotation)
             
         }
         else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 0
@@ -231,6 +242,23 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
                     point.user = friend
                     point.type = 1
                     mapView.addAnnotation(point)
+                }
+                else
+                {
+                    let point = MapAnnotation()
+                    point.title = friend.name
+                    point.user = friend
+                    for l in C.locations
+                    {
+                        if l.id == friend.curLoc
+                        {
+                            point.coordinate = CLLocationCoordinate2D(latitude:  l.latitude, longitude:  l.longitude)
+                            point.location = l
+                        }
+                    }
+                    point.type = 2
+                    mapView.addAnnotation(point)
+                    
                 }
             }
             self.values = v
@@ -362,6 +390,13 @@ extension MapViewController: UITextFieldDelegate, UITableViewDataSource, UITable
         for annotation in self.mapView.annotations!
         {
             if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
+            {
+                if textField.text == (annotation as! MapAnnotation).user.name.lowercased()
+                {
+                    mapView.selectAnnotation(annotation, animated: true)
+                }
+            }
+            if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
             {
                 if textField.text == (annotation as! MapAnnotation).user.name.lowercased()
                 {

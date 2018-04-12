@@ -315,14 +315,21 @@ class C: NSObject {
                             print("\(document.documentID) => \(document.data())")
                             spotted_userData = document.data()
                             f = C.parseUser(document: document)
-                            C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
-                                // Create a UIImage, add it to the array
-                                f.image = UIImage(data: data!)
-                                if C.navigationViewController.peopleViewController.sliderInt == 1
-                                {
-                                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
-                                }
-                            })
+                            if spotted_userData["profilePicture"] != nil
+                            {
+                                C.storage.reference(forURL: spotted_userData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                                    // Create a UIImage, add it to the array
+                                    f.image = UIImage(data: data!)
+                                    if C.navigationViewController.peopleViewController.sliderInt == 1
+                                    {
+                                        C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                    }
+                                })
+                            }
+                            else
+                            {
+                                f.image = UIImage(named: "sample_prof")
+                            }
                             C.user.spotted.append(f)
                             updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
                             
@@ -374,6 +381,18 @@ class C: NSObject {
         
     }
     
+    static func updateUserFriends()
+    {
+        Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting user spotted documents: \(err)")
+            } else {
+                let document = querySnapshot!.documents[0]
+                C.updateFriends(user: C.user, friends: document["friends"] as! [String])
+            }
+        }
+    }
+    
     static func updateSpottsAtUserLoc()
     {
         Firestore.firestore().collection("user_info").whereField("curLoc", isEqualTo: C.user.curLoc).getDocuments { (querySnapshot, err) in
@@ -405,15 +424,22 @@ class C: NSObject {
                     if add == 1
                     {
                         let f = parseUser(document: document)
-                        C.storage.reference(forURL: data["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
-                            // Create a UIImage, add it to the array
-                            f.image = UIImage(data: data!)
-                            spotts.append(f)
-                            if C.navigationViewController.peopleViewController.sliderInt == 0
-                            {
-                                C.navigationViewController.peopleViewController.collectionView?.reloadData()
-                            }
-                        })
+                        if data["profilePicture"] != nil
+                        {
+                            C.storage.reference(forURL: data["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                                // Create a UIImage, add it to the array
+                                f.image = UIImage(data: data!)
+                                spotts.append(f)
+                                if C.navigationViewController.peopleViewController.sliderInt == 0
+                                {
+                                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                }
+                            })
+                        }
+                        else
+                        {
+                            f.image = UIImage(named: "sample_prof")
+                        }
                         spotts.append(f)
                     }
                 }
@@ -437,7 +463,14 @@ class C: NSObject {
     static func updateFriends(user: User, friends: [String])
     {
         var friend_userData: Dictionary<String, Any>!
-        C.user.friends = []
+        
+        if friends.count == C.user.friends.count
+        {
+            return
+        }
+        
+        var newFriends: [User] = []
+        
         for friend in friends {
             
             Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: friend).getDocuments() { (querySnapshot, err) in
@@ -450,15 +483,27 @@ class C: NSObject {
                         let friend_userData = document.data()
                         C.storage.reference(forURL: friend_userData["profilePicture"] as! String).getData(maxSize: 1024*1024, completion: {(data, error) -> Void in
                             // Create a UIImage, add it to the array
-                            f.image = UIImage(data: data!)
-                            user.friends.append(f)
+                            if data == nil
+                            {
+                                f.image = UIImage(named: "sample_prof")
+                            }
+                            else
+                            {
+                                f.image = UIImage(data: data!)
+                            }
+                            newFriends.append(f)
                             i = i + 1
                             if i == querySnapshot!.documents.count
                             {
                                 NotificationCenter.default.post(name: .update, object: nil)
 
                             }
+                            user.friends = newFriends
                             C.navigationViewController.mapViewController.updateAnnotations()
+                            if C.profileViewController.tableView != nil
+                            {
+                                C.profileViewController.tableView.reloadData()
+                            }
                         })
                         updateFriendsofFriend(user: f, friends: friend_userData["friends"] as! [String])
                         updateLocations()
@@ -533,6 +578,18 @@ class C: NSObject {
         f.age = calendar.component(.year, from: birthdate!).distance(to: calendar.component(.year, from: currentDate))
         C.updateFriendsofFriend(user: f, friends: dict["friends"] as! [String])
         return f
+    }
+    
+    static func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSize(width: newWidth, height: newHeight))
+        image.draw(in: CGRect(x: 0, y: 0, width: newWidth, height: newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }
 extension Notification.Name {

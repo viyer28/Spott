@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        {
 //            try! Auth.auth().signOut()
 //        }
-        
+//
         if Auth.auth().currentUser != nil
         {
             Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
