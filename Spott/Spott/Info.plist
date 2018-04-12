@@ -39,6 +39,8 @@
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>Launch Screen</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app will use your photos to get a profile picture.</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

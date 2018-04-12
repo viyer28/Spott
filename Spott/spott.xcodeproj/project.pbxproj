@@ -14,7 +14,7 @@
 		271A8A3D207F17F400210FF9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271A8A3C207F17F300210FF9 /* Launch Screen.storyboard */; };
 		27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA0203F4F150096AF34 /* LoginViewController.swift */; };
 		27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA2203F5A810096AF34 /* SignUpViewController.swift */; };
-		274327ED207F1DCA00044B07 /* spott-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 274327EC207F1DCA00044B07 /* spott-Info.plist */; };
+		274327EF207F368C00044B07 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 274327EE207F368C00044B07 /* Info.plist */; };
 		2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2744A443203770AF00DAB7CF /* FuturaPTLight.otf */; };
 		2744A448203770CF00DAB7CF /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2744A447203770CF00DAB7CF /* Fonts */; };
 		2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744A45120379B8300DAB7CF /* MatchProfileView.swift */; };
@@ -89,7 +89,7 @@
 		27283FA0203F4F150096AF34 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		27283FA2203F5A810096AF34 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		274327EB207F1D9600044B07 /* spott copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "spott copy-Info.plist"; path = "/Users/brendansanderson/Desktop/Projects/Spott/Spott/spott copy-Info.plist"; sourceTree = "<absolute>"; };
-		274327EC207F1DCA00044B07 /* spott-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "spott-Info.plist"; sourceTree = SOURCE_ROOT; };
+		274327EE207F368C00044B07 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2744A443203770AF00DAB7CF /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
 		2744A447203770CF00DAB7CF /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Spott/Fonts; sourceTree = "<group>"; };
 		2744A45120379B8300DAB7CF /* MatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfileView.swift; sourceTree = "<group>"; };
@@ -195,6 +195,7 @@
 				2782E4262024F78200A3B2E8 /* ProfileViewController.swift */,
 				278203CC2066F9D000410E9F /* SettingsViewController.swift */,
 				27F41C3C206F37A10054D3D7 /* map.geojson */,
+				274327EE207F368C00044B07 /* Info.plist */,
 				2744A45120379B8300DAB7CF /* MatchProfileView.swift */,
 				27B9C4792030EF5B000D0BB1 /* Objects.swift */,
 				276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */,
@@ -205,7 +206,6 @@
 				276CBDC120706FAC0067904F /* FriendsView.swift */,
 				2782E4232024F78100A3B2E8 /* FeedViewController.swift */,
 				2782E4272024F78200A3B2E8 /* PeopleViewController.swift */,
-				274327EC207F1DCA00044B07 /* spott-Info.plist */,
 				2782E4252024F78200A3B2E8 /* EventsViewController.swift */,
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
@@ -379,9 +379,9 @@
 				2744A448203770CF00DAB7CF /* Fonts in Resources */,
 				2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */,
 				27F41C3D206F37A20054D3D7 /* map.geojson in Resources */,
-				274327ED207F1DCA00044B07 /* spott-Info.plist in Resources */,
 				274F87462071D933005E278D /* Assets.xcassets in Resources */,
 				2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */,
+				274327EF207F368C00044B07 /* Info.plist in Resources */,
 				271A8A3D207F17F400210FF9 /* Launch Screen.storyboard in Resources */,
 				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
 			);
@@ -699,7 +699,7 @@
 					"$(PROJECT_DIR)/mapbox-ios-sdk-3.7.3-dynamic/dynamic",
 					"$(PROJECT_DIR)/Spott/frameworks",
 				);
-				INFOPLIST_FILE = "spott-Info.plist";
+				INFOPLIST_FILE = Spott/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.live.spott;
@@ -722,7 +722,7 @@
 					"$(PROJECT_DIR)/mapbox-ios-sdk-3.7.3-dynamic/dynamic",
 					"$(PROJECT_DIR)/Spott/frameworks",
 				);
-				INFOPLIST_FILE = "spott-Info.plist";
+				INFOPLIST_FILE = Spott/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.live.spott;
