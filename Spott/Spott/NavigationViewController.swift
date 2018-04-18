@@ -125,7 +125,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
 //            mapButton.backgroundColor = UIColor.black
 //            eventsButton.imageView?.tintColor = C.goldishColor
 //            eventsButton.backgroundColor = UIColor.black
-            eventsButton.isHidden = false
+            eventsButton.isHidden = true
             spottButton.isHidden = true
             mapButton.isHidden = false
             selected = 3
@@ -149,7 +149,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
 //            mapButton.imageView?.tintColor = C.goldishColor
 //            mapButton.backgroundColor = UIColor.black
             eventsButton.isHidden = true
-            spottButton.isHidden = false
+            spottButton.isHidden = true
             mapButton.isHidden = false
             selected = 1
             setViewControllers([eventsViewController], direction: .reverse, animated: true, completion: nil)

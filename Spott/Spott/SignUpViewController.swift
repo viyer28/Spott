@@ -75,14 +75,16 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 32.0)
             titleLabel.textAlignment = .center
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Sign Up"
+            titleLabel.text="sign up"
             cell.addSubview(titleLabel)
             
-            let backButton = UIButton(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.2, height: ch*0.08))
+            let backButton = UIButton(type: UIButtonType.custom) as UIButton
+            backButton.frame = CGRect(x: cw*0.05, y: ch*0.025, width: ch*0.05, height: ch*0.05)
+            backButton.setBackgroundImage(UIImage(named: "centerUser"), for: .normal)
             backButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 28.0)
-            backButton.titleLabel?.text = "<"
+            backButton.imageView?.frame = backButton.frame
+            backButton.imageView?.image = UIImage(named: "centerUser")
             backButton.setTitleColor(C.goldishColor, for: .normal)
-            backButton.setTitle("<", for: .normal)
             backButton.addTarget(self, action: #selector(backClick), for: UIControlEvents.touchUpInside)
             
             cell.addSubview(backButton)
@@ -92,7 +94,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let titleLabel = UILabel(frame: CGRect(x: cw*0.1, y: ch*0.01, width: cw * 0.18, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Name:"
+            titleLabel.text = "name"
             titleLabel.textAlignment = .right
             cell.addSubview(titleLabel)
             
@@ -100,7 +102,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             nameField.keyboardType = UIKeyboardType.default
             nameField.returnKeyType = UIReturnKeyType.done
             nameField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            nameField.placeholder = "Enter your name"
+            nameField.placeholder = "enter your name"
             nameField.backgroundColor = UIColor.white
             nameField.borderStyle = UITextBorderStyle.roundedRect
             nameField.tintColor = UIColor.black
@@ -112,7 +114,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let titleLabel = UILabel(frame: CGRect(x: cw*0.1, y: ch*0.01, width: cw * 0.18, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Email:"
+            titleLabel.text="email"
             titleLabel.textAlignment = .right
             cell.addSubview(titleLabel)
             
@@ -120,7 +122,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             emailField.keyboardType = UIKeyboardType.default
             emailField.returnKeyType = UIReturnKeyType.done
             emailField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            emailField.placeholder = "Enter your email"
+            emailField.placeholder = "enter your email"
             emailField.backgroundColor = UIColor.white
             emailField.tintColor = UIColor.black
             emailField.borderStyle = UITextBorderStyle.roundedRect
@@ -134,14 +136,14 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             title1Label.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             title1Label.textAlignment = .right
             title1Label.textColor = C.darkColor
-            title1Label.text="Password:"
+            title1Label.text="password"
             cell.addSubview(title1Label)
             
             passwordField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             passwordField.keyboardType = UIKeyboardType.default
             passwordField.returnKeyType = UIReturnKeyType.done
             passwordField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            passwordField.placeholder = "Enter your password"
+            passwordField.placeholder = "enter your password"
             passwordField.backgroundColor = UIColor.white
             passwordField.borderStyle = UITextBorderStyle.roundedRect
             passwordField.delegate = self
@@ -154,14 +156,14 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             title2Label.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             title2Label.textAlignment = .right
             title2Label.textColor = C.darkColor
-            title2Label.text="Reenter:"
+            title2Label.text="reenter"
             cell.addSubview(title2Label)
             
             rePasswordField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             rePasswordField.keyboardType = UIKeyboardType.default
             rePasswordField.returnKeyType = UIReturnKeyType.done
             rePasswordField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            rePasswordField.placeholder = "Enter your password again"
+            rePasswordField.placeholder = "enter your password again"
             rePasswordField.backgroundColor = UIColor.white
             rePasswordField.delegate = self
             rePasswordField.tintColor = UIColor.black
@@ -175,14 +177,14 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let titleLabel = UILabel(frame: CGRect(x: cw*0.1, y: ch*0.01, width: cw * 0.18, height: ch * 0.08))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Major:"
+            titleLabel.text="major"
             titleLabel.textAlignment = .right
             cell.addSubview(titleLabel)
             
             majorField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             majorField.returnKeyType = UIReturnKeyType.done
             majorField.placeholder = "Select your major"
-            majorField.text = "Undecided"
+            majorField.text = "undecided"
             majorField.backgroundColor = UIColor.white
             majorField.borderStyle = UITextBorderStyle.roundedRect
             let pickerView = SignUpPickerView(frame: CGRect.zero, field:majorField, type: 1)
@@ -198,14 +200,14 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             titleLabel.textAlignment = .right
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Hometown:"
+            titleLabel.text="hometown"
             cell.addSubview(titleLabel)
             
             homeField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             homeField.keyboardType = UIKeyboardType.default
             homeField.returnKeyType = UIReturnKeyType.done
             homeField.clearButtonMode = UITextFieldViewMode.whileEditing;
-            homeField.placeholder = "Enter your hometown"
+            homeField.placeholder = "enter your hometown"
             homeField.backgroundColor = UIColor.white
             homeField.tintColor = UIColor.black
             homeField.borderStyle = UITextBorderStyle.roundedRect
@@ -217,13 +219,13 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let ageLabel = UILabel(frame: CGRect(x: 0, y: ch*0.01, width: cw * 0.28, height: ch * 0.08))
             ageLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             ageLabel.textColor = C.darkColor
-            ageLabel.text="DOB:"
+            ageLabel.text="dob"
             ageLabel.textAlignment = .right
             cell.addSubview(ageLabel)
 
             ageField = UITextField(frame:CGRect(x: cw*0.3, y: ch*0.025, width: cw*0.6, height: ch*0.05));
             ageField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
-            ageField.placeholder = "MM-DD-YY"
+            ageField.placeholder = "mm-dd-yy"
             ageField.returnKeyType = UIReturnKeyType.done
             ageField.tintColor = .black
             ageField.delegate = self
@@ -238,7 +240,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let titleLabel = UILabel(frame: CGRect(x: cw*0.25, y: ch*0.01, width: cw * 0.5, height: ch * 0.06))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Profile Picture"
+            titleLabel.text="profile picture"
             titleLabel.textAlignment = .center
             cell.addSubview(titleLabel)
             
@@ -247,9 +249,9 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             cameraButton.layer.cornerRadius = cameraButton.frame.size.width / 10;
             cameraButton.backgroundColor = C.goldishColor
             cameraButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            cameraButton.titleLabel?.text = "Camera"
+            cameraButton.titleLabel?.text = "camera"
             cameraButton.setTitleColor(C.darkColor, for: .normal)
-            cameraButton.setTitle("Camera", for: .normal)
+            cameraButton.setTitle("camera", for: .normal)
             cameraButton.addTarget(self, action: #selector(cameraClick), for: UIControlEvents.touchUpInside)
             cell.addSubview(cameraButton)
             
@@ -258,9 +260,9 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             cameraRollButton.layer.cornerRadius = cameraButton.frame.size.width / 10;
             cameraRollButton.backgroundColor = C.goldishColor
             cameraRollButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            cameraRollButton.titleLabel?.text = "Camera Roll"
+            cameraRollButton.titleLabel?.text = "camera roll"
             cameraRollButton.setTitleColor(C.darkColor, for: .normal)
-            cameraRollButton.setTitle("Camera Roll", for: .normal)
+            cameraRollButton.setTitle("camera roll", for: .normal)
             cameraRollButton.addTarget(self, action: #selector(cameraRollClick), for: UIControlEvents.touchUpInside)
             cell.addSubview(cameraRollButton)
             
@@ -274,7 +276,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let titleLabel = UILabel(frame: CGRect(x: cw*0.05, y: ch*0.01, width: cw * 0.4, height: ch * 0.04))
             titleLabel.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             titleLabel.textColor = C.darkColor
-            titleLabel.text="Who are you?"
+            titleLabel.text="who are you?"
             titleLabel.textAlignment = .left
             cell.addSubview(titleLabel)
             
@@ -282,7 +284,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whatField1.returnKeyType = UIReturnKeyType.done
             whatField1.keyboardType = UIKeyboardType.default
             whatField1.clearButtonMode = UITextFieldViewMode.whileEditing;
-            whatField1.placeholder = "Adjective 1"
+            whatField1.placeholder = "adjective 1"
             whatField1.tintColor = UIColor.black
             whatField1.delegate = self
             whatField1.backgroundColor = UIColor.white
@@ -292,7 +294,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whatField2.returnKeyType = UIReturnKeyType.done
             whatField2.keyboardType = UIKeyboardType.default
             whatField2.clearButtonMode = UITextFieldViewMode.whileEditing;
-            whatField2.placeholder = "Adjective 2"
+            whatField2.placeholder = "adjective 2"
             whatField2.tintColor = UIColor.black
             whatField2.delegate = self
             whatField2.backgroundColor = UIColor.white
@@ -302,7 +304,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whatField3.returnKeyType = UIReturnKeyType.done
             whatField3.keyboardType = UIKeyboardType.default
             whatField3.clearButtonMode = UITextFieldViewMode.whileEditing;
-            whatField3.placeholder = "Adjective 3"
+            whatField3.placeholder = "adjective 3"
             whatField3.tintColor = UIColor.black
             whatField3.delegate = self
             whatField3.backgroundColor = UIColor.white
@@ -319,7 +321,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             let titleLabel2 = UILabel(frame: CGRect(x: cw*0.55, y: ch*0.01, width: cw * 0.4, height: ch * 0.04))
             titleLabel2.font = UIFont(name: "FuturaPT-Light", size: 16.0)
             titleLabel2.textColor = C.darkColor
-            titleLabel2.text="What do you do?"
+            titleLabel2.text="what do you do?"
             titleLabel2.textAlignment = .left
             cell.addSubview(titleLabel2)
             
@@ -327,7 +329,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whoField1.returnKeyType = UIReturnKeyType.done
             whoField1.keyboardType = UIKeyboardType.default
             whoField1.clearButtonMode = UITextFieldViewMode.whileEditing;
-            whoField1.placeholder = "Activity 1"
+            whoField1.placeholder = "activity 1"
             whoField1.tintColor = UIColor.black
             whoField1.delegate = self
             whoField1.backgroundColor = UIColor.white
@@ -337,7 +339,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whoField2.returnKeyType = UIReturnKeyType.done
             whoField2.keyboardType = UIKeyboardType.default
             whoField2.clearButtonMode = UITextFieldViewMode.whileEditing;
-            whoField2.placeholder = "Activity 2"
+            whoField2.placeholder = "activity 2"
             whoField2.tintColor = UIColor.black
             whoField2.delegate = self
             whoField2.backgroundColor = UIColor.white
@@ -347,7 +349,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
             whoField3.returnKeyType = UIReturnKeyType.done
             whoField3.keyboardType = UIKeyboardType.default
             whoField3.clearButtonMode = UITextFieldViewMode.whileEditing;
-            whoField3.placeholder = "Activity 3"
+            whoField3.placeholder = "activity 3"
             whoField3.tintColor = UIColor.black
             whoField3.delegate = self
             whoField3.backgroundColor = UIColor.white
@@ -576,15 +578,15 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
         if Auth.auth().currentUser != nil
         {
             let _ = self.db.collection("user_info").addDocument(data: [
-                "hometown" : self.homeField.text!,
-                "name" : self.nameField.text!,
-                "who1" : self.whoField1.text!,
-                "who2" : self.whoField2.text!,
-                "who3" : self.whoField3.text!,
-                "what1" : self.whatField1.text!,
-                "what2" : self.whatField2.text!,
-                "what3" : self.whatField3.text!,
-                "major" : self.majorField.text!,
+                "hometown" : self.homeField.text!.lowercased(),
+                "name" : self.nameField.text!.lowercased(),
+                "who1" : self.whoField1.text!.lowercased(),
+                "who2" : self.whoField2.text!.lowercased(),
+                "who3" : self.whoField3.text!.lowercased(),
+                "what1" : self.whatField1.text!.lowercased(),
+                "what2" : self.whatField2.text!.lowercased(),
+                "what3" : self.whatField3.text!.lowercased(),
+                "major" : self.majorField.text!.lowercased(),
                 "user_id" : Auth.auth().currentUser!.uid,
                 "num_friends" : 0,
                 "level" : 1,

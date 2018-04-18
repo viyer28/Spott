@@ -93,6 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             self.window = UIWindow(frame: UIScreen.main.bounds)
                             C.w = self.window?.frame.width
                             C.h = self.window?.frame.height
+                            self.window?.backgroundColor = .white
                             self.window?.rootViewController = C.navigationViewController
                             self.window?.makeKeyAndVisible()
                         }

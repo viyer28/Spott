@@ -34,7 +34,9 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         view.addSubview(mapView)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.isZoomEnabled = true
+        self.view.backgroundColor = .white
         mapView.isScrollEnabled = true
+        mapView.compassView.isHidden = true;
         textField = UITextField(frame: CGRect(x: C.w*0.1, y: C.h*0.05, width: C.w*0.8, height: C.h*0.05))
         textField.delegate = self
         textField.backgroundColor = UIColor.white
@@ -120,12 +122,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
         {
-            let view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation1=", user: (annotation as! MapAnnotation).user)
+            let view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation1", user: (annotation as! MapAnnotation).user)
             return view
         }
         else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
         {
-            return UserAtLocationAnnotationView(reuseIdentifier: "mapAnnotation2", user: (annotation as! MapAnnotation).user)
+            return MapUserAnnotationView(reuseIdentifier: "mapAnnotation1", user: (annotation as! MapAnnotation).user)
         }
         let view = MapAnnotationView(reuseIdentifier: "mapAnnotation",  location: (annotation as! MapAnnotation).location)
         
@@ -133,9 +135,10 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     }
     func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
         // Instantiate and return our custom callout view.
+        self.centerButton.isHidden = false
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).move == 1
         {
-            mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+        mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
         }
         else if annotation.isKind(of: MapAnnotation.self)
         {
@@ -145,7 +148,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         {
             C.navigationViewController.eventsButton.isHidden = true
             C.navigationViewController.spottButton.isHidden = true
-            self.centerButton.isHidden = true
+//            self.centerButton.isHidden = true
             return UserCalloutView(representedObject: annotation)
             
         }
@@ -153,12 +156,13 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         {
             C.navigationViewController.eventsButton.isHidden = true
             C.navigationViewController.spottButton.isHidden = true
-            self.centerButton.isHidden = true
-            return UserAtLocCalloutView(representedObject: annotation)
+//            self.centerButton.isHidden = true
+            return UserCalloutView(representedObject: annotation)
             
         }
         else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 0
         {
+            self.centerButton.isHidden = false
             return SpottCalloutView(representedObject: annotation, location: (annotation as! MapAnnotation).location)
         }
         else if annotation.isKind(of: UserLocationAnnotationView.self)
@@ -252,10 +256,10 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
                     {
                         if l.id == friend.curLoc
                         {
-                            point.coordinate = CLLocationCoordinate2D(latitude:  l.latitude, longitude:  l.longitude)
                             point.location = l
                         }
                     }
+                    point.coordinate = CLLocationCoordinate2D(latitude:  friend.latitude, longitude:  friend.longitude)
                     point.type = 2
                     mapView.addAnnotation(point)
                     
@@ -267,7 +271,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         }
         
     }
-    
+  
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
         
         // Access the Mapbox Streets source and use it to create a `MGLFillExtrusionStyleLayer`. The source identifier is `composite`. Use the `sources` property on a style to verify source identifiers.
@@ -307,7 +311,7 @@ final class UserLocationAnnotationView: MGLUserLocationAnnotationView {
     
     convenience init()
     {
-        self.init(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.075, height: C.w*0.075))
     }
     
     override init(frame: CGRect) {
@@ -330,8 +334,16 @@ final class UserLocationAnnotationView: MGLUserLocationAnnotationView {
         
         // Use your image here
         let image = UIImage(named: "UserAnnotation")
-        UIGraphicsBeginImageContext(CGSize(width: 500, height: 500))
-        image?.draw(in: CGRect(x: 0, y: 0, width: 500, height: 500))
+        if UIDevice.current.modelName == "iPhone X"
+        {
+            UIGraphicsBeginImageContext(CGSize(width: 800, height: 800))
+            image?.draw(in: CGRect(x: 0, y: 0, width: 800, height: 800))
+        }
+        else
+        {
+            UIGraphicsBeginImageContext(CGSize(width: 500, height: 500))
+            image?.draw(in: CGRect(x: 0, y: 0, width: 500, height: 500))
+        }
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         

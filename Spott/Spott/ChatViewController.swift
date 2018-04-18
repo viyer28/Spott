@@ -153,14 +153,15 @@ class ChatViewController: JSQMessagesViewController
         return messages.count
     }
     override func textViewDidBeginEditing(_ textView: UITextView) {
-        parentView.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.9)
         if parentView.isKind(of: UserAtLocCalloutView.self)
         {
-            self.view.frame = CGRect(x: 0, y: C.h*0.2, width: C.w, height: C.h*0.7)
+            parentView.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.8)
+            self.view.frame = CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.65)
         }
         else
         {
-            self.view.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.8)
+            parentView.frame = CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.75)
+            self.view.frame = CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.7)
         }
         //C.navigationViewController.sea
         super.textViewDidBeginEditing(textView)
@@ -168,13 +169,13 @@ class ChatViewController: JSQMessagesViewController
     override func textViewDidEndEditing(_ textView: UITextView) {
         if parentView.isKind(of: UserAtLocCalloutView.self)
         {
-            parentView.frame = CGRect(x: 0, y: C.h*0.5, width: C.w, height: C.h*0.5)
-            self.view.frame = CGRect(x: 0, y: C.h*0.2, width: C.w, height: C.h*0.3)
+            parentView.frame = CGRect(x: 0, y: C.h*0.45, width: C.w, height: C.h*0.45)
+            self.view.frame = CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.3)
         }
         else
         {
-            parentView.frame = CGRect(x: 0, y: C.h*0.6, width: C.w, height: C.h*0.4)
-            self.view.frame = CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.3)
+            parentView.frame = CGRect(x: 0, y: C.h*0.575, width: C.w, height: C.h*0.35)
+            self.view.frame = CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.3)
         }
         super.textViewDidEndEditing(textView)
     }

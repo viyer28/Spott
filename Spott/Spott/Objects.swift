@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class Location : NSObject {
     var latitude: Double!
@@ -20,6 +21,7 @@ class Location : NSObject {
     var refid: String!
     var spotts: [User] = []
     var displayName: String!
+    var users: [QueryDocumentSnapshot] = []
 }
 
 class Event : NSObject {

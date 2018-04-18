@@ -63,7 +63,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             
             let nameLabel = UILabel(frame: CGRect(x: tw*0.02, y: tw*0.75, width: tw * 0.48, height: tw * 0.2))
             nameLabel.font = UIFont(name: "FuturaPT-Light", size: 28.0)
-            nameLabel.text = self.user.name
+            nameLabel.text = self.user.name.lowercased()
             cell.addSubview(nameLabel)
             
             let levelLabel = UILabel(frame: CGRect(x: tw*0.03, y: tw*0.83, width: tw * 0.28, height: tw * 0.08))
@@ -75,13 +75,13 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             let majorLabel = UILabel(frame: CGRect(x: tw*0.05, y: tw*0.925, width: tw * 0.45, height: tw * 0.05))
             majorLabel.textColor = C.blueishColor
             majorLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            majorLabel.text = self.user.major
+            majorLabel.text = self.user.major.lowercased()
             cell.addSubview(majorLabel)
             
             let locationLabel = UILabel(frame: CGRect(x: tw*0.6, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
             locationLabel.textColor = C.blueishColor
             locationLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            locationLabel.text = self.user.hometown
+            locationLabel.text = self.user.hometown.lowercased()
             cell.addSubview(locationLabel)
             
             let ageLabel = UILabel(frame: CGRect(x: tw*0.9, y: tw*0.925, width: tw * 0.05, height: tw * 0.05))

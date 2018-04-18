@@ -24,12 +24,12 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         locationLabel.textAlignment = .center
         locationLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
         locationLabel.text = "events"
-        self.view.addSubview(locationLabel)
+        //self.view.addSubview(locationLabel)
         
         let comingSoonLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         comingSoonLabel.center = CGPoint(x: C.w*0.5, y: C.h*0.5)
         comingSoonLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
-        comingSoonLabel.text = "events are coming soon."
+        comingSoonLabel.text = "events are coming soon"
         comingSoonLabel.textAlignment = .center
         self.view.addSubview(comingSoonLabel)
         

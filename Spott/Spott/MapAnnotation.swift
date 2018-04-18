@@ -115,7 +115,7 @@ class MapUserAnnotationView: MGLAnnotationView {
         super.init(reuseIdentifier: reuseIdentifier)
         
         //self.layer.borderWidth = 3.0 as CGFloat
-        self.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+        self.frame = CGRect(x: 0, y: 0, width: C.w*0.075, height: C.w*0.075)
         self.layer.cornerRadius = self.frame.size.width / 2
         self.clipsToBounds = true
         self.backgroundColor = UIColor.clear
@@ -150,19 +150,19 @@ class SpottCalloutView: UIView, MGLCalloutView {
     {
         self.init(representedObject: representedObject)
         self.frame = CGRect(x: 0, y: C.h*0.8, width: C.w, height: C.h*0.2)
-        self.titleLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.5, height: C.h*0.1))
+        self.titleLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.8, height: C.h*0.1))
         titleLabel.textColor = UIColor.black
         titleLabel.textAlignment = .left
         titleLabel.font = UIFont(name: "FuturaPT-Light", size: 36)
         titleLabel.text = representedObject.title!
         
-        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5,             titleLabel.intrinsicContentSize.width + C.w*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
+        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.8, titleLabel.intrinsicContentSize.width + C.w*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
         friendsLabel.textColor = C.greenishColor
         friendsLabel.textAlignment = .left
         friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
         friendsLabel.text = String(location.numFriends)
         
-        potentialsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.5, titleLabel.intrinsicContentSize.width + C.w*0.02), y: friendsLabel.intrinsicContentSize.height, width: C.w*0.2, height: C.h*0.05))
+        potentialsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.8, titleLabel.intrinsicContentSize.width + C.w*0.02), y: friendsLabel.intrinsicContentSize.height, width: C.w*0.2, height: C.h*0.05))
         potentialsLabel.textColor = C.redishColor
         potentialsLabel.textAlignment = .left
         potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
@@ -211,6 +211,7 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     let population = 100
     var messagingView: ChatViewController!
     var nameLabel: UILabel!
+    var locationLabel: UILabel!
     
 
     required init(representedObject: MGLAnnotation) {
@@ -218,22 +219,37 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         super.init(frame: .zero)
         self.isUserInteractionEnabled = true
         self.delegate = self
-        backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h*0.4))
+        backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h*0.35))
         backgroundView.backgroundColor = UIColor.white
-        let rectShape = CAShapeLayer()
-        rectShape.bounds = self.backgroundView.frame
-        rectShape.position = self.backgroundView.center
-        rectShape.path = UIBezierPath(roundedRect: self.backgroundView.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: C.h*0.1, height: C.h*0.1)).cgPath
-        backgroundView.layer.mask = rectShape
+        //let rectShape = CAShapeLayer()
+//        rectShape.bounds = self.backgroundView.frame
+//        rectShape.position = self.backgroundView.center
+//        rectShape.path = UIBezierPath(roundedRect: self.backgroundView.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: C.h*0.1, height: C.h*0.1)).cgPath
+//        backgroundView.layer.mask = rectShape
+        backgroundView.layer.cornerRadius = backgroundView.frame.width/15.0
         self.addSubview(backgroundView)
-        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.3))
+        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.3))
         chatBackgroundView.backgroundColor = UIColor.gray
         
-        self.nameLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.8, height: C.h*0.1))
+        let centerLine = UIView(frame: CGRect(x: 0, y: C.h*0.05-1, width: C.w, height: 1))
+        centerLine.backgroundColor = C.goldishColor
+        backgroundView.addSubview(centerLine)
+        
+        self.nameLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.4, height: C.h*0.05))
         nameLabel.textColor = UIColor.black
         nameLabel.textAlignment = .left
         nameLabel.font = UIFont(name: "FuturaPT-Light", size: 18)
         nameLabel.text = representedObject.title!
+        
+        self.locationLabel = UILabel(frame: CGRect(x: C.w*0.5, y: 0, width: C.w*0.4, height: C.h*0.05))
+        locationLabel.textColor = UIColor.black
+        locationLabel.textAlignment = .right
+        locationLabel.font = UIFont(name: "FuturaPT-Light", size: 18)
+        if (representedObject as! MapAnnotation).location != nil
+        {
+            locationLabel.text = (representedObject as! MapAnnotation).location.displayName
+            self.addSubview(locationLabel)
+        }
         
         messagingView = ChatViewController(pv: self, u2: (representedObject as! MapAnnotation).user)
         messagingView.view.frame = chatBackgroundView.frame
@@ -253,7 +269,7 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         //            return
         //        }
         view.isUserInteractionEnabled = true
-        frame = CGRect(x: 0, y: C.h*0.6, width: C.w, height: C.h*0.4)
+        frame = CGRect(x: 0, y: C.h*0.575, width: C.w, height: C.h*0.35)
         view.addSubview(self)
     }
         
@@ -303,16 +319,21 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         super.init(frame: .zero)
         self.isUserInteractionEnabled = true
         self.delegate = self
-        backgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.4))
+        backgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.1, width: C.w, height: C.h*0.35))
         backgroundView.backgroundColor = UIColor.white
-        let rectShape = CAShapeLayer()
-        rectShape.bounds = self.backgroundView.frame
-        rectShape.position = self.backgroundView.center
-        rectShape.path = UIBezierPath(roundedRect: self.backgroundView.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: C.h*0.1, height: C.h*0.1)).cgPath
-        backgroundView.layer.mask = rectShape
+        backgroundView.layer.cornerRadius = backgroundView.frame.width / 15.0
+//        let rectShape = CAShapeLayer()
+//        rectShape.bounds = self.backgroundView.frame
+//        rectShape.position = self.backgroundView.center
+//        rectShape.path = UIBezierPath(roundedRect: self.backgroundView.bounds, byRoundingCorners: [.topLeft , .topRight], cornerRadii: CGSize(width: C.h*0.1, height: C.h*0.1)).cgPath
+//        backgroundView.layer.mask = rectShape
         self.addSubview(backgroundView)
-        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.2, width: C.w, height: C.h*0.3))
+        chatBackgroundView = UIView(frame: CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.3))
         chatBackgroundView.backgroundColor = UIColor.gray
+        
+        let centerLine = UIView(frame: CGRect(x: 0, y: C.h*0.05-1, width: C.w, height: 1))
+        centerLine.backgroundColor = C.goldishColor
+        backgroundView.addSubview(centerLine)
         
         messagingView = ChatViewController(pv: self, u2: (representedObject as! MapAnnotation).user)
         messagingView.view.frame = chatBackgroundView.frame
@@ -320,7 +341,7 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         self.addSubview(chatBackgroundView)
         self.addSubview(messagingView.view)
         
-        self.nameLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.8, height: C.h*0.1))
+        self.nameLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.8, height: C.h*0.05))
         nameLabel.textColor = UIColor.black
         nameLabel.textAlignment = .left
         nameLabel.font = UIFont(name: "FuturaPT-Light", size: 18)
@@ -359,7 +380,7 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         //            return
         //        }
         view.isUserInteractionEnabled = true
-        frame = CGRect(x: 0, y: C.h*0.5, width: C.w, height: C.h*0.5)
+        frame = CGRect(x: 0, y: C.h*0.45, width: C.w, height: C.h*0.45)
         view.addSubview(self)
     }
     

@@ -21,13 +21,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let usernameLabel = UILabel(frame:CGRect(x: cw*0.15, y: ch*0.5, width: cw*0.5, height: ch*0.05));
         usernameLabel.textColor = C.darkColor
         usernameLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-        usernameLabel.text="Email:"
+        usernameLabel.text="email"
         self.view.addSubview(usernameLabel)
         
         let passwordLabel = UILabel(frame:CGRect(x: cw*0.15, y: ch*0.6, width: cw*0.5, height: ch*0.05));
         passwordLabel.textColor = C.darkColor
         passwordLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-        passwordLabel.text="Password:"
+        passwordLabel.text="password"
         
         self.view.addSubview(passwordLabel)
         
@@ -38,7 +38,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameField.clearButtonMode = UITextFieldViewMode.whileEditing
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         usernameField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
-        usernameField.placeholder = "Enter email"
+        usernameField.placeholder = "email"
         usernameField.delegate = self
         usernameField.font = UIFont(name: "FuturaPT-Light", size: 20.0)
         usernameField.backgroundColor = UIColor.white
@@ -53,15 +53,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         usernameField.contentVerticalAlignment = UIControlContentVerticalAlignment.center
         usernameField.autocorrectionType = UITextAutocorrectionType.no
         passwordField.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-        passwordField.placeholder = "Enter password"
+        passwordField.placeholder = "password"
         passwordField.backgroundColor = UIColor.white
         passwordField.borderStyle = UITextBorderStyle.roundedRect
         passwordField.isSecureTextEntry = true
         passwordField.autocapitalizationType = .none
         
         let spottImg = UIImageView(frame:CGRect(x: cw * 0.5 - ch * 0.125, y: ch * 0.15, width: ch * 0.25, height: ch*0.25))
-        spottImg.image = UIImage(named: "spottIcon")
+        spottImg.image = UIImage(named: "spottOwl")
         self.view.addSubview(spottImg)
+        
+        let betaImg = UIImageView(frame:CGRect(x: C.w*0.5-ch*0.05*640.0/176.0 / 2.0, y: ch * 0.375, width: ch*0.05*640.0/176.0, height: ch*0.05))
+        betaImg.image = UIImage(named: "betaImage")
+        self.view.addSubview(betaImg)
         
         let button = UIButton(type: .system) // let preferred over var here
         button.frame = CGRect(x: cw*0.25, y: ch*0.72, width: cw*0.5, height: ch*0.05)
@@ -126,11 +130,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         C.updateUser()
                         C.updateLocations()
                         //C.addUserListener()
-                        C.navigationViewController = NavigationViewController()
+                        
+                        let con = NavigationViewController(transitionStyle: UIPageViewControllerTransitionStyle.scroll,
+                                                           navigationOrientation: UIPageViewControllerNavigationOrientation.horizontal,
+                                                           options: nil)
+                        C.navigationViewController = con
+                        
                         C.profileViewController = ProfileViewController()
-                        let initialViewController = C.navigationViewController
+                        
                         //initialViewController.view.backgroundColor = C.darkColor
-                        self.present(initialViewController, animated: false, completion: nil)
+                        self.present(C.navigationViewController, animated: false, completion: nil)
                     }
                 }
             }

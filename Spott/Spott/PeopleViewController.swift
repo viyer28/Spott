@@ -9,7 +9,7 @@
 import UIKit
 
 class PeopleViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    var segControl = UISegmentedControl(items: ["Spott", "Spotted"])
+    var segControl = UISegmentedControl(items: ["spott", "spotted"])
     var titleLabel: UILabel!
     var current: [User] = []
     var sliderInt = 0
@@ -30,7 +30,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         self.noOneLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         noOneLabel.center = CGPoint(x: C.w*0.5, y: C.h*0.5)
         noOneLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
-        noOneLabel.text = "There is no one to spott here."
+        noOneLabel.text = "there is no one to spott here"
         noOneLabel.textAlignment = .center
         
         self.collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
@@ -55,8 +55,8 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         titleLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.02, width: C.w, height: C.h*0.1))
         titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
-        titleLabel.text = "Spott"
-        self.view.addSubview(titleLabel)
+        titleLabel.text = "spott"
+//        self.view.addSubview(titleLabel)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -220,14 +220,14 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     @objc func changeView(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 1:
-            self.titleLabel.text = "Spotted"
+            self.titleLabel.text = "spotted"
             current = C.user.spotted
             self.sliderInt = 1
             self.collectionView?.reloadData()
-            self.noOneLabel.text = "No one has spotted you."
+            self.noOneLabel.text = "no one has spotted you"
         default:
-            self.titleLabel.text = "Spott"
-            self.noOneLabel.text = "There is no one to spott here."
+            self.titleLabel.text = "spott"
+            self.noOneLabel.text = "there is no one to spott here"
             current = C.currentLocation.spotts
             self.sliderInt = 0
             self.collectionView?.reloadData()
