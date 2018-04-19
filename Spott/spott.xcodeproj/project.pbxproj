@@ -9,20 +9,18 @@
 /* Begin PBXBuildFile section */
 		270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 270A120E203A9DED009F6C6E /* GoogleService-Info.plist */; };
 		270F6F8A206B3E7600B55277 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 270F6F89206B3E7600B55277 /* ChatViewController.swift */; };
-		27101EAE2077F9610010A884 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27101EAD2077F9610010A884 /* Images.xcassets */; };
-		27101EB02077F96F0010A884 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27101EAF2077F96F0010A884 /* Images-2.xcassets */; };
 		271A8A3D207F17F400210FF9 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 271A8A3C207F17F300210FF9 /* Launch Screen.storyboard */; };
 		27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA0203F4F150096AF34 /* LoginViewController.swift */; };
 		27283FA3203F5A810096AF34 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27283FA2203F5A810096AF34 /* SignUpViewController.swift */; };
-		274327EF207F368C00044B07 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 274327EE207F368C00044B07 /* Info.plist */; };
+		272DD5CE20885081002DD0E4 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272DD5CD20885081002DD0E4 /* GradientView.swift */; };
 		2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2744A443203770AF00DAB7CF /* FuturaPTLight.otf */; };
 		2744A448203770CF00DAB7CF /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 2744A447203770CF00DAB7CF /* Fonts */; };
 		2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2744A45120379B8300DAB7CF /* MatchProfileView.swift */; };
-		274F87462071D933005E278D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 274F87452071D933005E278D /* Assets.xcassets */; };
 		2751CD492025545E000A38B0 /* Mapbox.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2751CD472025545D000A38B0 /* Mapbox.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		276AEEA02027B56C00E0CB1C /* EventTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */; };
 		276BE2642076D803004A6791 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276BE2632076D803004A6791 /* OnboardingViewController.swift */; };
 		276CBDC220706FAC0067904F /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 276CBDC120706FAC0067904F /* FriendsView.swift */; };
+		27709825208933D20057280B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27709824208933D10057280B /* Assets.xcassets */; };
 		277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */ = {isa = PBXBuildFile; fileRef = 277D980F20380B14007A0811 /* FuturaPTBook.otf */; };
 		278203CD2066F9D000410E9F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278203CC2066F9D000410E9F /* SettingsViewController.swift */; };
 		2782E3F82024F6B700A3B2E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E3F72024F6B700A3B2E8 /* ViewController.swift */; };
@@ -83,21 +81,20 @@
 		22E63EC619DE93731B8B90A3 /* Pods_Spott.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spott.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		270A120E203A9DED009F6C6E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		270F6F89206B3E7600B55277 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		27101EAD2077F9610010A884 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		27101EAF2077F96F0010A884 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
 		271A8A3C207F17F300210FF9 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		27283FA0203F4F150096AF34 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		27283FA2203F5A810096AF34 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		272DD5CD20885081002DD0E4 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		274327EB207F1D9600044B07 /* spott copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "spott copy-Info.plist"; path = "/Users/brendansanderson/Desktop/Projects/Spott/Spott/spott copy-Info.plist"; sourceTree = "<absolute>"; };
 		274327EE207F368C00044B07 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2744A443203770AF00DAB7CF /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
 		2744A447203770CF00DAB7CF /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = Spott/Fonts; sourceTree = "<group>"; };
 		2744A45120379B8300DAB7CF /* MatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfileView.swift; sourceTree = "<group>"; };
-		274F87452071D933005E278D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2751CD472025545D000A38B0 /* Mapbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Mapbox.framework; path = Spott/frameworks/Mapbox.framework; sourceTree = "<group>"; };
 		276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableCell.swift; sourceTree = "<group>"; };
 		276BE2632076D803004A6791 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		276CBDC120706FAC0067904F /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		27709824208933D10057280B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../projects/Spott/Spott/Spott/Assets.xcassets; sourceTree = "<group>"; };
 		277D980F20380B14007A0811 /* FuturaPTBook.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTBook.otf; sourceTree = "<group>"; };
 		278203CC2066F9D000410E9F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		2782E3F22024F6B700A3B2E8 /* spott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spott.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -184,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				271A8A3C207F17F300210FF9 /* Launch Screen.storyboard */,
+				272DD5CD20885081002DD0E4 /* GradientView.swift */,
 				2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */,
 				270A120E203A9DED009F6C6E /* GoogleService-Info.plist */,
 				27D26F272029052F00F585B5 /* AppDelegate.swift */,
@@ -204,7 +202,7 @@
 				27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */,
 				279C80692025518700F3950C /* Fonts */,
 				27A4DE5920250A6900AAC8A8 /* C.swift */,
-				274F87452071D933005E278D /* Assets.xcassets */,
+				27709824208933D10057280B /* Assets.xcassets */,
 				276CBDC120706FAC0067904F /* FriendsView.swift */,
 				2782E4232024F78100A3B2E8 /* FeedViewController.swift */,
 				2782E4272024F78200A3B2E8 /* PeopleViewController.swift */,
@@ -213,8 +211,6 @@
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
 				27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */,
 				2782E3F72024F6B700A3B2E8 /* ViewController.swift */,
-				27101EAD2077F9610010A884 /* Images.xcassets */,
-				27101EAF2077F96F0010A884 /* Images-2.xcassets */,
 			);
 			path = Spott;
 			sourceTree = "<group>";
@@ -331,13 +327,16 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Brendan Sanderson";
 				TargetAttributes = {
 					2782E3F12024F6B700A3B2E8 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -380,16 +379,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				27101EB02077F96F0010A884 /* Images-2.xcassets in Resources */,
 				277D981020380B2A007A0811 /* FuturaPTBook.otf in Resources */,
-				27101EAE2077F9610010A884 /* Images.xcassets in Resources */,
 				2744A448203770CF00DAB7CF /* Fonts in Resources */,
 				2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */,
 				27F41C3D206F37A20054D3D7 /* map.geojson in Resources */,
-				274F87462071D933005E278D /* Assets.xcassets in Resources */,
 				2744A444203770AF00DAB7CF /* FuturaPTLight.otf in Resources */,
-				274327EF207F368C00044B07 /* Info.plist in Resources */,
 				271A8A3D207F17F400210FF9 /* Launch Screen.storyboard in Resources */,
+				27709825208933D20057280B /* Assets.xcassets in Resources */,
 				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -543,6 +539,7 @@
 				2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */,
 				2782E42A2024F78200A3B2E8 /* FeedViewController.swift in Sources */,
 				2744A45220379B8300DAB7CF /* MatchProfileView.swift in Sources */,
+				272DD5CE20885081002DD0E4 /* GradientView.swift in Sources */,
 				270F6F8A206B3E7600B55277 /* ChatViewController.swift in Sources */,
 				27B07FDE202BDC5B0002FE0B /* LocationProfileView.swift in Sources */,
 				2782E42B2024F78200A3B2E8 /* MapViewController.swift in Sources */,
@@ -601,6 +598,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -608,6 +606,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -658,6 +657,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -665,6 +665,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -699,6 +700,7 @@
 			baseConfigurationReference = FD4B8D4F6B2FD522BD76A68E /* Pods-Spott.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_ENTITLEMENTS = spott/spott.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QV5DCZA4G6;
@@ -724,6 +726,7 @@
 			baseConfigurationReference = 157829373D4E0C06750FF66F /* Pods-Spott.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LIBRARY = "compiler-default";
 				CODE_SIGN_ENTITLEMENTS = spott/spott.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = QV5DCZA4G6;

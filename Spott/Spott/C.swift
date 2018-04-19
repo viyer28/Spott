@@ -363,8 +363,8 @@ class C: NSObject {
                                 {
                                     f.image = UIImage(named: "sample_prof")
                                 }
-                                C.user.spotted.append(f)
                                 updateFriendsofFriend(user: f, friends: spotted_userData["friends"] as! [String])
+                                C.user.spotted.append(f)
                                 
                                 //updateFriends(user: f, friends: friend_userData["friends"] as! [String])
                             }
@@ -430,6 +430,10 @@ class C: NSObject {
     
     static func updateSpottsAtUserLoc()
     {
+        if C.user.curLoc == -1
+        {
+            return;
+        }
         Firestore.firestore().collection("user_info").whereField("curLoc", isEqualTo: C.user.curLoc).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting Spotts documents: \(err)")
@@ -476,6 +480,7 @@ class C: NSObject {
                         {
                             f.image = UIImage(named: "sample_prof")
                         }
+                        C.updateFriendsofFriend(user: f, friends: data["friends"] as! [String])
                         spotts.append(f)
                     }
                 }
@@ -745,3 +750,4 @@ public extension UIDevice {
     }
     
 }
+

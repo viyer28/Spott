@@ -23,6 +23,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     var otherControllerView: UIView!
     var allValues: [String] = []
     var values: [String] = []
+    var profileView: MatchProfileView!
     //var searchView = SearchBarView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -165,11 +166,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             self.centerButton.isHidden = false
             return SpottCalloutView(representedObject: annotation, location: (annotation as! MapAnnotation).location)
         }
-        else if annotation.isKind(of: UserLocationAnnotationView.self)
+        else if annotation.isKind(of: MGLUserLocation.self)
         {
-            present(C.profileViewController, animated: true, completion: nil)
+            //mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+            return ProfileCalloutView(representedObject: annotation)
         }
-        showProfile()
+        //showProfile()
         return EmptyCalloutView(representedObject: annotation)
     }
     func mapViewRegionIsChanging(_ mapView: MGLMapView) {
@@ -197,11 +199,11 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
                     anno = a
                 }
             }
-        }
-        if anno.isKind(of: MapAnnotation.self)
-        {
-            (anno as! MapAnnotation).move = 0
-        }
+            if anno.isKind(of: MapAnnotation.self)
+            {
+                (anno as! MapAnnotation).move = 0
+            }
+    }
         if anno != nil
         {
             self.mapView.selectAnnotation(anno, animated: true)
@@ -270,6 +272,14 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             self.tableView.reloadData()
         }
         
+    }
+    
+    func deselectCallouts()
+    {
+        for annotation in self.mapView.selectedAnnotations
+        {
+            self.mapView.deselectAnnotation(annotation, animated: false)
+        }
     }
   
     func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {

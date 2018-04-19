@@ -14,11 +14,18 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     var tw = C.w * 0.8
     var th = C.h * 0.8
     var user = User()
-    
+    var type = 0
     convenience init (user: User)
     {
         self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
         self.user = user
+    }
+    
+    convenience init (user: User, t: Int)
+    {
+        self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
+        self.user = user
+        self.type = t
     }
     
     override init (frame : CGRect) {
@@ -99,14 +106,21 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             numFriendsLabel.textColor = C.blueishColor
             numFriendsLabel.textAlignment = .right
             numFriendsLabel.font = UIFont(name: "FuturaPT-Light", size: 24.0)
-            numFriendsLabel.text = "\(self.user.numFriends!)"
+            numFriendsLabel.text = "\(self.user.friends.count)"
             cell.addSubview(numFriendsLabel)
             
             let friendsLabel = UILabel(frame: CGRect(x: tw*0.26, y: th*0.025, width: tw * 0.18, height: th * 0.05))
-            friendsLabel.numberOfLines = 2
             friendsLabel.baselineAdjustment = .alignCenters
             friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 8.0)
-            friendsLabel.text = "friends in common"
+            if type == 0
+            {
+                friendsLabel.numberOfLines = 2
+                friendsLabel.text = "friends in common"
+            }
+            else if type == 1
+            {
+                friendsLabel.text = "friends"
+            }
             cell.addSubview(friendsLabel)
             
             if self.user.friends.count > 0
@@ -114,7 +128,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
                 let friendImage1 = UIImageView(frame:CGRect(x: tw * 0.45, y: th*0.02, width: th * 0.06, height: th * 0.06))
                 friendImage1.layer.cornerRadius = friendImage1.frame.size.width / 2;
                 friendImage1.clipsToBounds = true;
-                //friendImage1.image = UIImage(named: "sample_prof")
+                friendImage1.image = self.user.friends[0].image
                 cell.addSubview(friendImage1)
             }
             if self.user.friends.count > 1
@@ -122,7 +136,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
                 let friendImage2 = UIImageView(frame:CGRect(x: tw * 0.475 + th * 0.06, y: th*0.02 , width: th * 0.06, height: th * 0.06))
                 friendImage2.layer.cornerRadius = friendImage2.frame.size.width / 2;
                 friendImage2.clipsToBounds = true;
-                //friendImage2.image = UIImage(named: "sample_prof")
+                friendImage2.image = self.user.friends[1].image
                 cell.addSubview(friendImage2)
             }
             if self.user.friends.count > 2
@@ -130,7 +144,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
                 let friendImage3 = UIImageView(frame:CGRect(x: tw * 0.5 + th * 0.12, y: th*0.02 , width: th * 0.06, height: th * 0.06))
                 friendImage3.layer.cornerRadius = friendImage3.frame.size.width / 2;
                 friendImage3.clipsToBounds = true;
-                //friendImage3.image = UIImage(named: "sample_prof")
+                friendImage3.image = self.user.friends[2].image
                 cell.addSubview(friendImage3)
             }
             if self.user.friends.count > 3

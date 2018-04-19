@@ -103,9 +103,16 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             spottButton.isHidden = false
             mapButton.isHidden = true
             if selected == 1
-            { setViewControllers([mapViewController], direction: .forward, animated: true, completion: nil) }
+            {
+                eventsViewController.view.removeFromSuperview()
+                eventsViewController.removeFromParentViewController()
+                
+            }
             else
-            { setViewControllers([mapViewController], direction: .reverse, animated: true, completion: nil) }
+            { //setViewControllers([mapViewController], direction: .reverse, animated: true, completion: nil)
+                peopleViewController.view.removeFromSuperview()
+                peopleViewController.removeFromParentViewController()
+            }
             selected = 2
             self.view.bringSubview(toFront: mapButton)
             self.view.bringSubview(toFront: spottButton)
@@ -118,18 +125,16 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         switch self.selected {
         case 3:
             selected = 3
+        
         default:
-//            spottButton.imageView?.tintColor = UIColor.black
-//            spottButton.backgroundColor = C.goldishColor
-//            mapButton.imageView?.tintColor = C.goldishColor
-//            mapButton.backgroundColor = UIColor.black
-//            eventsButton.imageView?.tintColor = C.goldishColor
-//            eventsButton.backgroundColor = UIColor.black
+            self.mapViewController.deselectCallouts()
             eventsButton.isHidden = true
             spottButton.isHidden = true
             mapButton.isHidden = false
             selected = 3
-            setViewControllers([peopleViewController], direction: .forward, animated: true, completion: nil)
+            //setViewControllers([peopleViewController], direction: .forward, animated: true, completion: nil)
+            self.mapViewController.mapView.addSubview(peopleViewController.view)
+            self.mapViewController.addChildViewController(peopleViewController)
             self.view.bringSubview(toFront: mapButton)
             self.view.bringSubview(toFront: spottButton)
             self.view.bringSubview(toFront: eventsButton)
@@ -142,17 +147,14 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         case 1:
             selected = 1
         default:
-//            eventsButton.imageView?.tintColor = UIColor.black
-//            eventsButton.backgroundColor = C.goldishColor
-//            spottButton.imageView?.tintColor = C.goldishColor
-//            spottButton.backgroundColor = UIColor.black
-//            mapButton.imageView?.tintColor = C.goldishColor
-//            mapButton.backgroundColor = UIColor.black
+            self.mapViewController.deselectCallouts()
             eventsButton.isHidden = true
             spottButton.isHidden = true
             mapButton.isHidden = false
             selected = 1
-            setViewControllers([eventsViewController], direction: .reverse, animated: true, completion: nil)
+            //setViewControllers([eventsViewController], direction: .reverse, animated: true, completion: nil)
+            self.mapViewController.mapView.addSubview(eventsViewController.view)
+            self.mapViewController.addChildViewController(eventsViewController)
             self.view.bringSubview(toFront: mapButton)
             self.view.bringSubview(toFront: spottButton)
             self.view.bringSubview(toFront: eventsButton)
@@ -169,8 +171,9 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             self.userLocation = locationManager.location!
         }
         findUserLocation()
+        locationManager.pausesLocationUpdatesAutomatically = true
+        locationManager.allowsBackgroundLocationUpdates = true
         if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingHeading()
             locationManager.startUpdatingLocation()
         }
     }

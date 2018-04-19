@@ -206,13 +206,15 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     var chatBackgroundView: UIView!
     var vw: CGFloat!
     var vh: CGFloat!
+    var user: User!
     let numFriends = 3
     let numPotentials = 10
     let population = 100
     var messagingView: ChatViewController!
     var nameLabel: UILabel!
     var locationLabel: UILabel!
-    
+    var profileButton = UIButton(type: UIButtonType.custom) as UIButton
+    var profileView: MatchProfileView!
 
     required init(representedObject: MGLAnnotation) {
         self.representedObject = representedObject
@@ -235,7 +237,19 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         centerLine.backgroundColor = C.goldishColor
         backgroundView.addSubview(centerLine)
         
-        self.nameLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.4, height: C.h*0.05))
+        self.user = (representedObject as! MapAnnotation).user
+        
+        profileButton.frame = CGRect(x: 0, y: 0, width: C.h*0.04, height: C.h*0.04)
+        profileButton.center = CGPoint(x: C.w*0.5, y: C.h*0.025)
+        profileButton.setImage(user.image, for: .normal)
+        profileButton.addTarget(self, action: #selector(goToProfile), for: UIControlEvents.touchUpInside)
+        profileButton.layer.cornerRadius = profileButton.frame.width / 2
+        profileButton.clipsToBounds = true
+        profileButton.layer.borderColor = C.goldishColor.cgColor
+        profileButton.layer.borderWidth = 1
+        self.addSubview(profileButton)
+        
+        self.nameLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.35, height: C.h*0.05))
         nameLabel.textColor = UIColor.black
         nameLabel.textAlignment = .left
         nameLabel.font = UIFont(name: "FuturaPT-Light", size: 18)
@@ -257,6 +271,19 @@ class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         self.addSubview(chatBackgroundView)
         self.addSubview(messagingView.view)
         self.addSubview(nameLabel)
+    }
+    
+    @objc func goToProfile()
+    {
+        profileView = MatchProfileView(user: self.user)
+        frame = CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3)
+        self.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
+        self.chatBackgroundView.isHidden = true
+        self.nameLabel.isHidden = true
+        self.messagingView.view.isHidden = true
+        self.profileButton.isHidden = true
+        self.locationLabel.isHidden = true
+        self.addSubview(profileView)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -396,7 +423,6 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         C.navigationViewController.mapViewController.centerButton.isHidden = false
         removeFromSuperview()
     }
-    
 }
 
 
@@ -419,6 +445,8 @@ class EmptyCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     
     lazy var leftAccessoryView = UIView()
     lazy var rightAccessoryView = UIView()
+    let dismissesAutomatically: Bool = true
+    let isAnchoredToAnnotation: Bool = false
     
     var delegate: MGLCalloutViewDelegate?
     
@@ -438,6 +466,47 @@ class EmptyCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     }
     
     func dismissCallout(animated: Bool) {
+    }
+    
+}
+
+class ProfileCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
+    var representedObject: MGLAnnotation
+    var profileView: MatchProfileView!
+    lazy var leftAccessoryView = UIView()
+    lazy var rightAccessoryView = UIView()
+    
+    var delegate: MGLCalloutViewDelegate?
+    
+    
+    required init(representedObject: MGLAnnotation) {
+        if representedObject.isKind(of: MGLUserLocation.self)
+        {
+            profileView = MatchProfileView(user: C.user, t: 1)
+        }
+        else if representedObject.isKind(of: MKAnnotation.self)
+        {
+            profileView = MatchProfileView(user: (representedObject as! MapAnnotation).user)
+        }
+        self.representedObject = representedObject
+        super.init(frame: .zero)
+        self.addSubview(profileView)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // callout view delegate: present callout
+    func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
+        view.isUserInteractionEnabled = true
+        frame = CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3)
+        self.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
+        view.addSubview(self)
+    }
+    
+    func dismissCallout(animated: Bool) {
+        removeFromSuperview()
     }
     
 }

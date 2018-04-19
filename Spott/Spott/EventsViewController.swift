@@ -14,7 +14,7 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         self.tableView = UITableView(frame: CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.85))
         self.tableView.delegate = self
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.clear
         tableView.dataSource = self
         self.tableView.rowHeight = C.h*0.2
         tableView.allowsSelection = false;
@@ -26,12 +26,20 @@ class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         locationLabel.text = "events"
         //self.view.addSubview(locationLabel)
         
-        let comingSoonLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        comingSoonLabel.center = CGPoint(x: C.w*0.5, y: C.h*0.5)
-        comingSoonLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
-        comingSoonLabel.text = "events are coming soon"
-        comingSoonLabel.textAlignment = .center
-        self.view.addSubview(comingSoonLabel)
+        let noOneView = UIView(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
+        noOneView.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
+        noOneView.backgroundColor = UIColor.white
+        noOneView.layer.borderWidth = 1.0 as CGFloat
+        noOneView.layer.borderColor = C.goldishColor.cgColor
+        
+        let noOneLabel = UILabel(frame: noOneView.frame)
+        noOneLabel.center = CGPoint(x: noOneView.frame.width * 0.5, y: noOneView.frame.height * 0.5)
+        noOneLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
+        noOneLabel.text = "events are coming soon"
+        noOneLabel.textAlignment = .center
+        noOneView.addSubview(noOneLabel)
+        self.view.addSubview(noOneView)
+        
         
         //        self.navigationController?.navigationBar.titleTextAttributes =
         //            [NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 27)!,

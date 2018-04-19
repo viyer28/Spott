@@ -14,6 +14,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     var current: [User] = []
     var sliderInt = 0
     var noOneLabel : UILabel!
+    var noOneView: UIView!
     override func loadView() {
         self.view = UIView(frame: UIScreen.main.bounds)
     }
@@ -22,16 +23,23 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         super.viewDidLoad()
         self.title = "People";
         let flowLayout = UICollectionViewFlowLayout()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.clear
         flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: self.view.frame.width * 0.1, bottom: 0, right: self.view.frame.width * 0.1)
         flowLayout.itemSize = CGSize(width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3)
-
-        self.noOneLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        noOneLabel.center = CGPoint(x: C.w*0.5, y: C.h*0.5)
+        
+        self.noOneView = UIView(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
+        self.noOneView.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
+        self.noOneView.backgroundColor = UIColor.white
+        noOneView.layer.borderWidth = 1.0 as CGFloat
+        noOneView.layer.borderColor = C.goldishColor.cgColor
+        
+        self.noOneLabel = UILabel(frame: noOneView.frame)
+        noOneLabel.center = CGPoint(x: noOneView.frame.width * 0.5, y: noOneView.frame.height * 0.5)
         noOneLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
         noOneLabel.text = "there is no one to spott here"
         noOneLabel.textAlignment = .center
+        noOneView.addSubview(noOneLabel)
         
         self.collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: flowLayout)
         self.collectionView!.backgroundColor = UIColor.white.withAlphaComponent(0)
@@ -40,17 +48,19 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         self.collectionView!.delegate = self;
         self.collectionView!.dataSource = self;
         self.view.addSubview(self.collectionView!)
-        self.view.addSubview(noOneLabel)
+        self.view.addSubview(noOneView)
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
          print(1)
         
-        segControl.frame = CGRect(x: C.w*0.3, y: C.h*0.11, width: C.w*0.4, height: C.h*0.03)
+        segControl.frame = CGRect(x: C.w*0.1, y: C.h*0.11, width: C.w*0.8, height: C.h*0.03)
         segControl.selectedSegmentIndex = 0
         segControl.layer.cornerRadius = 5.0 
         segControl.backgroundColor = .white
         segControl.tintColor = C.goldishColor
         // spotSegControl.addTarget(self, action: "action:", forControlEvents: .ValueChanged)
         segControl.addTarget(self, action: #selector(changeView), for: UIControlEvents.valueChanged)
+        segControl.setTitleTextAttributes([kCTFontAttributeName: UIFont(name: "FuturaPT-Light", size: 16)],
+                                                for: .normal)
         self.view.addSubview(segControl)
         titleLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.02, width: C.w, height: C.h*0.1))
         titleLabel.textAlignment = .center
@@ -78,11 +88,11 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         // #warning Incomplete implementation, return the number of sections
         if current.count == 0
         {
-            self.noOneLabel.isHidden = false
+            self.noOneView.isHidden = false
         }
         else
         {
-            self.noOneLabel.isHidden = true
+            self.noOneView.isHidden = true
         }
         return current.count
     }
@@ -91,6 +101,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         let profileView = MatchProfileView(user: current[indexPath.section])
         cell.frame = CGRect(x: cell.frame.minX, y: cell.frame.minY, width: profileView.frame.width, height: profileView.frame.width)
         let button = UIButton(frame: profileView.frame)
+        cell.backgroundColor = UIColor.white
         button.backgroundColor = .clear
         button.addTarget(self, action: #selector(touch(_:)), for: .touchUpInside)
         button.tag = indexPath.section
