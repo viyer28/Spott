@@ -60,7 +60,7 @@ class TabBarViewController: UITabBarController, CLLocationManagerDelegate {
         
         if (NSDate().timeIntervalSince(lastUpdate as Date) > 30)
         {
-            let ref = Firestore.firestore().collection("user_info").document(C.refid)
+            let ref = Firestore.firestore().collection(C.userInfo).document(C.refid)
             lastUpdate = NSDate()
             // Set the "capital" field of the city 'DC'
             ref.updateData([

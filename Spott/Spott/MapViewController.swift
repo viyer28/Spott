@@ -24,15 +24,22 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     var allValues: [String] = []
     var values: [String] = []
     var profileView: MatchProfileView!
+
     //var searchView = SearchBarView()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         MGLAccountManager.setAccessToken(MapboxAccessToken)
         let url = URL(string: "mapbox://styles/spottiyer/cjfgeobk2aztz2rk98ke0awx4")
+
+        //let url = URL(string: "mapbox://styles/spottiyer/cjgiyn91l000i2smvwbjxj9oq")
         mapView = MGLMapView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h), styleURL: url)
         mapView.delegate = self
         view.addSubview(mapView)
+        profileView = MatchProfileView(user: C.user, t: 1)
+        profileView.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
+        profileView.isHidden = true
+        mapView.addSubview(profileView)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         mapView.isZoomEnabled = true
         self.view.backgroundColor = .white
@@ -46,7 +53,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         textField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
         textField.tintColor = .black 
         textField.clearButtonMode = UITextFieldViewMode.whileEditing
-        textField.placeholder = "Search for a user or a location..."
+        //textField.placeholder = "search for a user or location"
         textField.autocorrectionType = UITextAutocorrectionType.no
         tableView = UITableView(frame: CGRect(x: C.w*0.11, y: C.h*0.1, width: C.w*0.78, height: C.h*0.4))
         let tmaskLayer = CAShapeLayer()
@@ -134,12 +141,14 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         
         return view
     }
+    
+    
     func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
         // Instantiate and return our custom callout view.
         self.centerButton.isHidden = false
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).move == 1
         {
-        mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
+            mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
         }
         else if annotation.isKind(of: MapAnnotation.self)
         {
@@ -169,13 +178,21 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         else if annotation.isKind(of: MGLUserLocation.self)
         {
             //mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
-            return ProfileCalloutView(representedObject: annotation)
+            profileView.isHidden = false
+            return EmptyCalloutView(representedObject: annotation)
         }
         //showProfile()
         return EmptyCalloutView(representedObject: annotation)
     }
     func mapViewRegionIsChanging(_ mapView: MGLMapView) {
-        self.centerButton.isHidden = false
+        self.profileView.isHidden = true
+        self.profileView.tableView.reloadData()
+        self.textField.resignFirstResponder()
+        self.tableView.isHidden = true
+        if C.navigationViewController.onboarding == 0
+        {
+            self.centerButton.isHidden = false
+        }
     }
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
@@ -185,10 +202,8 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     
     @objc func centerToUser()
     {
+        self.profileView.isHidden = true
         mapView.centerCoordinate = C.navigationViewController.userLocation.coordinate
-        self.centerButton.isHidden = true
-        
-        
         var anno: MGLAnnotation! = nil
         if (C.user.curLoc != -1)
         {
@@ -203,11 +218,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             {
                 (anno as! MapAnnotation).move = 0
             }
-    }
+        }
         if anno != nil
         {
             self.mapView.selectAnnotation(anno, animated: true)
         }
+        self.centerButton.isHidden = true
     }
     
     @objc func showFriends ()

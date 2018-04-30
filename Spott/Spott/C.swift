@@ -36,6 +36,7 @@ class C: NSObject {
     static var eventLightBrownColor = UIColor(red:246.0/255.0, green:194.0/255.0, blue:127.0/255.0, alpha:1.0)
     static var refid: String!
     static var userData: Dictionary<String, Any>!
+    static let userInfo = "user_info2"
     static let db = Firestore.firestore()
     static let dbChat = db.collection("chats")
     static let storage = Storage.storage()
@@ -75,6 +76,33 @@ class C: NSObject {
         }
     }
     
+    static func updateLocationCenters()
+    {
+        Firestore.firestore().collection("locations").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting Friend documents: \(err)")
+            } else {
+                C.locations = []
+                for document in querySnapshot!.documents {
+                    let locationData = document.data()
+                    
+                    for f in C.features
+                    {
+                        if f.properties!["id"] as! Int == locationData["id"] as! Int
+                        {
+                            let point = f.geometries?.first?.centroid()
+                            Firestore.firestore().collection("locations").document(document.documentID).updateData([
+                                "longitude" : point?.coordinate.x ?? 0,
+                                "latitude" : point?.coordinate.y ?? 0
+                            ])
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+    
     static func updateUsersLocation()
     {
         if C.user.curLoc == -1
@@ -97,7 +125,7 @@ class C: NSObject {
     
     static func getNums(locations: [Location])
     {
-        Firestore.firestore().collection("user_info").getDocuments() { (querySnapshot, err) in
+        Firestore.firestore().collection(C.userInfo).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting Friend documents: \(err)")
             } else {
@@ -155,54 +183,6 @@ class C: NSObject {
         location.numPopulation = population
     }
     
-    static func getSpott(document: QueryDocumentSnapshot) -> User
-    {
-        let f = User()
-        f.name = document["name"] as! String
-        f.xp = document["xp"] as! Int
-        f.level = document["level"] as! Int
-        f.numFriends = document["num_friends"] as! Int
-        f.whoIam = ["", "", ""]
-        f.whatIDo = ["", "", ""]
-        if document["who1"] != nil
-        {
-            f.whoIam[0] = document["who1"] as! String
-        }
-        if document["who2"] != nil
-        {
-            f.whoIam[1] = document["who2"] as! String
-        }
-        if document["who3"] != nil
-        {
-            f.whoIam[2] = document["who3"] as! String
-        }
-        if document["what1"] != nil
-        {
-            f.whatIDo[0] = document["what1"] as! String
-        }
-        if document["what2"] != nil
-        {
-            f.whatIDo[1] = document["what2"] as! String
-        }
-        if document["what3"] != nil
-        {
-            f.whatIDo[2] = document["what3"] as! String
-        }
-        f.age = 18
-        if document["profilePicture"] != nil
-            
-        {
-            C.storage.reference(forURL: document["profilePicture"] as! String).getData(maxSize: 1024*1024, completion: {(data, error) -> Void in
-                // Create a UIImage, add it to the array
-                f.image = UIImage(data: data!)
-                
-                
-            })
-        }
-        updateFriendsofFriend(user: f, friends: document["friends"] as! [String])
-        return f
-    }
-    
     static func userHasFriend(document: QueryDocumentSnapshot) -> Bool
     {
         for friend in C.user.friends
@@ -217,7 +197,7 @@ class C: NSObject {
     
 //    static func addUserListener()
 //    {
-//        db.collection("user_info").document(C.refid)
+//        db.collection(C.userInfo).document(C.refid)
 //            .addSnapshotListener { documentSnapshot, error in
 //                guard let document = documentSnapshot else {
 //                    print("Error fetching document: \(error!)")
@@ -230,59 +210,21 @@ class C: NSObject {
     
     static func updateUser()
     {
-        C.user.name = C.userData["name"] as! String
-        C.user.xp = C.userData["xp"] as! Int
-        C.user.level = C.userData["level"] as! Int
-        C.user.numFriends = C.userData["num_friends"] as! Int
+
         C.user.dob = C.userData["dob"] as! String
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM–dd–yyyy"
+        dateFormatter.dateFormat = "MM/dd/yyyy"
         dateFormatter.timeZone = TimeZone.current
-        var yearString = C.user.dob[6..<C.user.dob.count]
-        let year = Int(yearString)
-        if year! < 18
-        {
-            yearString = "20" + yearString
-        }
-        else
-        {
-            yearString = "19" + yearString
-        }
-        var birthdayString = C.user.dob[0..<6] + yearString
-        birthdayString = birthdayString.replacingOccurrences(of: "-", with: "–")
-        let birthdate = dateFormatter.date(from: birthdayString)
+        let birthdate = dateFormatter.date(from: C.user.dob)
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)
+        C.user.name = C.userData["name"] as! String
         C.user.age = calendar.component(.year, from: birthdate!).distance(to: calendar.component(.year, from: currentDate))
         
-        if C.userData["who1"] != nil
+        if C.userData["bio"] != nil
         {
-            C.user.whoIam[0] = C.userData["who1"] as! String
-        }
-        if C.userData["who2"] != nil
-        {
-            C.user.whoIam[1] = C.userData["who2"] as! String
-        }
-        if C.userData["who3"] != nil
-        {
-            C.user.whoIam[2] = C.userData["who3"] as! String
-        }
-        if C.userData["what1"] != nil
-        {
-            C.user.whatIDo[0] = C.userData["what1"] as! String
-        }
-        if C.userData["what2"] != nil
-        {
-            C.user.whatIDo[1] = C.userData["what2"] as! String
-        }
-        if C.userData["what3"] != nil
-        {
-            C.user.whatIDo[2] = C.userData["what3"] as! String
-        }
-        if C.userData["hometown"] != nil
-        {
-            C.user.hometown = C.userData["hometown"] as! String
+            C.user.bio = C.userData["bio"] as! String
         }
         if C.userData["profilePicture"] != nil && C.user.profilePictureURL != C.userData["profilePicture"] as! String
             
@@ -297,7 +239,7 @@ class C: NSObject {
         }
         C.user.id = C.userData["user_id"] as! String
         C.user.spotted = []
-        C.user.major = C.userData["major"] as! String
+        C.user.friends = []
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
         updateSpotted(spotted: C.userData["spotted"] as! [String])
     }
@@ -340,7 +282,7 @@ class C: NSObject {
                 }
                 if old == 0
                 {
-                    Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
+                    Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: spott).getDocuments() { (querySnapshot, err) in
                         if let err = err {
                             print("Error getting spotted documents: \(err)")
                         } else {
@@ -387,7 +329,7 @@ class C: NSObject {
     {
         let oldSpotted = C.user.spotted
         C.user.spotted = []
-        Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+        Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting user spotted documents: \(err)")
             } else {
@@ -418,7 +360,7 @@ class C: NSObject {
     
     static func updateUserFriends()
     {
-        Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+        Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting user spotted documents: \(err)")
             } else {
@@ -434,7 +376,7 @@ class C: NSObject {
         {
             return;
         }
-        Firestore.firestore().collection("user_info").whereField("curLoc", isEqualTo: C.user.curLoc).getDocuments { (querySnapshot, err) in
+        Firestore.firestore().collection(C.userInfo).whereField("curLoc", isEqualTo: C.user.curLoc).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting Spotts documents: \(err)")
             } else {
@@ -535,7 +477,7 @@ class C: NSObject {
             }
             if found == 0
             {
-                Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: friend).getDocuments() { (querySnapshot, err) in
+                Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: friend).getDocuments() { (querySnapshot, err) in
                     if let err = err {
                         print("Error getting Friend documents: \(err)")
                     } else {
@@ -603,60 +545,16 @@ class C: NSObject {
         let dict = document.data()
         let f = User()
         f.name = dict["name"] as! String
-        f.xp = dict["xp"] as! Int
-        f.level = dict["level"] as! Int
-        f.numFriends = dict["num_friends"] as! Int
-        f.hometown = dict["hometown"] as! String
-        f.whoIam = ["", "", ""]
-        f.whatIDo = ["", "", ""]
-        if dict["who1"] != nil
-        {
-            f.whoIam[0] = dict["who1"] as! String
-        }
-        if dict["who2"] != nil
-        {
-            f.whoIam[1] = dict["who2"] as! String
-        }
-        if dict["who3"] != nil
-        {
-            f.whoIam[2] = dict["who3"] as! String
-        }
-        if dict["what1"] != nil
-        {
-            f.whatIDo[0] = dict["what1"] as! String
-        }
-        if dict["what2"] != nil
-        {
-            f.whatIDo[1] = dict["what2"] as! String
-        }
-        if dict["what3"] != nil
-        {
-            f.whatIDo[2] = dict["what3"] as! String
-        }
-        f.major = dict["major"] as! String
         f.longitude = dict["longitude"] as! Double
         f.latitude = dict["latitude"] as! Double
         f.refid = document.documentID
         f.id = dict["user_id"] as! String
         f.curLoc = dict["curLoc"] as! Int
         f.dob = dict["dob"] as! String
-        
+        f.bio = dict["bio"] as! String
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM–dd–yyyy"
-        var yearString = C.user.dob[6..<C.user.dob.count]
-        let year = Int(yearString)
-        if year! < 18
-        {
-            yearString = "20" + yearString
-        }
-        else
-        {
-            yearString = "19" + yearString
-        }
-        
-        var birthdayString = C.user.dob[0..<6] + yearString
-        birthdayString = birthdayString.replacingOccurrences(of: "-", with: "–")
-        let birthdate = dateFormatter.date(from: birthdayString)
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let birthdate = dateFormatter.date(from: f.dob)
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)
         f.age = calendar.component(.year, from: birthdate!).distance(to: calendar.component(.year, from: currentDate))
@@ -692,6 +590,7 @@ extension String {
         let end = index(startIndex, offsetBy: bounds.upperBound)
         return String(self[start..<end])
     }
+    
 }
 
 

@@ -15,6 +15,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     var th = C.h * 0.8
     var user = User()
     var type = 0
+    var friendsCollectionView: UICollectionView!
     convenience init (user: User)
     {
         self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
@@ -42,6 +43,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.addSubview(tableView)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -73,34 +75,41 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             nameLabel.text = self.user.name.lowercased()
             cell.addSubview(nameLabel)
             
-            let levelLabel = UILabel(frame: CGRect(x: tw*0.03, y: tw*0.83, width: tw * 0.28, height: tw * 0.08))
-            levelLabel.textColor = C.goldishColor
-            levelLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
-            levelLabel.text="lvl \(self.user.level)"
+//            let levelLabel = UILabel(frame: CGRect(x: tw*0.03, y: tw*0.83, width: tw * 0.28, height: tw * 0.08))
+//            levelLabel.textColor = C.goldishColor
+//            levelLabel.font = UIFont(name: "FuturaPT-Light", size: 20.0)
+//            levelLabel.text="lvl \(self.user.level)"
             //cell.addSubview(levelLabel)
             
-            let majorLabel = UILabel(frame: CGRect(x: tw*0.05, y: tw*0.925, width: tw * 0.45, height: tw * 0.05))
-            majorLabel.textColor = C.blueishColor
-            majorLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            majorLabel.text = self.user.major.lowercased()
-            cell.addSubview(majorLabel)
+//            let majorLabel = UILabel(frame: CGRect(x: tw*0.05, y: tw*0.925, width: tw * 0.45, height: tw * 0.05))
+//            majorLabel.textColor = C.blueishColor
+//            majorLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
+//            majorLabel.text = self.user.major.lowercased()
+//            cell.addSubview(majorLabel)
+//
+//            let locationLabel = UILabel(frame: CGRect(x: tw*0.6, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
+//            locationLabel.textColor = C.blueishColor
+//            locationLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
+//            locationLabel.text = self.user.hometown.lowercased()
+//            cell.addSubview(locationLabel)
             
-            let locationLabel = UILabel(frame: CGRect(x: tw*0.6, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
-            locationLabel.textColor = C.blueishColor
-            locationLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
-            locationLabel.text = self.user.hometown.lowercased()
-            cell.addSubview(locationLabel)
-            
-            let ageLabel = UILabel(frame: CGRect(x: tw*0.9, y: tw*0.925, width: tw * 0.05, height: tw * 0.05))
+//            let ageLabel = UILabel(frame: CGRect(x: tw*0.9, y: tw*0.925, width: tw * 0.05, height: tw * 0.05))
+            let ageLabel = UILabel(frame: CGRect(x: tw*0.05, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
             ageLabel.textColor = C.blueishColor
-            ageLabel.font = UIFont(name: "FuturaPT-Light", size: 10.0)
+            ageLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
             ageLabel.text = "\(self.user.age!)"
             cell.addSubview(ageLabel)
+            
+            let ageWordLabel = UILabel(frame: CGRect(x: tw*0.07 + ageLabel.intrinsicContentSize.width, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
+            ageWordLabel.textColor = .black
+            ageWordLabel.font = UIFont(name: "FuturaPT-Light", size: 14.0)
+            ageWordLabel.text = "years"
+            cell.addSubview(ageWordLabel)
             
         }
         else if indexPath.row == 1
         {
-            let numFriendsLabel = UILabel(frame: CGRect(x: 0, y: th*0.025, width: tw * 0.24, height: th * 0.05))
+            let numFriendsLabel = UILabel(frame: CGRect(x: 0, y: th*0.025, width: tw * 0.14, height: th * 0.05))
             numFriendsLabel.numberOfLines = 0
             numFriendsLabel.baselineAdjustment = .alignCenters
             numFriendsLabel.textColor = C.blueishColor
@@ -109,7 +118,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             numFriendsLabel.text = "\(self.user.friends.count)"
             cell.addSubview(numFriendsLabel)
             
-            let friendsLabel = UILabel(frame: CGRect(x: tw*0.26, y: th*0.025, width: tw * 0.18, height: th * 0.05))
+            let friendsLabel = UILabel(frame: CGRect(x: tw*0.16, y: th*0.025, width: tw * 0.18, height: th * 0.05))
             friendsLabel.baselineAdjustment = .alignCenters
             friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 8.0)
             if type == 0
@@ -123,70 +132,88 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             }
             cell.addSubview(friendsLabel)
             
-            if self.user.friends.count > 0
-            {
-                let friendImage1 = UIImageView(frame:CGRect(x: tw * 0.45, y: th*0.02, width: th * 0.06, height: th * 0.06))
-                friendImage1.layer.cornerRadius = friendImage1.frame.size.width / 2;
-                friendImage1.clipsToBounds = true;
-                friendImage1.image = self.user.friends[0].image
-                cell.addSubview(friendImage1)
-            }
-            if self.user.friends.count > 1
-            {
-                let friendImage2 = UIImageView(frame:CGRect(x: tw * 0.475 + th * 0.06, y: th*0.02 , width: th * 0.06, height: th * 0.06))
-                friendImage2.layer.cornerRadius = friendImage2.frame.size.width / 2;
-                friendImage2.clipsToBounds = true;
-                friendImage2.image = self.user.friends[1].image
-                cell.addSubview(friendImage2)
-            }
-            if self.user.friends.count > 2
-            {
-                let friendImage3 = UIImageView(frame:CGRect(x: tw * 0.5 + th * 0.12, y: th*0.02 , width: th * 0.06, height: th * 0.06))
-                friendImage3.layer.cornerRadius = friendImage3.frame.size.width / 2;
-                friendImage3.clipsToBounds = true;
-                friendImage3.image = self.user.friends[2].image
-                cell.addSubview(friendImage3)
-            }
-            if self.user.friends.count > 3
-            {
-                let dotLabel = UILabel(frame:CGRect(x: tw * 0.55 + th * 0.18, y: th*0.02 , width: th * 0.06, height: th * 0.06))
-                dotLabel.textColor = UIColor.black
-                dotLabel.textAlignment = .left
-                dotLabel.font = UIFont(name: "FuturaPT-Light", size: 24)
-                dotLabel.text="..."
-                cell.addSubview(dotLabel)
-            }
+            let flowLayout = UICollectionViewFlowLayout()
+            flowLayout.scrollDirection = UICollectionViewScrollDirection.horizontal
+            flowLayout.sectionInset = UIEdgeInsets(top: 0, left: tw*0.025, bottom: 0, right: tw*0.025)
+            flowLayout.itemSize = CGSize(width: th * 0.06, height: th*0.06)
+            friendsCollectionView = UICollectionView(frame: CGRect(x: tw * 0.25, y: th*0.02, width: tw * 0.7, height: th * 0.06), collectionViewLayout: flowLayout)
+            friendsCollectionView.backgroundColor = .white
+            friendsCollectionView.showsHorizontalScrollIndicator = false
+            self.friendsCollectionView.delegate = self;
+            self.friendsCollectionView.dataSource = self;
+            cell.addSubview(self.friendsCollectionView)
+            self.friendsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+            
+//            if self.user.friends.count > 0
+//            {
+//                let friendImage1 = UIImageView(frame:CGRect(x: tw * 0.45, y: th*0.02, width: th * 0.06, height: th * 0.06))
+//                friendImage1.layer.cornerRadius = friendImage1.frame.size.width / 2;
+//                friendImage1.clipsToBounds = true;
+//                friendImage1.image = self.user.friends[0].image
+//                //cell.addSubview(friendImage1)
+//            }
+//            if self.user.friends.count > 1
+//            {
+//                let friendImage2 = UIImageView(frame:CGRect(x: tw * 0.475 + th * 0.06, y: th*0.02 , width: th * 0.06, height: th * 0.06))
+//                friendImage2.layer.cornerRadius = friendImage2.frame.size.width / 2;
+//                friendImage2.clipsToBounds = true;
+//                friendImage2.image = self.user.friends[1].image
+//                //cell.addSubview(friendImage2)
+//            }
+//            if self.user.friends.count > 2
+//            {
+//                let friendImage3 = UIImageView(frame:CGRect(x: tw * 0.5 + th * 0.12, y: th*0.02 , width: th * 0.06, height: th * 0.06))
+//                friendImage3.layer.cornerRadius = friendImage3.frame.size.width / 2;
+//                friendImage3.clipsToBounds = true;
+//                friendImage3.image = self.user.friends[2].image
+//                //cell.addSubview(friendImage3)
+//            }
+//            if self.user.friends.count > 3
+//            {
+//                let dotLabel = UILabel(frame:CGRect(x: tw * 0.55 + th * 0.18, y: th*0.02 , width: th * 0.06, height: th * 0.06))
+//                dotLabel.textColor = UIColor.black
+//                dotLabel.textAlignment = .left
+//                dotLabel.font = UIFont(name: "FuturaPT-Light", size: 24)
+//                dotLabel.text="..."
+//                cell.addSubview(dotLabel)
+//            }
         }
         else if indexPath.row == 2
         {
-            let centerLine = UIView(frame: CGRect(x: tw*0.498, y: 0, width: tw*0.001, height: th*0.2))
-            centerLine.backgroundColor = C.goldishColor
-            cell.addSubview(centerLine)
+//            let centerLine = UIView(frame: CGRect(x: tw*0.498, y: 0, width: tw*0.001, height: th*0.2))
+//            centerLine.backgroundColor = C.goldishColor
+//            cell.addSubview(centerLine)
             
             let whoIAmLabel = UILabel(frame: CGRect(x: tw*0.05, y: th*0.01, width: tw*0.35, height: th*0.05))
             whoIAmLabel.textColor = UIColor.black
-            whoIAmLabel.text = "who i am"
+            whoIAmLabel.text = "bio"
             whoIAmLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
             cell.addSubview(whoIAmLabel)
             
-            let whoIAmTraitsLabel = UILabel(frame: CGRect(x: tw*0.15, y: th*0.05, width: tw*0.35, height: th*0.10))
-            whoIAmTraitsLabel.numberOfLines = 3
-            whoIAmTraitsLabel.textColor = C.blueishColor
-            whoIAmTraitsLabel.text = "\(self.user.whoIam[0])\n\(self.user.whoIam[1])\n\(self.user.whoIam[2])"
-            whoIAmTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 11)
-            cell.addSubview(whoIAmTraitsLabel)
-            
-            let whatIDoLabel = UILabel(frame: CGRect(x: tw*0.55, y: th*0.01, width: tw*0.35, height: th*0.05))
-            whatIDoLabel.text = "what i do"
-            whatIDoLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
-            cell.addSubview(whatIDoLabel)
-            
-            let whatIDoTraitsLabel = UILabel(frame: CGRect(x: tw*0.65, y: th*0.05, width: tw*0.35, height: th*0.10))
-            whatIDoTraitsLabel.numberOfLines = 3
-            whatIDoTraitsLabel.textColor = C.blueishColor
-            whatIDoTraitsLabel.text = "\(self.user.whatIDo[0])\n\(self.user.whatIDo[1])\n\(self.user.whatIDo[2])"
-            whatIDoTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 11)
-            cell.addSubview(whatIDoTraitsLabel)
+            let bioLabel = UILabel(frame: CGRect(x: tw*0.05, y: th*0.05, width: tw*0.9, height: th*0.1))
+            bioLabel.numberOfLines = 3
+            bioLabel.textColor = C.blueishColor
+            bioLabel.font = UIFont(name: "FuturaPT-Light", size: 14)
+            bioLabel.text = self.user.bio
+            cell.addSubview(bioLabel)
+//            let whoIAmTraitsLabel = UILabel(frame: CGRect(x: tw*0.15, y: th*0.05, width: tw*0.35, height: th*0.10))
+//            whoIAmTraitsLabel.numberOfLines = 3
+//            whoIAmTraitsLabel.textColor = C.blueishColor
+//            whoIAmTraitsLabel.text = "\(self.user.whoIam[0])\n\(self.user.whoIam[1])\n\(self.user.whoIam[2])"
+//            whoIAmTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 11)
+//            cell.addSubview(whoIAmTraitsLabel)
+//
+//            let whatIDoLabel = UILabel(frame: CGRect(x: tw*0.55, y: th*0.01, width: tw*0.35, height: th*0.05))
+//            whatIDoLabel.text = "what i do"
+//            whatIDoLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
+//            cell.addSubview(whatIDoLabel)
+//
+//            let whatIDoTraitsLabel = UILabel(frame: CGRect(x: tw*0.65, y: th*0.05, width: tw*0.35, height: th*0.10))
+//            whatIDoTraitsLabel.numberOfLines = 3
+//            whatIDoTraitsLabel.textColor = C.blueishColor
+//            whatIDoTraitsLabel.text = "\(self.user.whatIDo[0])\n\(self.user.whatIDo[1])\n\(self.user.whatIDo[2])"
+//            whatIDoTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 11)
+//            cell.addSubview(whatIDoTraitsLabel)
         }
         //cell.textLabel!.text = "foo"
         return cell
@@ -221,6 +248,47 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         
+    }
+}
+
+
+extension MatchProfileView : UICollectionViewDataSource, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of items
+        return 1
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return self.user.friends.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) //as! CustomCell
+        cell.frame = CGRect(x: cell.frame.minX, y: 0, width: th * 0.6, height: th * 0.6)
+        
+        let friendImage = UIImageView(frame:CGRect(x: 0, y: 0, width: th * 0.06, height: th * 0.06))
+        friendImage.layer.cornerRadius = friendImage.frame.size.width / 2;
+        friendImage.clipsToBounds = true;
+        friendImage.image = self.user.friends[indexPath.section].image
+        cell.addSubview(friendImage)
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(1)
+        for a in C.navigationViewController.mapViewController.mapView.selectedAnnotations
+        {
+            C.navigationViewController.mapViewController.mapView.deselectAnnotation(a, animated: false)
+        }
+        self.isHidden = true
+        let f = C.user.friends[indexPath.section]
+        for a in C.navigationViewController.mapViewController.mapView.annotations!
+        {
+            if a.isKind(of: MapAnnotation.self) && f.id == (a as! MapAnnotation).user.id
+            {
+                C.navigationViewController.mapViewController.mapView.setCenter(CLLocationCoordinate2D(latitude: a.coordinate.latitude, longitude: a.coordinate.longitude), animated: true)
+                return
+            }
+        }
     }
 }
 

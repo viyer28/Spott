@@ -573,7 +573,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
             uploadProfilePicture(ref: C.refid)
         }
         
-        db.collection("user_info").document(C.refid).updateData([
+        db.collection(C.userInfo).document(C.refid).updateData([
             "dob" : self.ageField.text!,
             "name" : self.nameField.text!,
             "who1" : self.whoField1.text!,
@@ -611,7 +611,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
                 let downloadURL = "gs://"+metaData!.bucket+"/profilePictures/"+metaData!.name!
                 //store downloadURL at database
                 C.user.image = self.profileImageView.image!
-                C.db.collection("user_info").document(C.refid).updateData(["profilePicture": downloadURL])
+                C.db.collection(C.userInfo).document(C.refid).updateData(["profilePicture": downloadURL])
             }
             
         }
@@ -619,7 +619,7 @@ class SettingsViewController: UITableViewController, UIPickerViewDataSource, UIP
     
     func updateUserData()
     {
-        let docRef = db.collection("user_info").document(C.refid)
+        let docRef = db.collection(C.userInfo).document(C.refid)
         
         docRef.getDocument { (document, error) in
             if let document = document {

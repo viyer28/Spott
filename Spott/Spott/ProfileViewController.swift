@@ -87,11 +87,12 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             locationLabel.text = C.user.hometown.lowercased()
             cell.addSubview(locationLabel)
             
-            let ageLabel = UILabel(frame: CGRect(x: C.w*0.9, y: C.w*0.925, width: C.w * 0.1, height: C.w * 0.05))
+            let ageLabel = UILabel(frame: CGRect(x: C.w*0.05, y: C.w*0.925, width: C.w * 0.1, height: C.w * 0.05))
             ageLabel.textColor = C.blueishColor
             ageLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
             ageLabel.text = "\(C.user.age!)"
             cell.addSubview(ageLabel)
+            
 
             let image = UIImage(named: "settingsIcon") as UIImage?
             let settingsButton   = UIButton(type: UIButtonType.custom) as UIButton

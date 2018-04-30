@@ -61,6 +61,7 @@ class User: NSObject {
     var curLoc: Int = -1
     var id: String!
     var dob: String!
+    var bio: String!
 }
 
 

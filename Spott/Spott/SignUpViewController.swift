@@ -577,7 +577,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
     {
         if Auth.auth().currentUser != nil
         {
-            let _ = self.db.collection("user_info").addDocument(data: [
+            let _ = self.db.collection(C.userInfo).addDocument(data: [
                 "hometown" : self.homeField.text!.lowercased(),
                 "name" : self.nameField.text!.lowercased(),
                 "who1" : self.whoField1.text!.lowercased(),
@@ -605,7 +605,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                     print("Added Document succesfully")
                 }
             }
-            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
@@ -647,7 +647,7 @@ class SignUpViewController: UITableViewController, UIPickerViewDataSource, UIPic
                 let downloadURL = "gs://"+metaData!.bucket+"/profilePictures/"+metaData!.name!
                 //store downloadURL at database
                 C.user.image = self.profileImageView.image!
-                C.db.collection("user_info").document(ref).updateData(["profilePicture": downloadURL])
+                C.db.collection(C.userInfo).document(ref).updateData(["profilePicture": downloadURL])
             }
             
         }

@@ -118,7 +118,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     {
         if (Auth.auth().currentUser != nil)
         {
-            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
                 if let err = err {
                     print("Error getting documents: \(err)")
                 } else {
@@ -173,9 +173,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     @objc func signup()
     {
-        print(1)
-        let nextViewController = SignUpViewController()
-        self.present(nextViewController, animated: true, completion: nil)
+        self.dismiss(animated: false, completion: nil)
     }
 }
 

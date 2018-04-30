@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8A8D978CA26028D48D90DA4B67E9FEBC"
-               BuildableName = "Pods_Spott.framework"
-               BlueprintName = "Pods-Spott"
+               BlueprintIdentifier = "F7987D20ADC4BAD091A76080EEF88821"
+               BuildableName = "Pods_spott.framework"
+               BlueprintName = "Pods-spott"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8A8D978CA26028D48D90DA4B67E9FEBC"
-            BuildableName = "Pods_Spott.framework"
-            BlueprintName = "Pods-Spott"
+            BlueprintIdentifier = "F7987D20ADC4BAD091A76080EEF88821"
+            BuildableName = "Pods_spott.framework"
+            BlueprintName = "Pods-spott"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

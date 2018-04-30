@@ -122,7 +122,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
             {
                 return
             }
-            C.db.collection("user_info").document(C.refid).getDocument { (document, error) in
+            C.db.collection(C.userInfo).document(C.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
@@ -140,7 +140,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                     {
                         spotted.remove(at: i)
                     }
-                    C.db.collection("user_info").document(C.refid).updateData(["friends" : friends, "spotted" : spotted])
+                    C.db.collection(C.userInfo).document(C.refid).updateData(["friends" : friends, "spotted" : spotted])
                     C.user.friends.append((userSpotted![path]))
                 } else {
                     print("Document does not exist")
@@ -148,12 +148,12 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
             }
             let f = C.user.spotted[path]
             C.user.spotted.remove(at: path)
-            C.db.collection("user_info").document(f.refid).getDocument { (document, error) in
+            C.db.collection(C.userInfo).document(f.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
                     friends.append(C.user.id)
-                    C.db.collection("user_info").document(f.refid).updateData(["friends" : friends])
+                    C.db.collection(C.userInfo).document(f.refid).updateData(["friends" : friends])
                 } else {
                     print("Document does not exist")
                 }
@@ -162,13 +162,13 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         else
         {
             let f = self.current[path]
-            C.db.collection("user_info").document(f.refid).getDocument { (document, error) in
+            C.db.collection(C.userInfo).document(f.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var spotted : [String] = data!["spotted"] as! [String]
                     spotted.append(C.user.id)
                     C.currentLocation.spotts.remove(at: path)
-                    C.db.collection("user_info").document(f.refid).updateData(["spotted" : spotted])
+                    C.db.collection(C.userInfo).document(f.refid).updateData(["spotted" : spotted])
                 } else {
                     print("Document does not exist")
                 }
@@ -183,12 +183,12 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if self.sliderInt == 1
         {
-            C.db.collection("user_info").document(C.refid).getDocument { (document, error) in
+            C.db.collection(C.userInfo).document(C.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
                     friends.append(C.user.spotted[indexPath.section].id)
-                    C.db.collection("user_info").document(C.refid).updateData(["friends" : friends])
+                    C.db.collection(C.userInfo).document(C.refid).updateData(["friends" : friends])
                     C.user.friends.append((C.user.spotted[indexPath.row]))
                     C.user.spotted.remove(at: indexPath.row)
                 } else {
@@ -196,12 +196,12 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                 }
             }
             let f = C.user.spotted[indexPath.row]
-            C.db.collection("user_info").document(f.refid).getDocument { (document, error) in
+            C.db.collection(C.userInfo).document(f.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var friends : [String] = data!["friends"] as! [String]
                     friends.append(C.user.spotted[indexPath.section].id)
-                    C.db.collection("user_info").document(f.refid).updateData(["friends" : friends, "spotted": C.user.spotted])
+                    C.db.collection(C.userInfo).document(f.refid).updateData(["friends" : friends, "spotted": C.user.spotted])
                 } else {
                     print("Document does not exist")
                 }
@@ -211,13 +211,13 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         {
             C.currentLocation.spotts.remove(at: indexPath.row)
             let f = C.currentLocation.spotts[indexPath.row]
-            C.db.collection("user_info").document(f.refid).getDocument { (document, error) in
+            C.db.collection(C.userInfo).document(f.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var spotted : [String] = data!["spotted"] as! [String]
                     spotted.append(C.currentLocation.spotts[indexPath.section].id)
                     C.currentLocation.spotts.remove(at: indexPath.section)
-                    C.db.collection("user_info").document(f.refid).updateData(["spotted" : spotted])
+                    C.db.collection(C.userInfo).document(f.refid).updateData(["spotted" : spotted])
                 } else {
                     print("Document does not exist")
                 }

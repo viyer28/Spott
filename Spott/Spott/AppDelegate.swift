@@ -10,13 +10,37 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import GEOSwift
+import UserNotifications
+import FirebaseInstanceID
+import FirebaseMessaging
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions:
         [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        if #available(iOS 10.0, *) {
+            // For iOS 10 display notification (sent via APNS)
+            UNUserNotificationCenter.current().delegate = self
+            let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+            UNUserNotificationCenter.current().requestAuthorization(
+                options: authOptions,
+                completionHandler: {_, _ in })
+            // For iOS 10 data message (sent via FCM
+            Messaging.messaging().delegate = self
+        } else {
+            let settings: UIUserNotificationSettings =
+                UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+            application.registerUserNotificationSettings(settings)
+        }
+        
+        let token = Messaging.messaging().fcmToken
+        
+        application.registerForRemoteNotifications()
+        
         FirebaseApp.configure()
         
         UINavigationBar.appearance().barTintColor = UIColor.white
@@ -61,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let geoJSONURL = Bundle.main.url(forResource: "map", withExtension: "geojson")
         C.features = try! Features.fromGeoJSON(geoJSONURL!)
+       // C.updateLocationCenters()
 //        
 //        if Auth.auth().currentUser != nil
 //        {
@@ -69,11 +94,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //
         if Auth.auth().currentUser != nil
         {
-            Firestore.firestore().collection("user_info").whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
                     if let err = err {
                         print("Error getting documents: \(err)")
                         try! Auth.auth().signOut()
-                        let initialViewController = LoginViewController()
+                        let initialViewController = WelcomeViewController()
                         //initialViewController.view.backgroundColor = C.darkColor
                         self.window = UIWindow(frame: UIScreen.main.bounds)
                         C.w = self.window?.frame.width
@@ -82,6 +107,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         self.window?.makeKeyAndVisible()
                     } else {
                         print("Recieved documents")
+                        if querySnapshot!.documents.count == 0
+                        {
+                            try! Auth.auth().signOut()
+                            let initialViewController = WelcomeViewController()
+                            //initialViewController.view.backgroundColor = C.darkColor
+                            self.window = UIWindow(frame: UIScreen.main.bounds)
+                            C.w = self.window?.frame.width
+                            C.h = self.window?.frame.height
+                            self.window?.rootViewController = initialViewController
+                            self.window?.makeKeyAndVisible()
+                            self.showLoadingScreen()
+                        }
                         for document in querySnapshot!.documents {
                             print("\(document.documentID) => \(document.data())")
                             C.refid = document.documentID
@@ -102,7 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         else
         {
-            let initialViewController = LoginViewController()
+            let initialViewController = WelcomeViewController()
             //initialViewController.view.backgroundColor = C.darkColor
             window = UIWindow(frame: UIScreen.main.bounds)
             C.w = window?.frame.width
@@ -115,6 +152,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         return true
     }
+    
+    private func application(application: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        Messaging.messaging().apnsToken = deviceToken as Data
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+        
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    
+    
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -132,6 +183,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        showLoadingScreen()
+    }
+    
+    func showLoadingScreen()
+    {
+        if self.window != nil
+        {
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h))
+            imageView.image = UIImage(named: "launchScreen")
+            imageView.contentMode = .scaleAspectFill
+            window?.rootViewController?.view.addSubview(imageView)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                imageView.removeFromSuperview()
+            })
+        }
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

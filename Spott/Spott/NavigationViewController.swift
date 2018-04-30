@@ -21,6 +21,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
     var mapViewController: MapViewController!
     var selected = 2
     var userLocation = CLLocation(latitude: 0, longitude: 0)
+    var onboarding = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,10 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         mapViewController = MapViewController()
         setViewControllers([mapViewController], direction: .forward, animated: false, completion: nil)
         addNav()
+        if (onboarding == 1)
+        {
+            startOnboarding()
+        }
     }
     
     func addNav()
@@ -102,6 +107,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             eventsButton.isHidden = false
             spottButton.isHidden = false
             mapButton.isHidden = true
+            self.mapViewController.mapView.isUserInteractionEnabled = true
             if selected == 1
             {
                 eventsViewController.view.removeFromSuperview()
@@ -114,6 +120,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
                 peopleViewController.removeFromParentViewController()
             }
             selected = 2
+            self.mapViewController.updateAnnotations()
             self.view.bringSubview(toFront: mapButton)
             self.view.bringSubview(toFront: spottButton)
             self.view.bringSubview(toFront: eventsButton)
@@ -131,9 +138,10 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             eventsButton.isHidden = true
             spottButton.isHidden = true
             mapButton.isHidden = false
+            self.mapViewController.mapView.isUserInteractionEnabled = false
             selected = 3
             //setViewControllers([peopleViewController], direction: .forward, animated: true, completion: nil)
-            self.mapViewController.mapView.addSubview(peopleViewController.view)
+            self.mapViewController.view.addSubview(peopleViewController.view)
             self.mapViewController.addChildViewController(peopleViewController)
             self.view.bringSubview(toFront: mapButton)
             self.view.bringSubview(toFront: spottButton)
@@ -151,6 +159,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             eventsButton.isHidden = true
             spottButton.isHidden = true
             mapButton.isHidden = false
+            self.mapViewController.mapView.isUserInteractionEnabled = false
             selected = 1
             //setViewControllers([eventsViewController], direction: .reverse, animated: true, completion: nil)
             self.mapViewController.mapView.addSubview(eventsViewController.view)
@@ -163,7 +172,10 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
     
     func determineCurrentLocation()
     {
-        locationManager = CLLocationManager()
+        if locationManager == nil
+        {
+            locationManager = CLLocationManager()
+        }
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -188,11 +200,13 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
                 C.user.curLoc = feature.properties!["id"] as! Int
             }
         }
-        if loc != C.user.curLoc
+        if Auth.auth().currentUser != nil && loc != C.user.curLoc
         {
-            let ref = Firestore.firestore().collection("user_info").document(C.refid)
+            let ref = Firestore.firestore().collection(C.userInfo).document(C.refid)
             ref.updateData([
-                "curLoc" : C.user.curLoc
+                "curLoc" : C.user.curLoc,
+                "longitude": userLocation.coordinate.longitude,
+                "latitude": userLocation.coordinate.latitude
             ]) { err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -228,18 +242,21 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         {
             C.user.curLoc = curLoc
             C.updateUsersLocation()
-            let ref = Firestore.firestore().collection("user_info").document(C.refid)
-            lastUpdate = NSDate()
-            // Set the "capital" field of the city 'DC'
-            ref.updateData([
-                "longitude": uLoc.coordinate.longitude,
-                "latitude": uLoc.coordinate.latitude,
-                "curLoc" : curLoc
-            ]) { err in
-                if let err = err {
-                    print("Error updating document: \(err)")
-                } else {
-                    print("Document successfully updated")
+            if Auth.auth().currentUser != nil
+            {
+                let ref = Firestore.firestore().collection(C.userInfo).document(C.refid)
+                lastUpdate = NSDate()
+                // Set the "capital" field of the city 'DC'
+                ref.updateData([
+                    "longitude": uLoc.coordinate.longitude,
+                    "latitude": uLoc.coordinate.latitude,
+                    "curLoc" : curLoc
+                ]) { err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Document successfully updated")
+                    }
                 }
             }
             
@@ -264,5 +281,31 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error)
     {
         print("Error \(error)")
+    }
+    
+    func startOnboarding()
+    {
+        self.eventsButton.isHidden = true
+        self.spottButton.isHidden = true
+        self.mapButton.isHidden = true
+        self.mapViewController.textField.isHidden = true
+        self.mapViewController.mapView.setCenter(self.userLocation.coordinate, animated: false)
+        self.mapViewController.view.isUserInteractionEnabled = false
+        C.navigationViewController.mapViewController.mapView.setCenter(C.navigationViewController.userLocation.coordinate, zoomLevel: 1, animated: false)
+        let onboardingViewController = OnboardingViewController()
+        self.view.addSubview(onboardingViewController.view)
+        self.addChildViewController(onboardingViewController)
+    }
+    func finishOnboarding()
+    {
+        self.eventsButton.isHidden = false
+        self.spottButton.isHidden = false
+        self.mapButton.isHidden = false
+        self.mapViewController.textField.isHidden = false
+        self.mapViewController.view.isUserInteractionEnabled = true
+        self.mapViewController.mapView.zoomLevel = 1
+        self.mapViewController.mapView.setCenter(C.navigationViewController.userLocation.coordinate, zoomLevel: 15, animated: false)
+        self.onboarding = 0
+        
     }
 }

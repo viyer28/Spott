@@ -1,10 +1,11 @@
-target ‘Spott' do
+target 'spott' do
   pod 'Mapbox-iOS-SDK', '~> 3.7'
   pod 'Firebase/Core'
   pod 'Firebase/Firestore'
   pod 'Firebase/Auth'
   pod 'JSQMessagesViewController'
   pod 'FirebaseStorage'
-  use_frameworks!
   pod 'GEOSwift'
+  pod 'Firebase/Messaging'
+  use_frameworks!
 end

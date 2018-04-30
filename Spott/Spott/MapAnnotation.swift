@@ -195,9 +195,7 @@ class SpottCalloutView: UIView, MGLCalloutView {
 }
 
 class UserCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
-    
     let dismissesAutomatically: Bool = true
-    let isAnchoredToAnnotation: Bool = false
     lazy var leftAccessoryView = UIView()
     lazy var rightAccessoryView = UIView()
     weak var delegate: MGLCalloutViewDelegate?
@@ -333,7 +331,6 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     let population = 100
     var messagingView: ChatViewController!
     var nameLabel: UILabel!
-    
     var potentialsImage: UIImageView!
     var titleView: UIView!
     var titleLabel: UILabel!
@@ -391,7 +388,6 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         potentialsLabel.textAlignment = .left
         potentialsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
         potentialsLabel.text = String((representedObject as! MapAnnotation).location.numPotentials)
-        
         self.addSubview(titleLabel)
         self.addSubview(friendsLabel)
         self.addSubview(potentialsLabel)
@@ -400,6 +396,8 @@ class UserAtLocCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     // callout view delegate: present callout
     func presentCallout(from rect: CGRect, in view: UIView, constrainedTo constrainedView: UIView, animated: Bool) {
@@ -442,12 +440,11 @@ extension UIView {
 
 class EmptyCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     var representedObject: MGLAnnotation
-    
     lazy var leftAccessoryView = UIView()
     lazy var rightAccessoryView = UIView()
     let dismissesAutomatically: Bool = true
     let isAnchoredToAnnotation: Bool = false
-    
+    var user: User!
     var delegate: MGLCalloutViewDelegate?
     
     
@@ -475,9 +472,9 @@ class ProfileCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     var profileView: MatchProfileView!
     lazy var leftAccessoryView = UIView()
     lazy var rightAccessoryView = UIView()
-    
+    let dismissesAutomatically: Bool = true
+    let isAnchoredToAnnotation: Bool = false
     var delegate: MGLCalloutViewDelegate?
-    
     
     required init(representedObject: MGLAnnotation) {
         if representedObject.isKind(of: MGLUserLocation.self)
@@ -492,6 +489,7 @@ class ProfileCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         super.init(frame: .zero)
         self.addSubview(profileView)
     }
+    
     
     required init?(coder decoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
