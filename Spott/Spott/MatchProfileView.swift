@@ -274,17 +274,16 @@ extension MatchProfileView : UICollectionViewDataSource, UICollectionViewDelegat
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(1)
-        for a in C.navigationViewController.mapViewController.mapView.selectedAnnotations
-        {
-            C.navigationViewController.mapViewController.mapView.deselectAnnotation(a, animated: false)
-        }
         self.isHidden = true
         let f = C.user.friends[indexPath.section]
         for a in C.navigationViewController.mapViewController.mapView.annotations!
         {
             if a.isKind(of: MapAnnotation.self) && f.id == (a as! MapAnnotation).user.id
             {
+                for a in C.navigationViewController.mapViewController.mapView.selectedAnnotations
+                {
+                    C.navigationViewController.mapViewController.mapView.deselectAnnotation(a, animated: false)
+                }
                 C.navigationViewController.mapViewController.mapView.setCenter(CLLocationCoordinate2D(latitude: a.coordinate.latitude, longitude: a.coordinate.longitude), animated: true)
                 return
             }

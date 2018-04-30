@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let geoJSONURL = Bundle.main.url(forResource: "map", withExtension: "geojson")
         C.features = try! Features.fromGeoJSON(geoJSONURL!)
-       // C.updateLocationCenters()
+        C.updateLocationCenters()
 //        
 //        if Auth.auth().currentUser != nil
 //        {
