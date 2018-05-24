@@ -37,57 +37,35 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
     
     func addNav()
     {
-//        var mImage = UIImage(named: "MapIcon") as UIImage?
-//        mImage = mImage?.withRenderingMode(.alwaysTemplate)
         self.spottButton = UIButton(type: UIButtonType.custom) as UIButton
         self.mapButton = UIButton(type: UIButtonType.custom) as UIButton
         self.eventsButton = UIButton(type: UIButtonType.custom) as UIButton
-        mapButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
+        
+        mapButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.15, height: C.w * 0.15)
         mapButton.center = CGPoint(x: C.w*0.5, y: C.h*0.95)
         mapButton.setImage(UIImage(named: "centerUser"), for: .normal)
-        //mapButton.layer.borderColor = C.goldishColor.cgColor
-        //mapButton.layer.borderWidth = 1.0
-//        mapButton.setImage(mImage, for: .normal)
-//        mapButton.backgroundColor = C.goldishColor
-//        mapButton.imageView?.tintColor = UIColor.black
-        //mapButton.layer.cornerRadius = mapButton.frame.width/2
-        //mapButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5)
-        //mapButton.clipsToBounds = true
         mapButton.subviews.first?.contentMode = .scaleAspectFit
         mapButton.addTarget(self, action: #selector(clickMap), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(mapButton)
         
-//        var eImage = UIImage(named: "EventsIcon") as UIImage?
-//        eImage = eImage?.withRenderingMode(.alwaysTemplate)
+        
+        
         eventsButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.075, height: C.w * 0.075)
         eventsButton.center = CGPoint(x: C.w*0.25, y: C.h*0.95)
         eventsButton.setImage(UIImage(named: "eventsIcon"), for: .normal)
-       // eventsButton.layer.borderColor = UIColor.
-        //eventsButton.imageView?.tintColor = C.goldishColor
-        //eventsButton.layer.borderWidth = 1.0
-//        eventsButton.backgroundColor = UIColor.black
-//        eventsButton.layer.cornerRadius = mapButton.frame.width/2
-//        eventsButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
-//        eventsButton.clipsToBounds = true
         eventsButton.imageView?.contentMode = .scaleAspectFit
         eventsButton.addTarget(self, action: #selector(clickEvents), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(eventsButton)
         
-//        var sImage = UIImage(named: "PeopleIcon") as UIImage?
-//        sImage = sImage?.withRenderingMode(.alwaysTemplate)
-        spottButton.frame = CGRect(x: C.w*0.85, y: C.w*0.1, width: C.w * 0.075, height: C.w * 0.075)
+        spottButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
         spottButton.center = CGPoint(x: C.w*0.75, y: C.h*0.95)
-//        spottButton.backgroundColor = UIColor.black
-//        spottButton.layer.borderColor = UIColor.black.cgColor
-//        spottButton.imageView?.tintColor = C.goldishColor
-        //spottButton.layer.borderWidth = 1.0
-//        spottButton.layer.cornerRadius = mapButton.frame.width/2
-//        spottButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
         spottButton.setImage(UIImage(named: "connectionIcon"), for: .normal)
         spottButton.imageView?.contentMode = .scaleAspectFit
-//        spottButton.clipsToBounds = true
         spottButton.addTarget(self, action: #selector(clickSpott), for: UIControlEvents.touchUpInside)
-        self.view.addSubview(spottButton)
+        if C.user.business == 0
+        {
+            self.view.addSubview(eventsButton)
+            self.view.addSubview(mapButton)
+            self.view.addSubview(spottButton)
+        }
         mapButton.isHidden = true
         
     }
@@ -138,7 +116,7 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
             eventsButton.isHidden = true
             spottButton.isHidden = true
             mapButton.isHidden = false
-            self.mapViewController.mapView.isUserInteractionEnabled = false
+            //self.mapViewController.mapView.isUserInteractionEnabled = false
             selected = 3
             //setViewControllers([peopleViewController], direction: .forward, animated: true, completion: nil)
             self.mapViewController.view.addSubview(peopleViewController.view)
@@ -238,10 +216,11 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         }
         
         
-        if (NSDate().timeIntervalSince(lastUpdate as Date) > 30 || C.user.curLoc != curLoc)
+        if (NSDate().timeIntervalSince(lastUpdate as Date) > 10 || C.user.curLoc != curLoc)
         {
             C.user.curLoc = curLoc
             C.updateUsersLocation()
+            C.updateFriendsLocations()
             if Auth.auth().currentUser != nil
             {
                 let ref = Firestore.firestore().collection(C.userInfo).document(C.refid)
@@ -291,6 +270,12 @@ class NavigationViewController : UIPageViewController, CLLocationManagerDelegate
         self.mapViewController.textField.isHidden = true
         self.mapViewController.mapView.setCenter(self.userLocation.coordinate, animated: false)
         self.mapViewController.view.isUserInteractionEnabled = false
+        determineCurrentLocation()
+        while locationManager.location == nil
+        {
+            
+        }
+        self.userLocation = locationManager.location!
         C.navigationViewController.mapViewController.mapView.setCenter(C.navigationViewController.userLocation.coordinate, zoomLevel: 1, animated: false)
         let onboardingViewController = OnboardingViewController()
         self.view.addSubview(onboardingViewController.view)

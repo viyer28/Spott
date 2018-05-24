@@ -26,7 +26,7 @@ class MapAnnotation : MGLPointAnnotation {
 }
 
 class MapAnnotationView: MGLAnnotationView {
-    private var imageView: UIImageView!
+    var imageView: UIImageView!
     var percent: CGFloat!
     var location: Location!
     var borderView = UIView()
@@ -36,9 +36,13 @@ class MapAnnotationView: MGLAnnotationView {
         self.location = location
         self.percent = min(3*CGFloat(location.numPopulation) / CGFloat(C.totalPopulation) * 100,100)
         self.frame = CGRect(x: 0, y: 0, width: Int(5 + (percent/5.0)), height: Int(5 + (percent/5.0)))
-        self.borderView.frame  = self.frame
+        //self.borderView.frame  = self.frame
         self.layer.cornerRadius = self.frame.size.width / 2
-        self.borderView.layer.cornerRadius = self.borderView.frame.width / 2
+        //self.borderView.layer.cornerRadius = self.borderView.frame.width / 2
+        self.imageView = UIImageView(frame: self.frame)
+        self.imageView.image = UIImage(named: "dot")
+        imageView.alpha = 0.4 + self.percent * 0.006
+        self.addSubview(imageView)
         self.clipsToBounds = true
         
         
@@ -50,12 +54,12 @@ class MapAnnotationView: MGLAnnotationView {
         //self.layer.borderWidth = 3.0 as CGFloat
         self.frame = CGRect(x: 0, y: 0, width: 5, height: 5)
         self.borderView.frame = self.frame
-        self.borderView.layer.cornerRadius = self.borderView.frame.width/2
-        self.layer.borderColor = C.darkColor.cgColor
-        self.layer.borderWidth = 1  
+        //self.borderView.layer.cornerRadius = self.borderView.frame.width/2
+        //self.layer.borderColor = C.darkColor.cgColor
+        //self.layer.borderWidth = 1
         self.layer.cornerRadius = self.frame.size.width / 2
         self.clipsToBounds = true
-        self.backgroundColor = C.darkColor
+        self.backgroundColor = .clear
         self.borderView.backgroundColor = UIColor.clear
         self.addSubview(borderView)
     }
@@ -63,9 +67,9 @@ class MapAnnotationView: MGLAnnotationView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override func draw(_ rect: CGRect) {
-        drawSlice(rect: rect, startPercent: 0, endPercent: percent, color: C.goldishColor)
-    }
+//    override func draw(_ rect: CGRect) {
+//        drawSlice(rect: rect, startPercent: 0, endPercent: percent, color: C.goldishColor)
+//    }
     
     func drawSlice(rect: CGRect, startPercent: CGFloat, endPercent: CGFloat, color: UIColor) {
         let center = CGPoint(x: rect.origin.x + rect.width / 2, y: rect.origin.y + rect.height / 2)
@@ -109,6 +113,10 @@ class MapUserAnnotationView: MGLAnnotationView {
         self.init(reuseIdentifier: reuseIdentifier)
         self.user = user
         self.img.image = user.image
+        if self.user.business == 1
+        {
+            self.layer.borderColor = C.blueishColor.cgColor
+        }
     }
     
     override init(reuseIdentifier: String?) {
@@ -144,19 +152,29 @@ class SpottCalloutView: UIView, MGLCalloutView {
     var titleLabel: UILabel!
     var friendsLabel: UILabel!
     var friendsImage: UIImageView!
+    var populationLabel: UILabel!
     var potentialsLabel: UILabel!
     
     convenience init (representedObject: MGLAnnotation, location: Location)
     {
         self.init(representedObject: representedObject)
-        self.frame = CGRect(x: 0, y: C.h*0.8, width: C.w, height: C.h*0.2)
-        self.titleLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.8, height: C.h*0.1))
+        self.frame = CGRect(x: 0, y: C.h*0.75, width: C.w, height: C.h*0.25)
+        
+        
+        self.populationLabel = UILabel(frame: CGRect(x: C.w*0.1, y: 0, width: C.w*0.8, height: C.h*0.1))
+        populationLabel.textColor = C.goldishColor
+        populationLabel.textAlignment = .center
+        populationLabel.font = UIFont(name: "FuturaPT-Light", size: 64)
+        populationLabel.text = String(location.numPopulation)
+        self.addSubview(populationLabel)
+        
+        self.titleLabel = UILabel(frame: CGRect(x: C.w*0.1, y: populationLabel.intrinsicContentSize.height - C.h*0.05, width: C.w*0.8, height: C.h*0.1))
         titleLabel.textColor = UIColor.black
-        titleLabel.textAlignment = .left
-        titleLabel.font = UIFont(name: "FuturaPT-Light", size: 36)
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont(name: "FuturaPT-Light", size: 42)
         titleLabel.text = representedObject.title!
         
-        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.8, titleLabel.intrinsicContentSize.width + C.w*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
+        friendsLabel = UILabel(frame: CGRect(x: C.w*0.1+min(C.w*0.8, titleLabel.intrinsicContentSize.width - C.h*0.02), y: 0, width: C.w*0.2, height: C.h*0.05))
         friendsLabel.textColor = C.greenishColor
         friendsLabel.textAlignment = .left
         friendsLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
@@ -169,8 +187,8 @@ class SpottCalloutView: UIView, MGLCalloutView {
         potentialsLabel.text = String(location.numPotentials)
         
         self.addSubview(titleLabel)
-        self.addSubview(friendsLabel)
-        self.addSubview(potentialsLabel)
+//        self.addSubview(friendsLabel)
+//        self.addSubview(potentialsLabel)
         
     }
     required init(representedObject: MGLAnnotation) {
@@ -467,6 +485,8 @@ class EmptyCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     
 }
 
+
+
 class ProfileCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
     var representedObject: MGLAnnotation
     var profileView: MatchProfileView!
@@ -481,9 +501,9 @@ class ProfileCalloutView: UIView, MGLCalloutView, MGLCalloutViewDelegate {
         {
             profileView = MatchProfileView(user: C.user, t: 1)
         }
-        else if representedObject.isKind(of: MKAnnotation.self)
+        else if representedObject.isKind(of: MapAnnotation.self)
         {
-            profileView = MatchProfileView(user: (representedObject as! MapAnnotation).user)
+            profileView = MatchProfileView(user: (representedObject as! MapAnnotation).user, t: -1)
         }
         self.representedObject = representedObject
         super.init(frame: .zero)

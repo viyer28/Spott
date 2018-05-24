@@ -14,9 +14,9 @@ class Location : NSObject {
     var latitude: Double!
     var longitude: Double!
     var name: String!
-    var numFriends: Int!
-    var numPotentials: Int!
-    var numPopulation: Int!
+    var numFriends    = 0
+    var numPotentials = 0
+    var numPopulation = 0
     var id: Int!
     var refid: String!
     var spotts: [User] = []
@@ -62,6 +62,13 @@ class User: NSObject {
     var id: String!
     var dob: String!
     var bio: String!
+    var statuses: [Status] = []
+    var business = 0
+}
+
+class Status: NSObject {
+    var time =  Date()
+    var text = ""
 }
 
 

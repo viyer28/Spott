@@ -29,6 +29,8 @@ class OnboardingViewController : UIViewController, UIImagePickerControllerDelega
     var datePicker: UIDatePicker = UIDatePicker()
     var textView: UITextView!
     var profileImageView: UIImageView!
+    var cameraRollButton: UIButton!
+    var finishButton: UIButton!
     override func viewDidLoad() {
         self.view.isUserInteractionEnabled = true
         self.view.frame = CGRect(x: 0, y: 0, width: C.w, height: C.h)
@@ -163,6 +165,7 @@ class OnboardingViewController : UIViewController, UIImagePickerControllerDelega
             }
             else if stage == 4
             {
+                textField.inputView = nil
                 self.dob = textField.text!
                 textField.removeFromSuperview()
                 self.dateButton.removeFromSuperview()
@@ -180,7 +183,7 @@ class OnboardingViewController : UIViewController, UIImagePickerControllerDelega
                 textView.removeFromSuperview()
                 titleLabel.text = "finally, give us your best look"
                 
-                let cameraRollButton = UIButton(type: .system)
+                cameraRollButton = UIButton(type: .system)
                 cameraRollButton.frame = CGRect(x: C.w*0.35, y: C.h*0.5 + C.w * 0.3, width: C.w * 0.3, height: C.h * 0.05)
                 cameraRollButton.layer.cornerRadius = cameraRollButton.frame.size.width / 10;
                 cameraRollButton.backgroundColor = C.goldishColor
@@ -191,7 +194,7 @@ class OnboardingViewController : UIViewController, UIImagePickerControllerDelega
                 cameraRollButton.addTarget(self, action: #selector(cameraRollClick), for: UIControlEvents.touchUpInside)
                 self.view.addSubview(cameraRollButton)
                 
-                let finishButton = UIButton(type: .system)
+                finishButton = UIButton(type: .system)
                 finishButton.frame = CGRect(x: C.w*0.35, y: C.h*0.575 + C.w * 0.3, width: C.w * 0.3, height: C.h * 0.05)
                 finishButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 20.0)
                 finishButton.titleLabel?.text = "finish"
@@ -273,13 +276,22 @@ class OnboardingViewController : UIViewController, UIImagePickerControllerDelega
             finishClicked = 1
             Auth.auth().createUser(withEmail: self.email, password: self.password, completion: { (user, error) in
                 if error == nil {
+                    self.profileImageView.isHidden = true
                     self.addUserInfo()
                 }
                 else{
                     self.errorLabel.text = "that email is already used."
                     self.stage = 0
+                    self.profileImageView.removeFromSuperview()
+                    self.cameraRollButton.removeFromSuperview()
+                    self.finishButton.removeFromSuperview()
+                    self.textField.isUserInteractionEnabled = true
+                    self.view.addSubview(self.textField)
                     self.finishClicked = 0
-                    self.moveOn()
+                    self.name = self.textField.text!
+                    self.textField.text = ""
+                    self.titleLabel.text = "what's your email"
+                    C.navigationViewController.mapViewController.mapView.setCenter(C.navigationViewController.userLocation.coordinate, zoomLevel: Double(1+2*self.stage), animated: true)
                     return
                 }
             })

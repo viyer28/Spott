@@ -87,10 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         C.features = try! Features.fromGeoJSON(geoJSONURL!)
         C.updateLocationCenters()
 //        
-//        if Auth.auth().currentUser != nil
-//        {
-//            try! Auth.auth().signOut()
-//        }
+//            if Auth.auth().currentUser != nil
+//            {
+//                try! Auth.auth().signOut()
+//            }
 //
         if Auth.auth().currentUser != nil
         {
@@ -161,11 +161,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
         
+        C.fcmToken = fcmToken
+        if C.refid != nil
+        {
+            let ref = Firestore.firestore().collection(C.userInfo).document(C.refid)
+            ref.updateData([ "token" : fcmToken ])
+            { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
+            }
+        }
+        
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
     
-    
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let sender = userInfo["gcm.notification.sender"]
+        {
+            while C.navigationViewController.mapViewController == nil
+            {
+            }
+            for annotation in C.navigationViewController.mapViewController.mapView.annotations!
+            {
+                if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
+                {
+                    if sender as? String == (annotation as! MapAnnotation).user.id
+                    {
+                        C.navigationViewController.mapViewController.mapView.selectAnnotation(annotation, animated: true)
+                    }
+                }
+            }
+        }
+        
+    }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

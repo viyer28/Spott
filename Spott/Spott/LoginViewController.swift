@@ -59,11 +59,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordField.isSecureTextEntry = true
         passwordField.autocapitalizationType = .none
         
-        let spottImg = UIImageView(frame:CGRect(x: cw * 0.5 - ch * 0.125, y: ch * 0.15, width: ch * 0.25, height: ch*0.25))
+        let spottImg = UIImageView(frame:CGRect(x: cw * 0.5 - ch * 0.125, y: ch * 0.15, width: ch * 0.25, height: ch * 0.25))
+        spottImg.contentMode = .scaleAspectFit
         spottImg.image = UIImage(named: "spottOwl")
         self.view.addSubview(spottImg)
         
-        let betaImg = UIImageView(frame:CGRect(x: C.w*0.5-ch*0.05*640.0/176.0 / 2.0, y: ch * 0.375, width: ch*0.05*640.0/176.0, height: ch*0.05))
+        let betaImg = UIImageView(frame:CGRect(x: C.w*0.5-ch*0.03*640.0/176.0 / 2.0, y: ch * 0.4, width: ch*0.03*640.0/176.0, height: ch*0.03))
         betaImg.image = UIImage(named: "betaImage")
         self.view.addSubview(betaImg)
         

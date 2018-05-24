@@ -27,6 +27,7 @@ class C: NSObject {
     static var currentLocation = Location()
     static var totalPopulation = 1
     static var user = User()
+    static var spotts: [User] = []
     static var lastLocationUpdate = NSDate()
     static var events: [Event] = []
     static var locations: [Location] = []
@@ -39,6 +40,7 @@ class C: NSObject {
     static let userInfo = "user_info2"
     static let db = Firestore.firestore()
     static let dbChat = db.collection("chats")
+    static var  fcmToken: String!
     static let storage = Storage.storage()
     static let stoRef = Storage.storage().reference()
     static var navigationViewController = NavigationViewController(transitionStyle: UIPageViewControllerTransitionStyle.scroll,
@@ -47,6 +49,7 @@ class C: NSObject {
     static var profileViewController = ProfileViewController()
     static var features: [Feature]!
     static var people: [QueryDocumentSnapshot]!
+    static var businesses: [User] = []
     static func updateLocations()
     {
         var locationData: Dictionary<String, Any>!
@@ -99,6 +102,41 @@ class C: NSObject {
                     }
                     
                 }
+            }
+        }
+    }
+    
+    static func updateBusinesses()
+    {
+        var locationData: Dictionary<String, Any>!
+        Firestore.firestore().collection(C.userInfo).whereField("business", isEqualTo: 1).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting Friend documents: \(err)")
+            } else {
+                C.businesses = []
+                for document in querySnapshot!.documents {
+                    let businessData = document.data()
+                    let b = parseUser(document: document)
+                    b.business = 1
+                    if businessData["profilePicture"] != nil
+                    {
+                    C.storage.reference(forURL: businessData["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                    // Create a UIImage, add it to the array
+                    b.image = UIImage(data: data!)
+                    })
+                    }
+                    else
+                    {
+                        b.image = UIImage(named: "sample_prof")
+                    }
+                    C.businesses.append(b)
+                    C.navigationViewController.mapViewController.updateAnnotations()
+                    
+                }
+                getNums(locations: C.locations)
+                C.updateUsersLocation()
+                C.navigationViewController.findUserLocation()
+                //C.navigationViewController.mapViewController.searchView.tableView.reloadData()
             }
         }
     }
@@ -213,6 +251,8 @@ class C: NSObject {
 
         C.user.dob = C.userData["dob"] as! String
         
+        C.updateToken()
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         dateFormatter.timeZone = TimeZone.current
@@ -220,6 +260,20 @@ class C: NSObject {
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)
         C.user.name = C.userData["name"] as! String
+        if C.userData["business"] != nil && C.userData["business"] as! Int == 1
+        {
+            C.user.business = 1
+            if C.navigationViewController.mapButton != nil
+            {
+                C.navigationViewController.mapButton.removeFromSuperview()
+                C.navigationViewController.spottButton.removeFromSuperview()
+                C.navigationViewController.eventsButton.removeFromSuperview()
+            }
+        }
+        if C.userData["statuses"] != nil
+        {
+            parseStatuses(statusDict: C.userData["statuses"] as! [Dictionary <String, Any>], u: C.user)
+        }
         C.user.age = calendar.component(.year, from: birthdate!).distance(to: calendar.component(.year, from: currentDate))
         
         if C.userData["bio"] != nil
@@ -242,6 +296,24 @@ class C: NSObject {
         C.user.friends = []
         updateFriends(user: C.user, friends: C.userData["friends"] as! [String])
         updateSpotted(spotted: C.userData["spotted"] as! [String])
+    }
+    
+    static func updateToken()
+    {
+        let fcmToken = Messaging.messaging().fcmToken
+        
+        if C.userData["token"] == nil || C.userData["token"] as! String != fcmToken
+        {
+            let ref = Firestore.firestore().collection(C.userInfo).document(C.refid)
+            ref.updateData([ "token" : fcmToken ])
+            { err in
+                if let err = err {
+                    print("Error updating document: \(err)")
+                } else {
+                    print("Document successfully updated")
+                }
+            }
+        }
     }
     
     static func updateSpotted(spotted: [String])
@@ -324,10 +396,47 @@ class C: NSObject {
         C.updateSpottsAtUserLoc()
     }
     
+    static func updateFriendsLocations()
+    {
+        for f in C.user.friends
+        {
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: f.id).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting spotted documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        f.latitude = data["latitude"] as! Double
+                        f.longitude = data["longitude"] as! Double
+                    }
+                    C.navigationViewController.mapViewController.updateAnnotations()
+                }
+            }
+        }
+        for f in C.businesses
+        {
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: f.id).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting spotted documents: \(err)")
+                } else {
+                    let latitude = f.latitude
+                    for document in querySnapshot!.documents {
+                        let data = document.data()
+                        f.latitude = data["latitude"] as! Double
+                        f.longitude = data["longitude"] as! Double
+                    }
+                    if latitude != f.latitude
+                    {
+                        C.navigationViewController.mapViewController.updateAnnotations()
+                    }
+                }
+            }
+        }
+    }
+    
     
     static func updateUserSpotted()
     {
-        let oldSpotted = C.user.spotted
         C.user.spotted = []
         Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -366,10 +475,87 @@ class C: NSObject {
             } else {
                 let document = querySnapshot!.documents[0]
                 C.updateFriends(user: C.user, friends: document["friends"] as! [String])
+                
             }
         }
     }
-    
+    static func updateSpotts()
+    {
+        Firestore.firestore().collection(C.userInfo).getDocuments { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting Spotts documents: \(err)")
+            } else {
+                var spotts: [User] = []
+                for document in querySnapshot!.documents
+                {
+                    let data = document.data()
+                    var add = 1
+                    if (data["business"] != nil) && data["business"] as! Int == 1
+                    {
+                        add = 0
+                    }
+                   
+                    if (data["user_id"] as! String) == C.user.id
+                    {
+                        add = 0
+                    }
+                    for f in C.user.friends
+                    {
+                        if (data["user_id"] as! String) == f.id
+                        {
+                            add = 0
+                        }
+                    }
+                    for s in (data["spotted"] as! [String])
+                    {
+                        if s == C.user.id
+                        {
+                            add = 0
+                        }
+                    }
+                    
+                    if add == 1
+                    {
+                        let point = CLLocation(latitude: CLLocationDegrees(data["latitude"] as! CGFloat), longitude: CLLocationDegrees(data["longitude"] as! CGFloat))
+                        if point.distance(from: C.navigationViewController.userLocation) > 200
+                        {
+                            add = 0
+                        }
+                    }
+                    
+                    if add == 1
+                    {
+                        let f = parseUser(document: document)
+                        if data["profilePicture"] != nil
+                        {
+                            C.storage.reference(forURL: data["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                                // Create a UIImage, add it to the array
+                                f.image = UIImage(data: data!)
+                                spotts.append(f)
+                                if C.navigationViewController.peopleViewController.sliderInt == 0
+                                {
+                                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                }
+                                C.navigationViewController.mapViewController.updateAnnotations()
+                            })
+                        }
+                        else
+                        {
+                            f.image = UIImage(named: "sample_prof")
+                        }
+                        C.updateFriendsofFriend(user: f, friends: data["friends"] as! [String])
+                        spotts.append(f)
+                    }
+                }
+                C.spotts = spotts
+                if C.navigationViewController.peopleViewController.sliderInt == 0
+                {
+                    C.navigationViewController.peopleViewController.current = spotts
+                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                }
+            }
+        }
+    }
     static func updateSpottsAtUserLoc()
     {
         if C.user.curLoc == -1
@@ -434,11 +620,6 @@ class C: NSObject {
                     }
                 }
                 C.currentLocation.spotts = spotts
-                if C.navigationViewController.peopleViewController.sliderInt == 0
-                {
-                    C.navigationViewController.peopleViewController.current = spotts
-                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
-                }
             }
         }
     }
@@ -534,6 +715,7 @@ class C: NSObject {
             C.profileViewController.tableView.reloadData()
         }
         updateLocations()
+        updateBusinesses()
         if C.navigationViewController.mapViewController != nil
         {
             C.navigationViewController.mapViewController.updateAnnotations()
@@ -552,12 +734,20 @@ class C: NSObject {
         f.curLoc = dict["curLoc"] as! Int
         f.dob = dict["dob"] as! String
         f.bio = dict["bio"] as! String
+        if dict["business"] != nil
+        {
+            f.business == dict["business"] as! Int
+        }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         let birthdate = dateFormatter.date(from: f.dob)
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)
         f.age = calendar.component(.year, from: birthdate!).distance(to: calendar.component(.year, from: currentDate))
+        if dict["statuses"] != nil
+        {
+            parseStatuses(statusDict: dict["statuses"] as! [Dictionary <String, Any>], u: f)
+        }
         C.updateFriendsofFriend(user: f, friends: dict["friends"] as! [String])
         return f
     }
@@ -572,6 +762,21 @@ class C: NSObject {
         UIGraphicsEndImageContext()
         
         return newImage!
+    }
+    
+    static func parseStatuses(statusDict: [Dictionary<String, Any>], u: User)
+    {
+        var statuses: [Status] = []
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+        for s in statusDict
+        {
+            let status = Status()
+            status.text = s["text"] as! String
+            status.time = dateFormatter.date(from: s["time"] as! String)!
+            statuses.append(status)
+        }
+        u.statuses = statuses
     }
 }
 extension Notification.Name {

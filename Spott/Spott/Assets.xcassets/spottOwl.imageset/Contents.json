@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "spottOwlx1.png",
+      "filename" : "logoBlackx1.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "spottOwlx2.png",
+      "filename" : "logoBlackx2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "spottOwlx3.png",
+      "filename" : "logoBlackx3.png",
       "scale" : "3x"
     }
   ],

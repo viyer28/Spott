@@ -71,7 +71,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
     
     override func viewDidAppear(_ animated: Bool) {
         C.updateUserSpotted()
-        C.updateSpottsAtUserLoc()
+        C.updateSpotts()
     }
     
     override func didReceiveMemoryWarning() {
@@ -167,7 +167,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
                     let data = document.data()
                     var spotted : [String] = data!["spotted"] as! [String]
                     spotted.append(C.user.id)
-                    C.currentLocation.spotts.remove(at: path)
+                    C.spotts.remove(at: path)
                     C.db.collection(C.userInfo).document(f.refid).updateData(["spotted" : spotted])
                 } else {
                     print("Document does not exist")
@@ -209,14 +209,14 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         }
         else
         {
-            C.currentLocation.spotts.remove(at: indexPath.row)
-            let f = C.currentLocation.spotts[indexPath.row]
+            C.spotts.remove(at: indexPath.row)
+            let f = C.spotts[indexPath.row]
             C.db.collection(C.userInfo).document(f.refid).getDocument { (document, error) in
                 if let document = document {
                     let data = document.data()
                     var spotted : [String] = data!["spotted"] as! [String]
-                    spotted.append(C.currentLocation.spotts[indexPath.section].id)
-                    C.currentLocation.spotts.remove(at: indexPath.section)
+                    spotted.append(C.spotts[indexPath.section].id)
+                    C.spotts.remove(at: indexPath.section)
                     C.db.collection(C.userInfo).document(f.refid).updateData(["spotted" : spotted])
                 } else {
                     print("Document does not exist")
@@ -239,7 +239,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         default:
             self.titleLabel.text = "spott"
             self.noOneLabel.text = "there is no one to spott here"
-            current = C.currentLocation.spotts
+            current = C.spotts
             self.sliderInt = 0
             self.collectionView?.reloadData()
         }

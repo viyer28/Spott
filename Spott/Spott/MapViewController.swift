@@ -17,8 +17,6 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     var tabBar:TabBarViewController!
     var textField: UITextField!
     var tableView: UITableView!
-    var profileButton = UIButton(type: UIButtonType.custom) as UIButton
-    var friendsButton = UIButton(type: UIButtonType.custom) as UIButton
     var centerButton = UIButton(type: UIButtonType.custom) as UIButton
     var otherControllerView: UIView!
     var allValues: [String] = []
@@ -78,41 +76,18 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
 
         //self.mapView.addSubview(searchView)
         
-        centerButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.1, height: C.w * 0.1)
+        centerButton.frame = CGRect(x: 0, y: 0, width: C.w * 0.15, height: C.w * 0.15)
         centerButton.center = CGPoint(x: C.w*0.5, y: C.h*0.95)
         centerButton.setImage(UIImage(named: "centerUser"), for: .normal)
         centerButton.addTarget(self, action: #selector(centerToUser), for: UIControlEvents.touchUpInside)
+
         self.view.addSubview(centerButton)
-        self.view.addSubview(tableView)
-        self.view.addSubview(textField)
+        if C.user.business == 0
+        {
+            self.view.addSubview(tableView)
+            self.view.addSubview(textField)
+        }
         self.centerButton.isHidden = true
-//
-//        let image = UIImage(named: "PeopleIcon") as UIImage?
-//        friendsButton = UIButton(type: UIButtonType.custom) as UIButton
-//        friendsButton.backgroundColor = UIColor.white
-//        friendsButton.frame = CGRect(x: C.w*0.9, y: C.w*0.2, width: C.w * 0.07, height: C.w * 0.07)
-//        friendsButton.imageView?.frame = CGRect(x: C.w*0.9, y: C.w*0.2, width: C.w * 0.05, height: C.w * 0.05)
-//        friendsButton.imageView?.center = friendsButton.center
-//        friendsButton.layer.cornerRadius = friendsButton.frame.width/2
-//        friendsButton.clipsToBounds = true
-//        friendsButton.setImage(image, for: .normal)
-//        friendsButton.imageView?.image = image
-//        friendsButton.imageEdgeInsets = UIEdgeInsetsMake(5, 5, 5, 5);
-//        friendsButton.addTarget(self, action: #selector(showFriends), for: UIControlEvents.touchUpInside)
-//        self.view.addSubview(friendsButton)
-//
-//        let image1 = UIImage(named: "ProfileIcon") as UIImage?
-//        profileButton.frame = CGRect(x: C.w*0.9, y: C.w*0.1, width: C.w * 0.07, height: C.w * 0.07)
-//        profileButton.backgroundColor = UIColor.white
-//        profileButton.layer.cornerRadius = profileButton.frame.width/2
-//        profileButton.clipsToBounds = true
-//        profileButton.backgroundColor = UIColor.white
-//        profileButton.setImage(image1, for: .normal)
-//        profileButton.addTarget(self, action: #selector(showProfile), for: UIControlEvents.touchUpInside)
-//        profileButton.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 3, 3);
-//        NotificationCenter.default.addObserver(self, selector: #selector(updateAnnotations), name: .update, object: nil)
-//        self.view.addSubview(profileButton)
-        
         
         self.title = "Map";
         
@@ -133,7 +108,8 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             let view = MapUserAnnotationView(reuseIdentifier: "mapAnnotation1", user: (annotation as! MapAnnotation).user)
             return view
         }
-        else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
+        else if annotation.isKind(of: MapAnnotation.self) &&
+            ((annotation as! MapAnnotation).type == 2 || (annotation as! MapAnnotation).type == 3)
         {
             return MapUserAnnotationView(reuseIdentifier: "mapAnnotation1", user: (annotation as! MapAnnotation).user)
         }
@@ -170,6 +146,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
             return UserCalloutView(representedObject: annotation)
             
         }
+        else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 3
+        {
+            C.navigationViewController.eventsButton.isHidden = true
+            C.navigationViewController.spottButton.isHidden = true
+            return ProfileCalloutView(representedObject: annotation)
+        }
         else if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 0
         {
             self.centerButton.isHidden = false
@@ -179,6 +161,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         {
             //mapView.centerCoordinate = CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
             profileView.isHidden = false
+            profileView.tableView.reloadData()
             return EmptyCalloutView(representedObject: annotation)
         }
         //showProfile()
@@ -238,6 +221,10 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     }
     func updateAnnotations()
     {
+        if C.user.business == 1
+        {
+            return
+        }
         if mapView != nil
         {
             var v: [String] = []
@@ -282,6 +269,15 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
                     mapView.addAnnotation(point)
                     
                 }
+            }
+            for b in C.businesses {
+                v.append(b.name)
+                let point = MapAnnotation()
+                point.coordinate = CLLocationCoordinate2D(latitude:  b.latitude, longitude:  b.longitude)
+                point.title = b.name
+                point.user = b
+                point.type = 3
+                mapView.addAnnotation(point)
             }
             self.values = v
             self.allValues = v
@@ -434,7 +430,7 @@ extension MapViewController: UITextFieldDelegate, UITableViewDataSource, UITable
                     mapView.selectAnnotation(annotation, animated: true)
                 }
             }
-            if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 2
+            if annotation.isKind(of: MapAnnotation.self) && ((annotation as! MapAnnotation).type == 2 || (annotation as! MapAnnotation).type == 3)
             {
                 if textField.text == (annotation as! MapAnnotation).user.name.lowercased()
                 {

@@ -15,7 +15,10 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     var th = C.h * 0.8
     var user = User()
     var type = 0
+    let editButton = UIButton(type: UIButtonType.custom) as UIButton
+    let logoutButton = UIButton(type: UIButtonType.custom) as UIButton
     var friendsCollectionView: UICollectionView!
+    var statusTextView: UITextView!
     convenience init (user: User)
     {
         self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
@@ -28,7 +31,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
         self.user = user
         self.type = t
     }
-    
+
     override init (frame : CGRect) {
         tableView = UITableView(frame: CGRect(x: 0, y: 0, width: frame.width, height: frame.height))
         super.init(frame : frame)
@@ -43,6 +46,8 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.addSubview(tableView)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear), name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear), name: Notification.Name.UIKeyboardWillShow, object: nil)
         
     }
     
@@ -51,7 +56,12 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        var rows = 3 + self.type + self.user.statuses.count
+        if self.type == 1
+        {
+            rows -= self.user.business
+        }
+        return rows
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell")
@@ -69,6 +79,22 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             profileImageView.addSubview(view)
             view.layer.insertSublayer(gradient, at: 0)
             cell.addSubview(profileImageView)
+            
+            if type == 1
+            {
+                let settingsButton   = UIButton(type: UIButtonType.custom) as UIButton
+                settingsButton.frame = CGRect(x: tw*0.85, y: th*0.05, width: tw * 0.1, height: tw * 0.1)
+                settingsButton.setImage(UIImage(named: "edit"), for: .normal)
+                settingsButton.addTarget(self, action: #selector(goToSettings), for: UIControlEvents.touchUpInside)
+                self.addSubview(settingsButton)
+                
+                let logoutButton   = UIButton(type: UIButtonType.custom) as UIButton
+                logoutButton.frame = CGRect(x: tw*0.05, y: th*0.05, width: tw * 0.1, height: tw * 0.1)
+                logoutButton.setImage(UIImage(named: "logout"), for: .normal)
+                logoutButton.addTarget(self, action: #selector(logout), for: UIControlEvents.touchUpInside)
+                self.addSubview(logoutButton)
+            }
+            
             
             let nameLabel = UILabel(frame: CGRect(x: tw*0.02, y: tw*0.75, width: tw * 0.48, height: tw * 0.2))
             nameLabel.font = UIFont(name: "FuturaPT-Light", size: 28.0)
@@ -98,16 +124,23 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             ageLabel.textColor = C.blueishColor
             ageLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
             ageLabel.text = "\(self.user.age!)"
-            cell.addSubview(ageLabel)
             
             let ageWordLabel = UILabel(frame: CGRect(x: tw*0.07 + ageLabel.intrinsicContentSize.width, y: tw*0.925, width: tw * 0.2, height: tw * 0.05))
             ageWordLabel.textColor = .black
             ageWordLabel.font = UIFont(name: "FuturaPT-Light", size: 14.0)
             ageWordLabel.text = "years"
-            cell.addSubview(ageWordLabel)
+            if type != -1 && user.business == 0
+            {
+                cell.addSubview(ageLabel)
+                cell.addSubview(ageWordLabel)
+            }
+            else
+            {
+                nameLabel.frame = CGRect(x: tw*0.02, y: tw*0.8, width: tw * 0.48, height: tw * 0.2)
+            }
             
         }
-        else if indexPath.row == 1
+        else if indexPath.row == 1 && (self.type != -1 && self.user.business != 1)
         {
             let numFriendsLabel = UILabel(frame: CGRect(x: 0, y: th*0.025, width: tw * 0.14, height: th * 0.05))
             numFriendsLabel.numberOfLines = 0
@@ -143,80 +176,96 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
             self.friendsCollectionView.dataSource = self;
             cell.addSubview(self.friendsCollectionView)
             self.friendsCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-            
-//            if self.user.friends.count > 0
-//            {
-//                let friendImage1 = UIImageView(frame:CGRect(x: tw * 0.45, y: th*0.02, width: th * 0.06, height: th * 0.06))
-//                friendImage1.layer.cornerRadius = friendImage1.frame.size.width / 2;
-//                friendImage1.clipsToBounds = true;
-//                friendImage1.image = self.user.friends[0].image
-//                //cell.addSubview(friendImage1)
-//            }
-//            if self.user.friends.count > 1
-//            {
-//                let friendImage2 = UIImageView(frame:CGRect(x: tw * 0.475 + th * 0.06, y: th*0.02 , width: th * 0.06, height: th * 0.06))
-//                friendImage2.layer.cornerRadius = friendImage2.frame.size.width / 2;
-//                friendImage2.clipsToBounds = true;
-//                friendImage2.image = self.user.friends[1].image
-//                //cell.addSubview(friendImage2)
-//            }
-//            if self.user.friends.count > 2
-//            {
-//                let friendImage3 = UIImageView(frame:CGRect(x: tw * 0.5 + th * 0.12, y: th*0.02 , width: th * 0.06, height: th * 0.06))
-//                friendImage3.layer.cornerRadius = friendImage3.frame.size.width / 2;
-//                friendImage3.clipsToBounds = true;
-//                friendImage3.image = self.user.friends[2].image
-//                //cell.addSubview(friendImage3)
-//            }
-//            if self.user.friends.count > 3
-//            {
-//                let dotLabel = UILabel(frame:CGRect(x: tw * 0.55 + th * 0.18, y: th*0.02 , width: th * 0.06, height: th * 0.06))
-//                dotLabel.textColor = UIColor.black
-//                dotLabel.textAlignment = .left
-//                dotLabel.font = UIFont(name: "FuturaPT-Light", size: 24)
-//                dotLabel.text="..."
-//                cell.addSubview(dotLabel)
-//            }
         }
-        else if indexPath.row == 2
+        else if (indexPath.row == 2 && (self.type != -1 && self.user.business != 1)) || indexPath.row == 1
         {
-//            let centerLine = UIView(frame: CGRect(x: tw*0.498, y: 0, width: tw*0.001, height: th*0.2))
-//            centerLine.backgroundColor = C.goldishColor
-//            cell.addSubview(centerLine)
-            
-            let whoIAmLabel = UILabel(frame: CGRect(x: tw*0.05, y: th*0.01, width: tw*0.35, height: th*0.05))
+            let whoIAmLabel = UILabel(frame: CGRect(x: tw*0.05, y: th*0.01, width: tw*0.35, height: th*0.03))
             whoIAmLabel.textColor = UIColor.black
             whoIAmLabel.text = "bio"
             whoIAmLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
             cell.addSubview(whoIAmLabel)
             
-            let bioLabel = UILabel(frame: CGRect(x: tw*0.05, y: th*0.05, width: tw*0.9, height: th*0.1))
-            bioLabel.numberOfLines = 3
-            bioLabel.textColor = C.blueishColor
-            bioLabel.font = UIFont(name: "FuturaPT-Light", size: 14)
-            bioLabel.text = self.user.bio
-            cell.addSubview(bioLabel)
-//            let whoIAmTraitsLabel = UILabel(frame: CGRect(x: tw*0.15, y: th*0.05, width: tw*0.35, height: th*0.10))
-//            whoIAmTraitsLabel.numberOfLines = 3
-//            whoIAmTraitsLabel.textColor = C.blueishColor
-//            whoIAmTraitsLabel.text = "\(self.user.whoIam[0])\n\(self.user.whoIam[1])\n\(self.user.whoIam[2])"
-//            whoIAmTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 11)
-//            cell.addSubview(whoIAmTraitsLabel)
-//
-//            let whatIDoLabel = UILabel(frame: CGRect(x: tw*0.55, y: th*0.01, width: tw*0.35, height: th*0.05))
-//            whatIDoLabel.text = "what i do"
-//            whatIDoLabel.font = UIFont(name: "FuturaPT-Light", size: 16)
-//            cell.addSubview(whatIDoLabel)
-//
-//            let whatIDoTraitsLabel = UILabel(frame: CGRect(x: tw*0.65, y: th*0.05, width: tw*0.35, height: th*0.10))
-//            whatIDoTraitsLabel.numberOfLines = 3
-//            whatIDoTraitsLabel.textColor = C.blueishColor
-//            whatIDoTraitsLabel.text = "\(self.user.whatIDo[0])\n\(self.user.whatIDo[1])\n\(self.user.whatIDo[2])"
-//            whatIDoTraitsLabel.font = UIFont(name: "FuturaPT-Light", size: 11)
-//            cell.addSubview(whatIDoTraitsLabel)
+            
+            let bioTextView = UITextView(frame: CGRect(x: tw*0.05, y: th*0.03, width: tw*0.9, height: th*0.1))
+            bioTextView.backgroundColor = .clear
+            bioTextView.textColor = C.blueishColor
+            bioTextView.font = UIFont(name: "FuturaPT-Light", size: 14)
+            bioTextView.text = self.user.bio
+            
+            bioTextView.isEditable = false
+            
+            if type == -1 || user.business == 1
+            {
+                whoIAmLabel.text = "menu"
+                bioTextView.frame = CGRect(x: tw*0.05, y: th*0.03, width: tw*0.9, height: th*0.24)
+            }
+            cell.addSubview(bioTextView)
         }
-        //cell.textLabel!.text = "foo"
+        else if (indexPath.row == 3 && type == 1) || (indexPath.row == 2 && type == 1)
+        {
+            statusTextView = UITextView(frame: CGRect(x: tw * 0.1, y: th * 0.01, width: tw * 0.8, height: th * 0.09))
+            statusTextView.keyboardType = UIKeyboardType.default
+            statusTextView.backgroundColor = UIColor.gray.withAlphaComponent(0.1)
+            statusTextView.returnKeyType = UIReturnKeyType.done
+            statusTextView.layer.cornerRadius = statusTextView.frame.size.width / 25
+            statusTextView.autocorrectionType = UITextAutocorrectionType.no
+            statusTextView.delegate = self
+            statusTextView.font = UIFont(name: "FuturaPT-Light", size: 12.0)
+            statusTextView.autocapitalizationType = .none
+            cell.addSubview(statusTextView)
+            
+            let postButton = UIButton(type: UIButtonType.custom) as UIButton
+            postButton.frame = CGRect(x: tw * 0.45, y: th * 0.15 - tw * 0.1, width: tw * 0.1, height: tw * 0.1 * 0.875)
+            postButton.setImage(UIImage(named: "brush"), for: .normal)
+//            postButton.layer.cornerRadius = postButton.frame.size.width / 10;
+//            postButton.backgroundColor = C.goldishColor
+//            postButton.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: 12.0)
+//            postButton.titleLabel?.text = "post"
+//            postButton.setTitleColor(.white, for: .normal)
+//            postButton.setTitle("post", for: .normal)
+            postButton.addTarget(self, action: #selector(postStatus), for: UIControlEvents.touchUpInside)
+            cell.addSubview(postButton)
+        }
+        else
+        {
+            let statusLabel = UILabel(frame: CGRect(x: tw*0.05, y: th*0.025, width: tw*0.9, height: th*0.1))
+            statusLabel.numberOfLines = 2
+            statusLabel.textColor = C.darkColor
+            statusLabel.font = UIFont(name: "FuturaPT-Light", size: 14)
+            statusLabel.text = self.user.statuses[self.user.statuses.count - 1 - indexPath.row + 3 + type].text
+            cell.addSubview(statusLabel)
+            
+            
+            let dateLabel = UILabel(frame: CGRect(x: tw*0.47, y: th*0.11, width: tw*0.5, height: th*0.03))
+            dateLabel.textColor = .gray
+            dateLabel.textAlignment = .right
+            dateLabel.font = UIFont(name: "FuturaPT-Light", size: 10)
+            
+            let timeString = self.timeAgoSince(self.user.statuses[self.user.statuses.count - 1 - indexPath.row + 3 + type].time)
+            dateLabel.text = timeString
+            cell.addSubview(dateLabel)
+        }
         return cell
+    }
+    
+    @objc func goToSettings()
+    {
+        //self.isHidden = true
+        self.addSubview(EditableMatchProfileView(user: self.user, t: 1, pv: self))
+    }
+    
+    @objc func logout()
+    {
+        let alert = UIAlertController(title: "logout", message: "do you want to logout?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "yes", style: .default, handler: {(alert: UIAlertAction!) in self.reallyLogout()}))
+        alert.addAction(UIAlertAction(title: "no", style: .default, handler: nil))
+        self.parentViewController!.present(alert, animated: true, completion: nil)
+    }
+    
+    func reallyLogout()
+    {
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -224,13 +273,17 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
         {
             return tw
         }
-        if indexPath.row == 1
+        if indexPath.row == 1 && (type != -1 && user.business == 0)
         {
             return C.h * 0.1 * 0.8
         }
+        else if indexPath.row == 1
+        {
+            return C.h * 0.3 * 0.8
+        }
         else
         {
-            return C.h * 0.2 * 0.8
+            return C.h * 0.15 * 0.8
         }
     }
     
@@ -241,12 +294,33 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
         }
         else
         {
-            return th*0.2
+            return th*0.15
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        
+    }
+    
+    @objc func postStatus()
+    {
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
+        let dateString = dateFormatter.string(from: Date())
+        var statusesDict: [Dictionary<String, Any>] = []
+        if C.userData["statuses"] != nil
+        {
+            statusesDict = C.userData["statuses"]  as! [Dictionary<String, Any>]
+        }
+        let status = ["text": statusTextView.text!, "time": dateString]
+        statusesDict.append(status)
+        C.userData["statuses"] = statusesDict
+        C.parseStatuses(statusDict: statusesDict, u: C.user)
+        statusTextView.text = ""
+        C.db.collection("user_info2").document(C.refid).updateData(["statuses":statusesDict])
+        self.tableView.reloadData()
         
     }
 }
@@ -289,6 +363,95 @@ extension MatchProfileView : UICollectionViewDataSource, UICollectionViewDelegat
             }
         }
     }
+    
+    public func timeAgoSince(_ date: Date) -> String {
+        
+        let calendar = Calendar.current
+        let now = Date()
+        let unitFlags: NSCalendar.Unit = [.second, .minute, .hour, .day, .weekOfYear, .month, .year]
+        let components = (calendar as NSCalendar).components(unitFlags, from: date, to: now, options: [])
+        
+        if let year = components.year, year >= 2 {
+            return "\(year) years ago"
+        }
+        
+        if let year = components.year, year >= 1 {
+            return "Last year"
+        }
+        
+        if let month = components.month, month >= 2 {
+            return "\(month) months ago"
+        }
+        
+        if let month = components.month, month >= 1 {
+            return "Last month"
+        }
+        
+        if let week = components.weekOfYear, week >= 2 {
+            return "\(week) weeks ago"
+        }
+        
+        if let week = components.weekOfYear, week >= 1 {
+            return "Last week"
+        }
+        
+        if let day = components.day, day >= 2 {
+            return "\(day) days ago"
+        }
+        
+        if let day = components.day, day >= 1 {
+            return "Yesterday"
+        }
+        
+        if let hour = components.hour, hour >= 2 {
+            return "\(hour) hours ago"
+        }
+        
+        if let hour = components.hour, hour >= 1 {
+            return "An hour ago"
+        }
+        
+        if let minute = components.minute, minute >= 2 {
+            return "\(minute) minutes ago"
+        }
+        
+        if let minute = components.minute, minute >= 1 {
+            return "A minute ago"
+        }
+        
+        if let second = components.second, second >= 3 {
+            return "\(second) seconds ago"
+        }
+        
+        return "Just now"
+        
+    }
+    
+    @objc func keyboardWillAppear(_ notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.frame.origin.y -= C.h * 0.175
+        }
+    }
+    
+    @objc func keyboardWillDisappear(_ notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            self.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
+        }
+    }
+    
+
 }
 
-
+extension MatchProfileView: UITextViewDelegate {
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let numberOfChars = newText.count
+        if(text == "\n") {
+            self.statusTextView.resignFirstResponder()
+        }
+        return numberOfChars < 50;
+    }
+}

@@ -45,6 +45,7 @@
 		27D26F282029053000F585B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D26F272029052F00F585B5 /* AppDelegate.swift */; };
 		27F41C3D206F37A20054D3D7 /* map.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 27F41C3C206F37A10054D3D7 /* map.geojson */; };
 		27F41C3F206F3D2C0054D3D7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */; };
+		27F752BB20AE134D00E2A5F6 /* EditableMatchProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F752BA20AE134D00E2A5F6 /* EditableMatchProfileView.swift */; };
 		A6559C831ACC36C4B1636B30 /* Pods_spott.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 39F459FE357F13F59F3A5EE4 /* Pods_spott.framework */; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,7 @@
 		27D26F272029052F00F585B5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27F41C3C206F37A10054D3D7 /* map.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map.geojson; sourceTree = "<group>"; };
 		27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		27F752BA20AE134D00E2A5F6 /* EditableMatchProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableMatchProfileView.swift; sourceTree = "<group>"; };
 		39F459FE357F13F59F3A5EE4 /* Pods_spott.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spott.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		92AA1DE6D01980F39F046788 /* Pods-spott.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spott.release.xcconfig"; path = "Pods/Target Support Files/Pods-spott/Pods-spott.release.xcconfig"; sourceTree = "<group>"; };
 		B238D47E97F0A460C226F398 /* Pods-spott.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spott.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spott/Pods-spott.debug.xcconfig"; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				27F41C3C206F37A10054D3D7 /* map.geojson */,
 				274327EE207F368C00044B07 /* Info.plist */,
 				2744A45120379B8300DAB7CF /* MatchProfileView.swift */,
+				27F752BA20AE134D00E2A5F6 /* EditableMatchProfileView.swift */,
 				27B9C4792030EF5B000D0BB1 /* Objects.swift */,
 				276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */,
 				27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */,
@@ -564,6 +567,7 @@
 				27283FA1203F4F150096AF34 /* LoginViewController.swift in Sources */,
 				278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */,
 				27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */,
+				27F752BB20AE134D00E2A5F6 /* EditableMatchProfileView.swift in Sources */,
 				2782E42C2024F78200A3B2E8 /* EventsViewController.swift in Sources */,
 				27F41C3F206F3D2C0054D3D7 /* CustomCell.swift in Sources */,
 				278203CD2066F9D000410E9F /* SettingsViewController.swift in Sources */,

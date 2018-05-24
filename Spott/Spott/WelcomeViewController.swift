@@ -34,11 +34,12 @@ class WelcomeViewController: UIViewController {
         nda.text = ndaText;
         nda.isEditable = false
         
-        let spottImg = UIImageView(frame:CGRect(x: cw * 0.5 - ch * 0.125, y: ch * 0.15, width: ch * 0.25, height: ch*0.25))
+        let spottImg = UIImageView(frame:CGRect(x: cw * 0.5 - ch * 0.125, y: ch * 0.15, width: ch * 0.25, height: ch * 0.25))
+        spottImg.contentMode = .scaleAspectFit
         spottImg.image = UIImage(named: "spottOwl")
         self.view.addSubview(spottImg)
         
-        let betaImg = UIImageView(frame:CGRect(x: C.w*0.5-ch*0.05*640.0/176.0 / 2.0, y: ch * 0.375, width: ch*0.05*640.0/176.0, height: ch*0.05))
+        let betaImg = UIImageView(frame:CGRect(x: C.w*0.5-ch*0.03*640.0/176.0 / 2.0, y: ch * 0.4, width: ch*0.03*640.0/176.0, height: ch*0.03))
         betaImg.image = UIImage(named: "betaImage")
         self.view.addSubview(betaImg)
         
@@ -92,10 +93,6 @@ class WelcomeViewController: UIViewController {
                 {
                     goToStage3()
                 }
-                else if stage == 3
-                {
-                    findUser()
-                }
             }
         }
         
@@ -123,7 +120,15 @@ class WelcomeViewController: UIViewController {
         but.removeFromSuperview()
         nda.removeFromSuperview()
         startLabel.isHidden = false
-        startLabel.text = "first, let's find you."
+        startLabel.text = "let's find you."
+        
+        but = UIButton(type: UIButtonType.custom) as UIButton
+        but.frame = CGRect(x: 0, y: 0, width: C.w * 0.2, height: C.w * 0.2)
+        but.center = CGPoint(x: C.w*0.5, y: C.h*0.9)
+        but.setImage(UIImage(named: "centerUser"), for: .normal)
+        but.addTarget(self, action: #selector(findUser), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(but)
+        
     }
     
     @objc func findUser()
@@ -132,17 +137,18 @@ class WelcomeViewController: UIViewController {
         C.navigationViewController.locationManager = CLLocationManager()
         C.navigationViewController.locationManager.requestAlwaysAuthorization()
         self.view.isUserInteractionEnabled = false
-        if CLLocationManager.locationServicesEnabled() {
+        while CLLocationManager.locationServicesEnabled() {
             switch CLLocationManager.authorizationStatus() {
             case .notDetermined, .restricted, .denied:
-                startLabel.text = "Enable location to use spott"
+                startLabel.text = "enable location to use spott"
             case .authorizedAlways, .authorizedWhenInUse:
                 C.navigationViewController.onboarding = 1
                 self.present(C.navigationViewController, animated: false, completion: nil)
+                return
             }
-        } else {
-            startLabel.text = "Enable location to use spott"
         }
+        startLabel.text = "enable location to use spott"
+        return
     }
     
 }
