@@ -4,7 +4,7 @@ admin.initializeApp(functions.config().firebase);
 const collection = admin.firestore().collection('user_info2');
 const locationCollection = admin.firestore().collection('locations');
 const crossedCollection = admin.firestore().collection('crossed_paths');
-const meetRadius = 0.2;
+const enterCollection = admin.firestore().collection('visited_locations');
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -75,7 +75,7 @@ function sendNotificaiton(payload, uid)
       return true;
     });
     return false
-  }).catch((error) => console.log("Error fetching user token:", error));
+  }).catch((error) => console.log("Error fetching user token:" + error));
 }
 
 exports.sendUserNotification = functions.firestore.document('user_info2/{documentId}')
@@ -83,6 +83,12 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
 
       let beforeValue = change.before.data();
       let afterValue = change.after.data();
+
+      if (!afterValue.score)
+      {
+        afterValue.score = 0;
+      }
+
 
       // Send notification if spotted.
       if (afterValue.spotted.length > beforeValue.spotted.length) {
@@ -111,32 +117,43 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
           locationCollection.where('id', '==', afterValue.curLoc).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const data = doc.data();
-              if (!data.population) {
+              if (!data.users || !data.population)
+              {
                 data.population = 1;
-              }   else {
-                data.population += 1;
+                data.users[afterValue.user_id];
+                enterLocation(afterValue.user_id, data.id);
+                locationCollection.doc(doc.id).set(data);
               }
-              // console.log(data.name + ": " + data.population);
-              locationCollection.doc(doc.id).set(data);
+              else if (!data.users.includes(afterValue.user_id))
+              {
+                data.users.push(afterValue.user_id);
+                data.population = data.users.length;
+                enterLocation(afterValue.user_id, data.id);
+                locationCollection.doc(doc.id).set(data);
+              }
             });
             return true;
-          }).catch((error) => console.log("Error updating locaiton"));
+          }).catch((error) => console.log("Error updating locaiton: " + error));
           locationCollection.where('id', '==', beforeValue.curLoc).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const data = doc.data();
-              if (!data.population) {
+              if (!data.users || !data.population)
+              {
                 data.population = 0;
-              } else if (data.population > 0) {
-                data.population -= 1;
+                data.users = [];
+                locationCollection.doc(doc.id).set(data);
+              } else if (data.users.includes(afterValue.user_id))
+              {
+                data.users = data.users.filter(x => x !== afterValue.user_id);
+                data.population = data.users.length;
+                locationCollection.doc(doc.id).set(data);
               }
-              // console.log(data.name + ": " + data.population);
-              locationCollection.doc(doc.id).set(data);
             });
             return true;
-          }).catch((error) => console.log("Error updating previous locaiton"));
+          }).catch((error) => console.log("Error updating previous locaiton: " + error));
         }
       // Crossed Paths and Spotts
-      if (afterValue.longitude !== beforeValue.longitude)
+      if (!withinRadius(afterValue.latitude, afterValue.longitude, beforeValue.latitude, beforeValue.longitude, 0.1))
       {
         const spotts = [];
         collection.get().then((querySnapshot) => {
@@ -149,13 +166,17 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
             }
             else
             {
-              if (withinRadius(afterValue.latitude, afterValue.longitude, data.latitude, data.longitude) === true)
+              if (withinRadius(afterValue.latitude, afterValue.longitude, data.latitude, data.longitude, 0.2) === true)
               {
                 if(!afterValue.friends.includes(data.user_id) && !afterValue.spotted.includes(data.user_id))
                 {
                   spotts.push(data.user_id);
                 }
-                crossedPaths(data.user_id, afterValue.user_id);
+                if (withinRadius(beforeValue.latitude, beforeValue.longitude, data.latitude, data.longitude, 0.2) === false)
+                {
+                  crossedPaths(afterValue.user_id, data.user_id);
+                  afterValue.score += 5;
+                }
               }
             }
           });
@@ -168,7 +189,7 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
       return true;
 });
 
-function withinRadius(lat1, lon1, lat2, lon2)
+function withinRadius(lat1, lon1, lat2, lon2, rad)
 {
   var R = 6371; // km
   var dLat = toRad(lat2-lat1);
@@ -180,10 +201,68 @@ function withinRadius(lat1, lon1, lat2, lon2)
     Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(latitude1) * Math.cos(latitude2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c;
-  return (d < meetRadius);
+  return (d < rad);
 }
 
 function toRad(Value)
 {
     return Value * Math.PI / 180;
+}
+
+function crossedPaths(user1, user2)
+{
+  var id1 = user1;
+  var id2 = user2;
+  if (user2 > user1)
+  {
+    id1 = user2;
+    id2 = user1;
+  }
+  crossedCollection.where('id1', '==', id1).where('id2', '==', id2).get().then((querySnapshot) => {
+    if (querySnapshot.size === 0)
+    {
+      const data = {
+        'id1' : id1,
+        'id2' : id2,
+        'count' : 1
+      };
+      crossedCollection.add(data);
+    } else {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        data.count += 1;
+        crossedCollection.doc(doc.id).set(data);
+      })
+    }
+    return true;
+  }).catch((error) => console.log("Error added crossed location: " + error));
+
+}
+
+function enterLocation(user, location)
+{
+  if (location === -1)
+  {
+    return true;
+  }
+  enterCollection.where('user_id', '==', user).where('location_id', '==', location).get().then((querySnapshot) => {
+    if (querySnapshot.size === 0)
+    {
+      console.log(user + " enter " + location)
+      const data = {
+        'user_id' : user,
+        'location_id' : location,
+        'count' : 1
+      };
+      enterCollection.add(data);
+    } else {
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        data.count += 1;
+        enterCollection.doc(doc.id).set(data);
+      })
+    }
+    return true;
+  }).catch((error) => console.log("Error entering location: " + error));
+  return true;
 }

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FirebaseAuth
 
 class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     var tableView: UITableView
@@ -265,7 +266,9 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
     
     func reallyLogout()
     {
-        
+        try! Auth.auth().signOut()
+        self.window!.rootViewController?.dismiss(animated: false, completion: nil)
+        self.window!.rootViewController = WelcomeViewController()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

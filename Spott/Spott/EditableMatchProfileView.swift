@@ -87,13 +87,13 @@ class EditableMatchProfileView : UIView, UITableViewDelegate, UITableViewDataSou
             if type == 1
             {
                 let acceptButton = UIButton(type: UIButtonType.custom) as UIButton
-                acceptButton.frame = CGRect(x: tw*0.85, y: th*0.05, width: tw * 0.1, height: tw * 0.1)
+                acceptButton.frame = CGRect(x: tw*0.85, y: th*0.75, width: tw * 0.1, height: tw * 0.1)
                 acceptButton.setImage(UIImage(named: "accept"), for: .normal)
                 acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
                 self.addSubview(acceptButton)
                 
                 let denyButton   = UIButton(type: UIButtonType.custom) as UIButton
-                denyButton.frame = CGRect(x: tw*0.05, y: th*0.05, width: tw * 0.1, height: tw * 0.1)
+                denyButton.frame = CGRect(x: tw*0.05, y: th*0.75, width: tw * 0.1, height: tw * 0.1)
                 //denyButton.setImage(UIImage(named: "settingsIcon"), for: .normal)
                 denyButton.setImage(UIImage(named: "deny"), for: .normal)
                 denyButton.addTarget(self, action: #selector(deny), for: .touchUpInside)
@@ -136,7 +136,7 @@ class EditableMatchProfileView : UIView, UITableViewDelegate, UITableViewDataSou
             
             let changePicButton = UIButton(type: UIButtonType.custom) as UIButton
             changePicButton.frame = CGRect(x: tw*0.85, y: tw*0.8, width: tw * 0.1, height: tw * 0.1)
-            changePicButton.setImage(UIImage(named: "settingsIcon"), for: .normal)
+            changePicButton.setImage(UIImage(named: "brush"), for: .normal)
             changePicButton.addTarget(self, action: #selector(changePic), for: UIControlEvents.touchUpInside)
             cell.addSubview(changePicButton)
             

@@ -68,10 +68,14 @@ class C: NSObject {
                     location.displayName = locationData["displayName"] as! String
                     location.refid = document.documentID
                     location.numPopulation = 0
+                    if locationData["population"] != nil
+                    {
+                        location.numPopulation = locationData["population"] as! Int
+                    }
                     C.locations.append(location)
                     
                 }
-                getNums(locations: C.locations)
+                //getNums(locations: C.locations)
                 C.updateUsersLocation()
                 C.navigationViewController.findUserLocation()
                 //C.navigationViewController.mapViewController.searchView.tableView.reloadData()
@@ -133,7 +137,7 @@ class C: NSObject {
                     C.navigationViewController.mapViewController.updateAnnotations()
                     
                 }
-                getNums(locations: C.locations)
+                // getNums(locations: C.locations)
                 C.updateUsersLocation()
                 C.navigationViewController.findUserLocation()
                 //C.navigationViewController.mapViewController.searchView.tableView.reloadData()
@@ -477,6 +481,28 @@ class C: NSObject {
                 C.updateFriends(user: C.user, friends: document["friends"] as! [String])
                 
             }
+        }
+    }
+    static func updateSpotts2()
+    {
+        Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting user spotted documents: \(err)")
+            } else {
+                let document = querySnapshot!.documents[0]
+                let data = document.data()
+                if document["spotts"] != nil
+                {
+                    parseSpotts(ss: document["spotts"] as! [String])
+                }
+            }
+        }
+    }
+    static func parseSpotts(ss: [String])
+    {
+        for s in ss
+        {
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments()
         }
     }
     static func updateSpotts()

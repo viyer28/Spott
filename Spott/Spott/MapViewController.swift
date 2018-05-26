@@ -168,8 +168,18 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         return EmptyCalloutView(representedObject: annotation)
     }
     func mapViewRegionIsChanging(_ mapView: MGLMapView) {
-        self.profileView.isHidden = true
-        self.profileView.tableView.reloadData()
+        if self.profileView.isHidden == false
+        {
+            self.profileView.isHidden = true
+            self.profileView.tableView.reloadData()
+            for c in self.profileView.subviews
+            {
+                if c.isKind(of: EditableMatchProfileView.self)
+                {
+                    c.removeFromSuperview()
+                }
+            }
+        }
         self.textField.resignFirstResponder()
         self.tableView.isHidden = true
         if C.navigationViewController.onboarding == 0
@@ -185,10 +195,21 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     
     @objc func centerToUser()
     {
-        self.profileView.isHidden = true
+        if self.profileView.isHidden == false
+        {
+            self.profileView.isHidden = true
+            self.profileView.tableView.reloadData()
+            for c in self.profileView.subviews
+            {
+                if c.isKind(of: EditableMatchProfileView.self)
+                {
+                    c.removeFromSuperview()
+                }
+            }
+        }
         mapView.centerCoordinate = C.navigationViewController.userLocation.coordinate
         var anno: MGLAnnotation! = nil
-        if (C.user.curLoc != -1)
+        if (C.user.curLoc != -1 && self.mapView != nil)
         {
             for a in self.mapView.annotations!
             {
