@@ -35,15 +35,16 @@ class MapAnnotationView: MGLAnnotationView {
         self.init(reuseIdentifier: reuseIdentifier)
         self.location = location
         self.percent = min(3*CGFloat(location.numPopulation) / CGFloat(C.totalPopulation) * 100,100)
-        self.frame = CGRect(x: 0, y: 0, width: Int(5 + (percent/5.0)), height: Int(5 + (percent/5.0)))
+        self.frame = CGRect(x: 0, y: 0, width: Int(20 + (percent/5.0)), height: Int(20 + (percent/5.0)))
         //self.borderView.frame  = self.frame
-        self.layer.cornerRadius = self.frame.size.width / 2
+        //self.layer.cornerRadius = self.frame.size.width / 2
         //self.borderView.layer.cornerRadius = self.borderView.frame.width / 2
         self.imageView = UIImageView(frame: self.frame)
-        self.imageView.image = UIImage(named: "dot")
-        imageView.alpha = 0.4 + self.percent * 0.006
+        imageView.contentMode = .scaleAspectFit
+        self.imageView.image = UIImage(named: "flame\(location.type)")
+        imageView.alpha = 0.6 + self.percent * 0.004
         self.addSubview(imageView)
-        self.clipsToBounds = true
+        //self.clipsToBounds = true
         
         
     }

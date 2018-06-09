@@ -35,8 +35,7 @@ class EventTableCell: UITableViewCell {
     init(style: UITableViewCellStyle, reuseIdentifier: String?, event: Event, row: Int) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.separatorInset = UIEdgeInsets.zero;
-        self.frame = CGRect(x: 0, y: 0, width: C.w, height:C.h*0.2)
-        
+        self.frame = CGRect(x: 0, y: 0, width: C.w, height:C.h)
         wholeView = UIView(frame: CGRect(x: self.frame.width*0.1, y: self.frame.height*0.05, width: self.frame.width*0.8, height: self.frame.height*0.9))
         wholeView.layer.cornerRadius = wholeView.frame.size.width / 15;
         let shadowView = UIView(frame: wholeView.frame)

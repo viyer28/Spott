@@ -290,7 +290,7 @@ class OnboardingViewController : UIViewController, UIImagePickerControllerDelega
                     self.finishClicked = 0
                     self.name = self.textField.text!
                     self.textField.text = ""
-                    self.titleLabel.text = "what's your email"
+                    self.titleLabel.text = "what's your name"
                     C.navigationViewController.mapViewController.mapView.setCenter(C.navigationViewController.userLocation.coordinate, zoomLevel: Double(1+2*self.stage), animated: true)
                     return
                 }

@@ -10,49 +10,56 @@ import UIKit
 
 class EventsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     var tableView: UITableView!
+    var userView: LeaderView!
+    var userRank = -1
+    var updateLeaderboardTime = NSDate()
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView = UITableView(frame: CGRect(x: 0, y: C.h*0.15, width: C.w, height: C.h*0.85))
+        //let blankView = UIView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h))
+        //blankView.backgroundColor = .white
+        //self.view.addSubview(blankView)
+        self.tableView = UITableView(frame: CGRect(x: C.w*0.1, y: C.h*0.15, width: C.w*0.8, height: C.h*0.625))
         self.tableView.delegate = self
         self.view.backgroundColor = UIColor.clear
         tableView.dataSource = self
-        self.tableView.rowHeight = C.h*0.2
+        self.tableView.rowHeight = C.h*0.075
         tableView.allowsSelection = false;
-        self.tableView.separatorColor = UIColor.white
-        //self.view.addSubview(tableView)
-        let locationLabel = UILabel(frame: CGRect(x: 0, y: C.h*0.05, width: C.w, height: C.h*0.1))
-        locationLabel.textAlignment = .center
-        locationLabel.font = UIFont(name: "FuturaPT-Light", size: 30)
-        locationLabel.text = "events"
-        //self.view.addSubview(locationLabel)
+        self.tableView.separatorColor = C.goldishColor
+        tableView.separatorInset = UIEdgeInsets.zero;
+        self.tableView.layer.borderWidth = 1
+        self.tableView.layer.borderColor = C.goldishColor.cgColor
+        self.view.addSubview(tableView)
+      
         
-        let noOneView = UIView(frame: CGRect(x: 0, y: 0, width: C.w*0.8, height: C.w * 0.8 + C.h * 0.8 * 0.3))
-        noOneView.center = CGPoint(x: C.w * 0.5, y: C.h * 0.5)
-        noOneView.backgroundColor = UIColor.white
-        noOneView.layer.borderWidth = 1.0 as CGFloat
-        noOneView.layer.borderColor = C.goldishColor.cgColor
+        userView = LeaderView(frame: CGRect(x: C.w * 0.1, y: C.h*0.775, width: C.w*0.8, height: tableView.rowHeight), leader: C.leader, rank: 1)
+        self.view.addSubview(userView)
         
-        let noOneLabel = UILabel(frame: noOneView.frame)
-        noOneLabel.center = CGPoint(x: noOneView.frame.width * 0.5, y: noOneView.frame.height * 0.5)
-        noOneLabel.font = UIFont(name: "FuturaPT-Light", size: 18.0)
-        noOneLabel.text = "events are coming soon"
-        noOneLabel.textAlignment = .center
-        noOneView.addSubview(noOneLabel)
-        self.view.addSubview(noOneView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+        if NSDate().timeIntervalSince(updateLeaderboardTime as Date) >= 300
+        {
+            C.getLeaderboardUsers()
+            updateLeaderboardTime = NSDate()
+        }
         
-        
-        //        self.navigationController?.navigationBar.titleTextAttributes =
-        //            [NSAttributedStringKey.font: UIFont(name: "Chalkduster", size: 27)!,
-        //             NSAttributedStringKey.foregroundColor: UIColor.black]
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return C.events.count
+        for l in C.leaders {
+            if l.name == C.leader.name
+            {
+                C.leader.score = l.score
+                userRank = C.leaders.index(of: l)!
+                self.userView.rankLabel.text = String(userRank+1)
+            }
+        }
+        return C.leaders.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         NSLog("get cell")
-        let cell = EventTableCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell", event: C.events[indexPath.row], row: indexPath.row)
-        //cell.textLabel!.text = "foo"
+        let cell = LeaderTableCell(style: UITableViewCellStyle.value1, reuseIdentifier: "Cell", leader: C.leaders[indexPath.row], row: indexPath.row)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)

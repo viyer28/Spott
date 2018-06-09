@@ -22,6 +22,7 @@ class Location : NSObject {
     var spotts: [User] = []
     var displayName: String!
     var users: [QueryDocumentSnapshot] = []
+    var type = 0
 }
 
 class Event : NSObject {
@@ -45,8 +46,6 @@ class User: NSObject {
     var profilePictureURL: String!
     var whoIam: [String]!
     var whatIDo: [String]!
-    var xp: Int!
-    var level: Int!
     var major: String!
     var hometown: String!
     var gender: String!
@@ -64,6 +63,17 @@ class User: NSObject {
     var bio: String!
     var statuses: [Status] = []
     var business = 0
+}
+
+class Leader: NSObject {
+    var score = 0
+    var rank = -1
+    var prevRank = -1
+    var profilePictureURL: String!
+    var name: String!
+    var refid: String!
+    var id: String!
+    var image: UIImage!
 }
 
 class Status: NSObject {

@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import Firebase
 import FirebaseAuth
+import AVFoundation
+import AVKit
 
 class WelcomeViewController: UIViewController {
     var startLabel: UILabel!
@@ -17,6 +19,7 @@ class WelcomeViewController: UIViewController {
     var nda: UITextView!
     var button: UIButton!
     var but: UIButton!
+    var avPlayerController: AVPlayerViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -119,6 +122,48 @@ class WelcomeViewController: UIViewController {
         stage = 3
         but.removeFromSuperview()
         nda.removeFromSuperview()
+        
+        let filepath: String? = Bundle.main.path(forResource: "tutorial", ofType: "mov")
+        let fileURL = URL.init(fileURLWithPath: filepath!)
+        let avPlayer = AVPlayer(url: fileURL)
+        
+        avPlayerController = AVPlayerViewController()
+        avPlayerController.player = avPlayer
+        avPlayerController.view.frame = CGRect(x: C.w * 0.15, y: C.h * 0.15, width: C.w * 0.7, height: C.h * 0.7)
+        avPlayerController.showsPlaybackControls = false
+        avPlayerController.view.backgroundColor = .white
+        self.view.addSubview(avPlayerController.view)
+        avPlayer.play()
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: avPlayer.currentItem, queue: nil) { (_) in
+            avPlayer.seek(to: kCMTimeZero)
+            avPlayer.play()
+        }
+        
+        but = UIButton(type: UIButtonType.custom) as UIButton
+        but.frame = CGRect(x: 0, y: 0, width: C.w * 0.2, height: C.w * 0.2)
+        but.center = CGPoint(x: C.w*0.5, y: C.h*0.9)
+        but.setImage(UIImage(named: "centerUser"), for: .normal)
+        let image1:UIImage = UIImage(named: "home1")!
+        let image2:UIImage = UIImage(named: "home2")!
+        let image3:UIImage = UIImage(named: "home3")!
+        let image4:UIImage = UIImage(named: "home4")!
+        let image5:UIImage = UIImage(named: "home5")!
+        let image6:UIImage = UIImage(named: "home6")!
+        let image7:UIImage = UIImage(named: "home7")!
+        let image8:UIImage = UIImage(named: "home8")!
+        but.imageView!.animationImages = [image1, image2, image3, image4, image5, image6, image7, image8]
+        but.imageView!.animationDuration = 0.8
+        but.imageView!.startAnimating()
+        but.addTarget(self, action: #selector(goToStage4), for: UIControlEvents.touchUpInside)
+        self.view.addSubview(but)
+        
+        
+    }
+    
+    @objc func goToStage4()
+    {
+        stage = 4
+        avPlayerController.view.removeFromSuperview()
         startLabel.isHidden = false
         startLabel.text = "let's find you."
         
@@ -126,14 +171,24 @@ class WelcomeViewController: UIViewController {
         but.frame = CGRect(x: 0, y: 0, width: C.w * 0.2, height: C.w * 0.2)
         but.center = CGPoint(x: C.w*0.5, y: C.h*0.9)
         but.setImage(UIImage(named: "centerUser"), for: .normal)
+        let image1:UIImage = UIImage(named: "home1")!
+        let image2:UIImage = UIImage(named: "home2")!
+        let image3:UIImage = UIImage(named: "home3")!
+        let image4:UIImage = UIImage(named: "home4")!
+        let image5:UIImage = UIImage(named: "home5")!
+        let image6:UIImage = UIImage(named: "home6")!
+        let image7:UIImage = UIImage(named: "home7")!
+        let image8:UIImage = UIImage(named: "home8")!
+        but.imageView!.animationImages = [image1, image2, image3, image4, image5, image6, image7, image8]
+        but.imageView!.animationDuration = 0.8
+        but.imageView!.startAnimating()
         but.addTarget(self, action: #selector(findUser), for: UIControlEvents.touchUpInside)
         self.view.addSubview(but)
-        
     }
     
     @objc func findUser()
     {
-        stage = 4
+        stage = 5
         C.navigationViewController.locationManager = CLLocationManager()
         C.navigationViewController.locationManager.requestAlwaysAuthorization()
         self.view.isUserInteractionEnabled = false

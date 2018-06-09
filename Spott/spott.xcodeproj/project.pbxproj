@@ -33,6 +33,7 @@
 		2782E42E2024F78200A3B2E8 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4272024F78200A3B2E8 /* PeopleViewController.swift */; };
 		2782E4302024F78200A3B2E8 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2782E4292024F78200A3B2E8 /* TabBarViewController.swift */; };
 		2782E4362024F7B500A3B2E8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */; };
+		278655E320BCCD1800129FE8 /* tutorial.mov in Resources */ = {isa = PBXBuildFile; fileRef = 278655E220BCCD1700129FE8 /* tutorial.mov */; };
 		278D306B202CB2B700B0B941 /* EventProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 278D306A202CB2B700B0B941 /* EventProfileView.swift */; };
 		279AE459206EDDED008F5801 /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 279AE458206EDDED008F5801 /* NavigationViewController.swift */; };
 		27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27A4DE5920250A6900AAC8A8 /* C.swift */; };
@@ -42,6 +43,7 @@
 		27B07FDE202BDC5B0002FE0B /* LocationProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */; };
 		27B9C47A2030EF5B000D0BB1 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27B9C4792030EF5B000D0BB1 /* Objects.swift */; };
 		27BC6B242089397900352388 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27BC6B232089397900352388 /* WelcomeViewController.swift */; };
+		27C26F5220BA726600E6C068 /* LeaderboardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27C26F5120BA726600E6C068 /* LeaderboardTableCell.swift */; };
 		27D26F282029053000F585B5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D26F272029052F00F585B5 /* AppDelegate.swift */; };
 		27F41C3D206F37A20054D3D7 /* map.geojson in Resources */ = {isa = PBXBuildFile; fileRef = 27F41C3C206F37A10054D3D7 /* map.geojson */; };
 		27F41C3F206F3D2C0054D3D7 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */; };
@@ -116,6 +118,7 @@
 		2782E4272024F78200A3B2E8 /* PeopleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		2782E4292024F78200A3B2E8 /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		2782E4352024F7B500A3B2E8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		278655E220BCCD1700129FE8 /* tutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = tutorial.mov; path = ../../../../projects/Spott/Spott/Spott/tutorial.mov; sourceTree = "<group>"; };
 		278D306A202CB2B700B0B941 /* EventProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProfileView.swift; sourceTree = "<group>"; };
 		2794B8A220800D2A00E901FC /* spott.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = spott.entitlements; path = spott/spott.entitlements; sourceTree = "<group>"; };
 		279AE458206EDDED008F5801 /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
@@ -126,6 +129,7 @@
 		27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProfileView.swift; sourceTree = "<group>"; };
 		27B9C4792030EF5B000D0BB1 /* Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		27BC6B232089397900352388 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		27C26F5120BA726600E6C068 /* LeaderboardTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardTableCell.swift; sourceTree = "<group>"; };
 		27D26F272029052F00F585B5 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		27F41C3C206F37A10054D3D7 /* map.geojson */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = map.geojson; sourceTree = "<group>"; };
 		27F41C3E206F3D2C0054D3D7 /* CustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -213,6 +217,7 @@
 				27F752BA20AE134D00E2A5F6 /* EditableMatchProfileView.swift */,
 				27B9C4792030EF5B000D0BB1 /* Objects.swift */,
 				276AEE9F2027B56C00E0CB1C /* EventTableCell.swift */,
+				27C26F5120BA726600E6C068 /* LeaderboardTableCell.swift */,
 				27A4DE5B2025125B00AAC8A8 /* MapAnnotation.swift */,
 				279C80692025518700F3950C /* Fonts */,
 				27A4DE5920250A6900AAC8A8 /* C.swift */,
@@ -223,6 +228,7 @@
 				27ACDD4D2093B71200D71266 /* GoogleService-Info.plist */,
 				2782E4252024F78200A3B2E8 /* EventsViewController.swift */,
 				2782E4292024F78200A3B2E8 /* TabBarViewController.swift */,
+				278655E220BCCD1700129FE8 /* tutorial.mov */,
 				278D306A202CB2B700B0B941 /* EventProfileView.swift */,
 				27B07FDD202BDC5B0002FE0B /* LocationProfileView.swift */,
 				2782E3F72024F6B700A3B2E8 /* ViewController.swift */,
@@ -407,6 +413,7 @@
 				271A8A3D207F17F400210FF9 /* Launch Screen.storyboard in Resources */,
 				27709825208933D20057280B /* Assets.xcassets in Resources */,
 				270A120F203A9DED009F6C6E /* GoogleService-Info.plist in Resources */,
+				278655E320BCCD1800129FE8 /* tutorial.mov in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -548,6 +555,7 @@
 				27D26F282029053000F585B5 /* AppDelegate.swift in Sources */,
 				27A4DE5C2025125B00AAC8A8 /* MapAnnotation.swift in Sources */,
 				2782E42D2024F78200A3B2E8 /* ProfileViewController.swift in Sources */,
+				27C26F5220BA726600E6C068 /* LeaderboardTableCell.swift in Sources */,
 				2782E42E2024F78200A3B2E8 /* PeopleViewController.swift in Sources */,
 				276BE2642076D803004A6791 /* OnboardingViewController.swift in Sources */,
 				27A4DE5A20250A6900AAC8A8 /* C.swift in Sources */,

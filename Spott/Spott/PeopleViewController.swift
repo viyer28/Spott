@@ -103,7 +103,7 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         let button = UIButton(frame: profileView.frame)
         cell.backgroundColor = UIColor.white
         button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(touch(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(touch(_:event:)), for: .touchDownRepeat)
         button.tag = indexPath.section
         cell.addSubview(profileView)
         cell.addSubview(button)
@@ -112,8 +112,12 @@ class PeopleViewController: UICollectionViewController, UICollectionViewDelegate
         
     }
     
-    @objc func touch(_ button: UIButton)
+    @objc func touch(_ button: UIButton, event: UIEvent)
     {
+        let touch: UITouch = event.allTouches!.first!
+        if (touch.tapCount != 2) {
+            return
+        }
         let path = button.tag
         let userSpotted = C.user.spotted
         if self.sliderInt != 0

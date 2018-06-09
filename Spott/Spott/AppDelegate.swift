@@ -76,8 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         C.user.profilePictureURL = "sample_prof"
         C.user.whoIam = ["Charismatic", "Chill", "Risktaking"]
         C.user.whatIDo = ["Tennis", "Trumpet", "Skiiing"]
-        C.user.xp = 10000
-        C.user.level = 10
         C.user.major = "Economics"
         C.user.hometown = "Washington DC"
         C.user.age = 20
@@ -105,6 +103,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         C.h = self.window?.frame.height
                         self.window?.rootViewController = initialViewController
                         self.window?.makeKeyAndVisible()
+                        //self.showLoadingScreen()
+                        
                     } else {
                         print("Recieved documents")
                         if querySnapshot!.documents.count == 0
@@ -117,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             C.h = self.window?.frame.height
                             self.window?.rootViewController = initialViewController
                             self.window?.makeKeyAndVisible()
-                            self.showLoadingScreen()
+                            //self.showLoadingScreen()
                         }
                         for document in querySnapshot!.documents {
                             print("\(document.documentID) => \(document.data())")
@@ -133,6 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             self.window?.backgroundColor = .white
                             self.window?.rootViewController = C.navigationViewController
                             self.window?.makeKeyAndVisible()
+                           // self.showLoadingScreen()
                         }
                     }
             }
@@ -212,10 +213,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        if C.navigationViewController.mapViewController.userAnnotation != nil
+        {
+            C.navigationViewController.mapViewController.userAnnotation.layer.removeAllAnimations()
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+        if C.navigationViewController.mapViewController.userAnnotation != nil
+        {
+            C.navigationViewController.mapViewController.userAnnotation.layer.removeAllAnimations()
+            let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+            
+            animation.values = [0.1, 1.0]
+            animation.duration = 3
+            animation.repeatCount = Float.infinity
+            C.navigationViewController.mapViewController.userAnnotation.imageView.layer.add(animation, forKey: nil)
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -230,8 +246,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: C.w, height: C.h))
             imageView.image = UIImage(named: "launchScreen")
             imageView.contentMode = .scaleAspectFill
+            
+//            let image1:UIImage = UIImage(named: "loadingScreen1")!
+//            let image2:UIImage = UIImage(named: "loadingScreen2")!
+//            let image3:UIImage = UIImage(named: "loadingScreen3")!
+//            let image4:UIImage = UIImage(named: "loadingScreen4")!
+//            let image5:UIImage = UIImage(named: "loadingScreen5")!
+//            let image6:UIImage = UIImage(named: "loadingScreen6")!
+//            let image7:UIImage = UIImage(named: "loadingScreen7")!
+//            let image8:UIImage = UIImage(named: "loadingScreen8")!
+//            let image9:UIImage = UIImage(named: "loadingScreen9")!
+//            let image10:UIImage = UIImage(named: "loadingScreen10")!
+//            let image11:UIImage = UIImage(named: "loadingScreen11")!
+//            let image12:UIImage = UIImage(named: "loadingScreen12")!
+//            let image13:UIImage = UIImage(named: "loadingScreen13")!
+//            let image14:UIImage = UIImage(named: "loadingScreen14")!
+//            let image15:UIImage = UIImage(named: "loadingScreen15")!
+//            let image16:UIImage = UIImage(named: "loadingScreen16")!
+//            let image17:UIImage = UIImage(named: "loadingScreen17")!
+//            let image18:UIImage = UIImage(named: "loadingScreen18")!
+//            let image19:UIImage = UIImage(named: "loadingScreen19")!
+//            let image20:UIImage = UIImage(named: "loadingScreen20")!
+//            imageView.animationImages = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11, image12, image13, image14, image15, image16, image17, image18, image19, image20]
+//            imageView.animationDuration = 1
+//            imageView.startAnimating()
+            
             window?.rootViewController?.view.addSubview(imageView)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
                 imageView.removeFromSuperview()
             })
         }

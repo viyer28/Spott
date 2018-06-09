@@ -18,11 +18,13 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
     var textField: UITextField!
     var tableView: UITableView!
     var centerButton = UIButton(type: UIButtonType.custom) as UIButton
+    var helpButton = UIButton(type: .custom) as UIButton
     var otherControllerView: UIView!
     var allValues: [String] = []
     var values: [String] = []
     var profileView: MatchProfileView!
-
+    var userAnnotation: UserLocationAnnotationView!
+    
     //var searchView = SearchBarView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +53,11 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         textField.font = UIFont(name: "FuturaPT-Light", size: 16.0)
         textField.tintColor = .black 
         textField.clearButtonMode = UITextFieldViewMode.whileEditing
+        textField.leftViewMode = .always
+        let imageView = UIImageView(image: UIImage(named: "search"))
+        imageView.frame = CGRect(x: textField.frame.height * 0.2, y: textField.frame.height * 0.2, width: textField.frame.height * 0.6, height: textField.frame.height * 0.6)
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: textField.frame.height, height: textField.frame.height))
+        textField.leftView?.addSubview(imageView)
         //textField.placeholder = "search for a user or location"
         textField.autocorrectionType = UITextAutocorrectionType.no
         tableView = UITableView(frame: CGRect(x: C.w*0.11, y: C.h*0.1, width: C.w*0.78, height: C.h*0.4))
@@ -80,8 +87,26 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         centerButton.center = CGPoint(x: C.w*0.5, y: C.h*0.95)
         centerButton.setImage(UIImage(named: "centerUser"), for: .normal)
         centerButton.addTarget(self, action: #selector(centerToUser), for: UIControlEvents.touchUpInside)
-
+        let image1:UIImage = UIImage(named: "home1")!
+        let image2:UIImage = UIImage(named: "home2")!
+        let image3:UIImage = UIImage(named: "home3")!
+        let image4:UIImage = UIImage(named: "home4")!
+        let image5:UIImage = UIImage(named: "home5")!
+        let image6:UIImage = UIImage(named: "home6")!
+        let image7:UIImage = UIImage(named: "home7")!
+        let image8:UIImage = UIImage(named: "home8")!
+        centerButton.imageView!.animationImages = [image1, image2, image3, image4, image5, image6, image7, image8]
+        centerButton.imageView!.animationDuration = 0.8
+        centerButton.imageView!.startAnimating()
+        
+        helpButton.frame = CGRect(x: C.w * 0.11, y: C.h * 0.11, width: C.h * 0.04, height: C.h * 0.04)
+        helpButton.setImage(UIImage(named: "helpy"), for: .normal)
+        helpButton.subviews.first?.contentMode = .scaleAspectFit
+        helpButton.addTarget(self, action: #selector(showTutorial), for: UIControlEvents.touchUpInside)
+        
+        
         self.view.addSubview(centerButton)
+        self.view.addSubview(helpButton)
         if C.user.business == 0
         {
             self.view.addSubview(tableView)
@@ -100,7 +125,8 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         
         if annotation is MGLUserLocation {
             
-            return UserLocationAnnotationView()
+            self.userAnnotation = UserLocationAnnotationView()
+            return self.userAnnotation
         }
         
         if annotation.isKind(of: MapAnnotation.self) && (annotation as! MapAnnotation).type == 1
@@ -118,6 +144,12 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         return view
     }
     
+    @objc func showTutorial() {
+        C.navigationViewController.helpView.isHidden = false
+        C.navigationViewController.spottButton.isHidden = true
+        C.navigationViewController.eventsButton.isHidden = true
+        C.navigationViewController.avPlayer.play()
+    }
     
     func mapView(_ mapView: MGLMapView, calloutViewFor annotation: MGLAnnotation) -> MGLCalloutView? {
         // Instantiate and return our custom callout view.
@@ -240,6 +272,7 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
         self.present(C.profileViewController, animated: true, completion: nil)
         self.centerButton.isHidden = false
     }
+    
     func updateAnnotations()
     {
         if C.user.business == 1
@@ -348,13 +381,27 @@ class MapViewController: UIViewController, MGLMapViewDelegate {
 }
 
 final class UserLocationAnnotationView: MGLUserLocationAnnotationView {
+    var imageView: UIImageView!
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
     }
     
     convenience init()
     {
-        self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.075, height: C.w*0.075))
+        self.init(frame: CGRect(x: 0, y: 0, width: C.w*0.1, height: C.w*0.1))
+        let imageView1 = UIImageView(frame: CGRect(x: 0, y: 0, width: C.w*0.1, height: C.w*0.1))
+        imageView1.image = UIImage(named: "locationIcon1")
+        imageView1.contentMode = .scaleAspectFit
+        imageView = UIImageView(frame: CGRect(x: -C.w*0.1, y: -C.w*0.1, width: C.w*0.3, height: C.w*0.3))
+        imageView.image = UIImage(named: "radiusCircle")
+        self.addSubview(imageView)
+        self.addSubview(imageView1)
+        let animation = CAKeyframeAnimation(keyPath: "transform.scale")
+        
+        animation.values = [0.1, 1.0]
+        animation.duration = 3
+        animation.repeatCount = Float.infinity
+        imageView.layer.add(animation, forKey: nil)
     }
     
     override init(frame: CGRect) {
@@ -377,6 +424,20 @@ final class UserLocationAnnotationView: MGLUserLocationAnnotationView {
         
         // Use your image here
         let image = UIImage(named: "UserAnnotation")
+//        let image1:UIImage = UIImage(named: "locationIcon1")!
+//        let image2:UIImage = UIImage(named: "locationIcon2")!
+//        let image3:UIImage = UIImage(named: "locationIcon3")!
+//        let image4:UIImage = UIImage(named: "locationIcon4")!
+//        let image5:UIImage = UIImage(named: "locationIcon5")!
+//        let image6:UIImage = UIImage(named: "locationIcon6")!
+//        let image7:UIImage = UIImage(named: "locationIcon7")!
+//        let image8:UIImage = UIImage(named: "locationIcon8")!
+//        let locationImageView = UIImageView(frame: CGRect(x: -C.w*0.025, y: -C.w*0.025, width: C.w*0.125, height: C.w*0.125))
+//        locationImageView.contentMode = .scaleAspectFit
+//
+//        locationImageView.animationImages = [image1, image2, image3, image4, image5, image6, image7, image8]
+//        locationImageView.animationDuration = 0.6
+//        locationImageView.startAnimating()
         if UIDevice.current.modelName == "iPhone X"
         {
             UIGraphicsBeginImageContext(CGSize(width: 800, height: 800))
@@ -390,7 +451,9 @@ final class UserLocationAnnotationView: MGLUserLocationAnnotationView {
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        layer.contents = newImage?.cgImage
+        //layer.contents = newImage?.cgImage
+        
+        //self.addSubview(locationImageView)
     }
 }
 

@@ -27,6 +27,8 @@ class C: NSObject {
     static var currentLocation = Location()
     static var totalPopulation = 1
     static var user = User()
+    static var lastSpottUpdated = NSDate()
+    static var leaders: [Leader] = []
     static var spotts: [User] = []
     static var lastLocationUpdate = NSDate()
     static var events: [Event] = []
@@ -40,6 +42,7 @@ class C: NSObject {
     static let userInfo = "user_info2"
     static let db = Firestore.firestore()
     static let dbChat = db.collection("chats")
+    static var leader = Leader()
     static var  fcmToken: String!
     static let storage = Storage.storage()
     static let stoRef = Storage.storage().reference()
@@ -68,14 +71,18 @@ class C: NSObject {
                     location.displayName = locationData["displayName"] as! String
                     location.refid = document.documentID
                     location.numPopulation = 0
+                    if locationData["flame"] != nil
+                    {
+                        location.type = locationData["flame"] as! Int
+                    }
                     if locationData["population"] != nil
                     {
-                        location.numPopulation = locationData["population"] as! Int
+                        //location.numPopulation = locationData["population"] as! Int
                     }
                     C.locations.append(location)
                     
                 }
-                //getNums(locations: C.locations)
+                getNums(locations: C.locations)
                 C.updateUsersLocation()
                 C.navigationViewController.findUserLocation()
                 //C.navigationViewController.mapViewController.searchView.tableView.reloadData()
@@ -237,6 +244,67 @@ class C: NSObject {
         return false
     }
     
+    static func getLeaderboardUsers()
+    {
+        var leaders: [Leader] = []
+        Firestore.firestore().collection(C.userInfo).getDocuments() {
+            (querySnapshot, err) in
+            if let err = err {
+                print("Error getting Friend documents: \(err)")
+            } else {
+                for document in querySnapshot!.documents
+                {
+                    let data = document.data()
+                    let l = Leader()
+                    l.name = document["name"] as! String
+                    if data["score"] != nil
+                    {
+                        l.score = document["score"] as! Int
+                    }
+                    if data["rank"] != nil
+                    {
+                        l.rank = data["rank"] as! Int
+                    }
+                    if data["prevRank"] != nil
+                    {
+                        l.prevRank = data["prevRank"] as! Int
+                    }
+                    leaders.append(l)
+                    
+                    if C.user.refid != nil && C.user.refid == document.documentID
+                    {
+                        if data["score"] != nil
+                        {
+                            C.leader.score = document["score"] as! Int
+                        }
+                        if data["rank"] != nil
+                        {
+                            C.leader.rank = data["rank"] as! Int
+                        }
+                        if data["prevRank"] != nil
+                        {
+                            C.leader.prevRank = data["prevRank"] as! Int
+                        }
+                    }
+                    
+                    if data["profilePicture"] != nil
+                    {
+                        C.storage.reference(forURL: data["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                            l.image = UIImage(data: data!)
+                            
+                        })
+                        if C.navigationViewController.eventsViewController.tableView != nil
+                        {
+                            C.navigationViewController.eventsViewController.tableView.reloadData()
+                        }
+                    }
+                }
+                C.leaders = leaders.sorted(by: { $0.score > $1.score })
+                
+            }
+        }
+    }
+    
 //    static func addUserListener()
 //    {
 //        db.collection(C.userInfo).document(C.refid)
@@ -256,7 +324,7 @@ class C: NSObject {
         C.user.dob = C.userData["dob"] as! String
         
         C.updateToken()
-        
+        C.getLeaderboardUsers()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         dateFormatter.timeZone = TimeZone.current
@@ -264,6 +332,21 @@ class C: NSObject {
         let currentDate = Date()
         let calendar: Calendar = Calendar(identifier: .gregorian)
         C.user.name = C.userData["name"] as! String
+        C.leader.name = C.userData["name"] as! String
+        if C.userData["score"] != nil
+        {
+            C.leader.score = C.userData["score"] as! Int
+        }
+        if C.userData["rank"] != nil
+        {
+            C.leader.rank = C.userData["rank"] as! Int
+        }
+        
+        if C.userData["prevRank"] != nil
+        {
+            C.leader.rank = C.userData["rank"] as! Int
+        }
+        
         if C.userData["business"] != nil && C.userData["business"] as! Int == 1
         {
             C.user.business = 1
@@ -291,6 +374,7 @@ class C: NSObject {
                 
                 // Create a UIImage, add it to the array
                 C.user.image = UIImage(data: data!)
+                C.leader.image = C.user.image
             
         
             })
@@ -373,7 +457,7 @@ class C: NSObject {
                                         f.image = UIImage(data: data!)
                                         if C.navigationViewController.peopleViewController.sliderInt == 1
                                         {
-                                            C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                        C.navigationViewController.peopleViewController.collectionView?.reloadData()
                                         }
                                     })
                                 }
@@ -397,7 +481,7 @@ class C: NSObject {
                 }
             }
         }
-        C.updateSpottsAtUserLoc()
+        C.updateSpotts()
     }
     
     static func updateFriendsLocations()
@@ -502,11 +586,52 @@ class C: NSObject {
     {
         for s in ss
         {
-            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments()
+            Firestore.firestore().collection(C.userInfo).whereField("user_id", isEqualTo: s).getDocuments { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting Spotts documents: \(err)")
+                } else {
+                    for document in querySnapshot!.documents
+                    {
+                        let data = document.data()
+                        let f = parseUser(document: document)
+                        if data["profilePicture"] != nil
+                        {
+                            C.storage.reference(forURL: data["profilePicture"] as! String).getData(maxSize: 4*1024*1024, completion: {(data, error) -> Void in
+                                // Create a UIImage, add it to the array
+                                f.image = UIImage(data: data!)
+                                spotts.append(f)
+                                if C.navigationViewController.peopleViewController.sliderInt == 0
+                                {
+                                    C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                                }
+                                C.navigationViewController.mapViewController.updateAnnotations()
+                            })
+                        }
+                        else
+                        {
+                            f.image = UIImage(named: "sample_prof")
+                        }
+                        C.updateFriendsofFriend(user: f, friends: data["friends"] as! [String])
+                        spotts.append(f)
+                    }
+                    C.spotts = spotts
+                    if C.navigationViewController.peopleViewController.sliderInt == 0
+                    {
+                        C.navigationViewController.peopleViewController.current = spotts
+                        C.navigationViewController.peopleViewController.collectionView?.reloadData()
+                    }
+                }
+            }
+            
         }
     }
     static func updateSpotts()
     {
+        if NSDate().timeIntervalSince(lastSpottUpdated as Date) <= 15
+        {
+            return
+        }
+        lastSpottUpdated = NSDate()
         Firestore.firestore().collection(C.userInfo).getDocuments { (querySnapshot, err) in
             if let err = err {
                 print("Error getting Spotts documents: \(err)")

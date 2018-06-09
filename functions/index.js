@@ -97,6 +97,8 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
             body : `you have been spotted`
           }
         };
+        afterValue.score += 13;
+        collection.doc(change.after.id).set(afterValue);
         return sendNotificaiton(payload, afterValue.user_id);
       }
 
@@ -107,6 +109,8 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
             body : `you have a new friend`
           }
         };
+        afterValue.score += 17;
+        collection.doc(change.after.id).set(afterValue);
         return sendNotificaiton(payload, afterValue.user_id);
       }
 
@@ -121,19 +125,23 @@ exports.sendUserNotification = functions.firestore.document('user_info2/{documen
               {
                 data.population = 1;
                 data.users[afterValue.user_id];
+                afterValue.score += 2;
                 enterLocation(afterValue.user_id, data.id);
+                collection.doc(change.after.id).set(afterValue);
                 locationCollection.doc(doc.id).set(data);
               }
               else if (!data.users.includes(afterValue.user_id))
               {
                 data.users.push(afterValue.user_id);
                 data.population = data.users.length;
+                afterValue.score += 2;
                 enterLocation(afterValue.user_id, data.id);
+                collection.doc(change.after.id).set(afterValue);
                 locationCollection.doc(doc.id).set(data);
               }
             });
             return true;
-          }).catch((error) => console.log("Error updating locaiton: " + error));
+          }).catch((error) => console.log("Error visiting a location: " + error));
           locationCollection.where('id', '==', beforeValue.curLoc).get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
               const data = doc.data();
@@ -265,4 +273,44 @@ function enterLocation(user, location)
     return true;
   }).catch((error) => console.log("Error entering location: " + error));
   return true;
+}
+
+exports.updateranks = functions.firestore.document('rank_timer/{documentId}')
+    .onWrite((change, context) => {
+      updateScoreboardRanks();
+      return true;
+});
+
+function updateScoreboardRanks()
+{
+  collection.get().then((querySnapshot) => {
+    const ranks = []
+    querySnapshot.forEach((doc) => {
+      const rank = doc.data();
+      if (!rank.prevRank)
+      {
+        rank.prevRank = -1;
+      }
+      if (!rank.rank)
+      {
+        rank.rank = -1;
+      }
+      if (!rank.score)
+      {
+        rank.score = 0;
+      }
+      ranks.push({data: rank, doc: doc.id});
+    });
+    console.log(ranks);
+    ranks.sort((a, b) => b.data.score - a.data.score);
+    var i = 1;
+    console.log(ranks);
+    ranks.forEach((rank) => {
+      rank.data.prevRank = rank.data.rank;
+      rank.data.rank = i;
+      i += 1;
+      collection.doc(rank.doc).set(rank.data);
+    });
+    return true
+  }).catch((error) => console.log("Error updating ranks: " + error))
 }

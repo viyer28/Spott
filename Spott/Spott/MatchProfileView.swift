@@ -269,6 +269,7 @@ class MatchProfileView : UIView, UITableViewDelegate, UITableViewDataSource {
         try! Auth.auth().signOut()
         self.window!.rootViewController?.dismiss(animated: false, completion: nil)
         self.window!.rootViewController = WelcomeViewController()
+        C.navigationViewController = NavigationViewController()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
