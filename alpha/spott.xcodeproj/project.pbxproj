@@ -1,0 +1,382 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AC1D205D20E42A9F007D20B3 /* ProfileScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D205C20E42A9F007D20B3 /* ProfileScrollViewController.swift */; };
+		AC1D205F20E47CE4007D20B3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D205E20E47CE4007D20B3 /* SearchViewController.swift */; };
+		AC1D206120E48A8A007D20B3 /* SpottViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D206020E48A8A007D20B3 /* SpottViewController.swift */; };
+		AC1D206320E56FF5007D20B3 /* SpottScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D206220E56FF5007D20B3 /* SpottScrollViewController.swift */; };
+		AC1D206920E57375007D20B3 /* SpottScrollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D206820E57375007D20B3 /* SpottScrollCollectionViewCell.swift */; };
+		AC4DC60020EE7BFB008670E5 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4DC5FF20EE7BFB008670E5 /* FoodViewController.swift */; };
+		AC70E5DB20E31634000C4F35 /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = AC70E5DA20E31634000C4F35 /* FuturaPTLight.otf */; };
+		AC93655A20E700E7006AF979 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC93655920E700E7006AF979 /* FriendsViewController.swift */; };
+		AC93655C20E82DB9006AF979 /* WYDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC93655B20E82DB9006AF979 /* WYDViewController.swift */; };
+		AC93655E20E83572006AF979 /* MesssagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC93655D20E83572006AF979 /* MesssagingViewController.swift */; };
+		ACB3B51E20E2BAEB00C07AA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3B51D20E2BAEB00C07AA6 /* AppDelegate.swift */; };
+		ACB3B52020E2BAEB00C07AA6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3B51F20E2BAEB00C07AA6 /* ViewController.swift */; };
+		ACB3B52320E2BAEB00C07AA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3B52120E2BAEB00C07AA6 /* Main.storyboard */; };
+		ACB3B52620E2BAEB00C07AA6 /* spott.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ACB3B52420E2BAEB00C07AA6 /* spott.xcdatamodeld */; };
+		ACB3B52820E2BAEB00C07AA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACB3B52720E2BAEB00C07AA6 /* Assets.xcassets */; };
+		ACB3B52B20E2BAEB00C07AA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3B52920E2BAEB00C07AA6 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		AC1D205C20E42A9F007D20B3 /* ProfileScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScrollViewController.swift; sourceTree = "<group>"; };
+		AC1D205E20E47CE4007D20B3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		AC1D206020E48A8A007D20B3 /* SpottViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottViewController.swift; sourceTree = "<group>"; };
+		AC1D206220E56FF5007D20B3 /* SpottScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottScrollViewController.swift; sourceTree = "<group>"; };
+		AC1D206820E57375007D20B3 /* SpottScrollCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottScrollCollectionViewCell.swift; sourceTree = "<group>"; };
+		AC4DC5FF20EE7BFB008670E5 /* FoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
+		AC70E5DA20E31634000C4F35 /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
+		AC93655920E700E7006AF979 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
+		AC93655B20E82DB9006AF979 /* WYDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYDViewController.swift; sourceTree = "<group>"; };
+		AC93655D20E83572006AF979 /* MesssagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesssagingViewController.swift; sourceTree = "<group>"; };
+		ACB3B51A20E2BAEB00C07AA6 /* spott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spott.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ACB3B51D20E2BAEB00C07AA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		ACB3B51F20E2BAEB00C07AA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ACB3B52220E2BAEB00C07AA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		ACB3B52520E2BAEB00C07AA6 /* spott.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = spott.xcdatamodel; sourceTree = "<group>"; };
+		ACB3B52720E2BAEB00C07AA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ACB3B52A20E2BAEB00C07AA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		ACB3B52C20E2BAEB00C07AA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		ACB3B51720E2BAEB00C07AA6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		ACB3B51120E2BAEB00C07AA6 = {
+			isa = PBXGroup;
+			children = (
+				ACB3B51C20E2BAEB00C07AA6 /* spott */,
+				ACB3B51B20E2BAEB00C07AA6 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		ACB3B51B20E2BAEB00C07AA6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3B51A20E2BAEB00C07AA6 /* spott.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		ACB3B51C20E2BAEB00C07AA6 /* spott */ = {
+			isa = PBXGroup;
+			children = (
+				ACB3B51D20E2BAEB00C07AA6 /* AppDelegate.swift */,
+				ACB3B51F20E2BAEB00C07AA6 /* ViewController.swift */,
+				AC1D205C20E42A9F007D20B3 /* ProfileScrollViewController.swift */,
+				AC1D205E20E47CE4007D20B3 /* SearchViewController.swift */,
+				AC1D206020E48A8A007D20B3 /* SpottViewController.swift */,
+				AC1D206220E56FF5007D20B3 /* SpottScrollViewController.swift */,
+				AC1D206820E57375007D20B3 /* SpottScrollCollectionViewCell.swift */,
+				AC93655920E700E7006AF979 /* FriendsViewController.swift */,
+				AC93655B20E82DB9006AF979 /* WYDViewController.swift */,
+				AC93655D20E83572006AF979 /* MesssagingViewController.swift */,
+				AC4DC5FF20EE7BFB008670E5 /* FoodViewController.swift */,
+				ACB3B52120E2BAEB00C07AA6 /* Main.storyboard */,
+				AC70E5DA20E31634000C4F35 /* FuturaPTLight.otf */,
+				ACB3B52720E2BAEB00C07AA6 /* Assets.xcassets */,
+				ACB3B52920E2BAEB00C07AA6 /* LaunchScreen.storyboard */,
+				ACB3B52C20E2BAEB00C07AA6 /* Info.plist */,
+				ACB3B52420E2BAEB00C07AA6 /* spott.xcdatamodeld */,
+			);
+			path = spott;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		ACB3B51920E2BAEB00C07AA6 /* spott */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACB3B52F20E2BAEB00C07AA6 /* Build configuration list for PBXNativeTarget "spott" */;
+			buildPhases = (
+				ACB3B51620E2BAEB00C07AA6 /* Sources */,
+				ACB3B51720E2BAEB00C07AA6 /* Frameworks */,
+				ACB3B51820E2BAEB00C07AA6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = spott;
+			productName = spott;
+			productReference = ACB3B51A20E2BAEB00C07AA6 /* spott.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		ACB3B51220E2BAEB00C07AA6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = Spott;
+				TargetAttributes = {
+					ACB3B51920E2BAEB00C07AA6 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = ACB3B51520E2BAEB00C07AA6 /* Build configuration list for PBXProject "spott" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = ACB3B51120E2BAEB00C07AA6;
+			productRefGroup = ACB3B51B20E2BAEB00C07AA6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				ACB3B51920E2BAEB00C07AA6 /* spott */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ACB3B51820E2BAEB00C07AA6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ACB3B52B20E2BAEB00C07AA6 /* LaunchScreen.storyboard in Resources */,
+				ACB3B52820E2BAEB00C07AA6 /* Assets.xcassets in Resources */,
+				ACB3B52320E2BAEB00C07AA6 /* Main.storyboard in Resources */,
+				AC70E5DB20E31634000C4F35 /* FuturaPTLight.otf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		ACB3B51620E2BAEB00C07AA6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC1D206320E56FF5007D20B3 /* SpottScrollViewController.swift in Sources */,
+				AC93655A20E700E7006AF979 /* FriendsViewController.swift in Sources */,
+				AC1D205F20E47CE4007D20B3 /* SearchViewController.swift in Sources */,
+				AC1D206120E48A8A007D20B3 /* SpottViewController.swift in Sources */,
+				ACB3B52020E2BAEB00C07AA6 /* ViewController.swift in Sources */,
+				AC1D205D20E42A9F007D20B3 /* ProfileScrollViewController.swift in Sources */,
+				ACB3B52620E2BAEB00C07AA6 /* spott.xcdatamodeld in Sources */,
+				AC1D206920E57375007D20B3 /* SpottScrollCollectionViewCell.swift in Sources */,
+				ACB3B51E20E2BAEB00C07AA6 /* AppDelegate.swift in Sources */,
+				AC93655E20E83572006AF979 /* MesssagingViewController.swift in Sources */,
+				AC4DC60020EE7BFB008670E5 /* FoodViewController.swift in Sources */,
+				AC93655C20E82DB9006AF979 /* WYDViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		ACB3B52120E2BAEB00C07AA6 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACB3B52220E2BAEB00C07AA6 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		ACB3B52920E2BAEB00C07AA6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ACB3B52A20E2BAEB00C07AA6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		ACB3B52D20E2BAEB00C07AA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		ACB3B52E20E2BAEB00C07AA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		ACB3B53020E2BAEB00C07AA6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = spott/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.spott.spott;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		ACB3B53120E2BAEB00C07AA6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = spott/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.spott.spott;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		ACB3B51520E2BAEB00C07AA6 /* Build configuration list for PBXProject "spott" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACB3B52D20E2BAEB00C07AA6 /* Debug */,
+				ACB3B52E20E2BAEB00C07AA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		ACB3B52F20E2BAEB00C07AA6 /* Build configuration list for PBXNativeTarget "spott" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				ACB3B53020E2BAEB00C07AA6 /* Debug */,
+				ACB3B53120E2BAEB00C07AA6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		ACB3B52420E2BAEB00C07AA6 /* spott.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				ACB3B52520E2BAEB00C07AA6 /* spott.xcdatamodel */,
+			);
+			currentVersion = ACB3B52520E2BAEB00C07AA6 /* spott.xcdatamodel */;
+			path = spott.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = ACB3B51220E2BAEB00C07AA6 /* Project object */;
+}
