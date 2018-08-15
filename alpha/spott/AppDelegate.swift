@@ -7,17 +7,114 @@
 //
 
 import UIKit
-import CoreData
+import Firebase
+import FirebaseAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var auth = SPTAuth()
+    var userDefaults: UserDefaults? = UserDefaults.standard
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        FirebaseApp.configure()
+        
+        if Auth.auth().currentUser != nil {
+            Firestore.firestore().collection(B.userInfo).whereField("user_id", isEqualTo: Auth.auth().currentUser!.uid).getDocuments() { (querySnapshot, err) in
+                if let err = err {
+                    print("Error getting documents: \(err)")
+                    
+                    try! Auth.auth().signOut()
+                    
+                    let initialViewController = B.mapViewController
+                    
+                    B.welcome = true
+                    
+                    self.window = UIWindow(frame: UIScreen.main.bounds)
+                    B.w = self.window?.frame.width
+                    B.h = self.window?.frame.height
+                    
+                    self.window?.rootViewController = initialViewController
+                    self.window?.makeKeyAndVisible()
+                    
+                } else {
+                    print("Recieved documents")
+                    if querySnapshot!.documents.count == 0
+                    {
+                        try! Auth.auth().signOut()
+                        
+                        let initialViewController = B.mapViewController
+                        
+                        B.welcome = true
+                        
+                        self.window = UIWindow(frame: UIScreen.main.bounds)
+                        B.w = self.window?.frame.width
+                        B.h = self.window?.frame.height
+                        
+                        self.window?.rootViewController = initialViewController
+                        self.window?.makeKeyAndVisible()
+                    }
+                    for document in querySnapshot!.documents {
+                        print("\(document.documentID) => \(document.data())")
+                        
+                        //B.refid = document.documentID
+                        //B.userData = document.data()
+                        
+                        //B.updateUser()
+                        //B.updateLocations()
+                        
+                        try! Auth.auth().signOut()
+                        
+                        let initialViewController = B.mapViewController
+                        
+                        B.welcome = true
+                        
+                        self.window = UIWindow(frame: UIScreen.main.bounds)
+                        B.w = self.window?.frame.width
+                        B.h = self.window?.frame.height
+
+                        self.window?.rootViewController = initialViewController //B.mapViewController
+                        self.window?.makeKeyAndVisible()
+                    }
+                }
+            }
+        } else {
+            let initialViewController = B.mapViewController
+            
+            B.welcome = true
+
+            window = UIWindow(frame: UIScreen.main.bounds)
+            B.w = window?.frame.width
+            B.h = window?.frame.height
+            
+            window?.rootViewController = initialViewController
+            window?.makeKeyAndVisible()
+        }
+        
+        auth.redirectURL = URL(string: "http://www.spott.live/callback/")
+        auth.sessionUserDefaultsKey = "current session"
+        
         return true
+    }
+    
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        if auth.canHandle(auth.redirectURL) {
+            auth.handleAuthCallback(withTriggeredAuthURL: url, callback: { (error, session) in
+                if error != nil {
+                    print("error!")
+                } else {
+                    let sessionData = NSKeyedArchiver.archivedData(withRootObject: session!)
+                    self.userDefaults?.set(sessionData, forKey: "SpotifySession")
+                    self.userDefaults?.synchronize()
+                    B.userDefaults = self.userDefaults
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: "loginSuccessfull"), object: nil)
+                }
+            })
+            return true
+        }
+        return false
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -36,57 +133,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        // Saves changes in the application's managed object context before the application terminates.
-        self.saveContext()
-    }
-
-    // MARK: - Core Data stack
-
-    lazy var persistentContainer: NSPersistentContainer = {
-        /*
-         The persistent container for the application. This implementation
-         creates and returns a container, having loaded the store for the
-         application to it. This property is optional since there are legitimate
-         error conditions that could cause the creation of the store to fail.
-        */
-        let container = NSPersistentContainer(name: "spott")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                 
-                /*
-                 Typical reasons for an error here include:
-                 * The parent directory does not exist, cannot be created, or disallows writing.
-                 * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                 * The device is out of space.
-                 * The store could not be migrated to the current model version.
-                 Check the error message to determine what the actual problem was.
-                 */
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
-    }()
-
-    // MARK: - Core Data Saving support
-
-    func saveContext () {
-        let context = persistentContainer.viewContext
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
     }
 
 }

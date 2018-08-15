@@ -7,43 +7,64 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AC1D205D20E42A9F007D20B3 /* ProfileScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D205C20E42A9F007D20B3 /* ProfileScrollViewController.swift */; };
-		AC1D205F20E47CE4007D20B3 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D205E20E47CE4007D20B3 /* SearchViewController.swift */; };
-		AC1D206120E48A8A007D20B3 /* SpottViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D206020E48A8A007D20B3 /* SpottViewController.swift */; };
-		AC1D206320E56FF5007D20B3 /* SpottScrollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D206220E56FF5007D20B3 /* SpottScrollViewController.swift */; };
-		AC1D206920E57375007D20B3 /* SpottScrollCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC1D206820E57375007D20B3 /* SpottScrollCollectionViewCell.swift */; };
-		AC4DC60020EE7BFB008670E5 /* FoodViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4DC5FF20EE7BFB008670E5 /* FoodViewController.swift */; };
+		AC15B8FD21017AE80021415C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC15B8FC21017AE80021415C /* GoogleService-Info.plist */; };
+		AC15B8FF21017F860021415C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC15B8FE21017F860021415C /* MapViewController.swift */; };
+		AC15B9012101818D0021415C /* B.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC15B9002101818D0021415C /* B.swift */; };
+		AC6C0F3B2102B41A008D129C /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC6C0F3A2102B41A008D129C /* WelcomeViewController.swift */; };
+		AC6C0F3D2102B5C5008D129C /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AC6C0F3C2102B5C5008D129C /* Onboarding.storyboard */; };
 		AC70E5DB20E31634000C4F35 /* FuturaPTLight.otf in Resources */ = {isa = PBXBuildFile; fileRef = AC70E5DA20E31634000C4F35 /* FuturaPTLight.otf */; };
-		AC93655A20E700E7006AF979 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC93655920E700E7006AF979 /* FriendsViewController.swift */; };
-		AC93655C20E82DB9006AF979 /* WYDViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC93655B20E82DB9006AF979 /* WYDViewController.swift */; };
-		AC93655E20E83572006AF979 /* MesssagingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC93655D20E83572006AF979 /* MesssagingViewController.swift */; };
 		ACB3B51E20E2BAEB00C07AA6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3B51D20E2BAEB00C07AA6 /* AppDelegate.swift */; };
-		ACB3B52020E2BAEB00C07AA6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB3B51F20E2BAEB00C07AA6 /* ViewController.swift */; };
 		ACB3B52320E2BAEB00C07AA6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3B52120E2BAEB00C07AA6 /* Main.storyboard */; };
 		ACB3B52620E2BAEB00C07AA6 /* spott.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = ACB3B52420E2BAEB00C07AA6 /* spott.xcdatamodeld */; };
-		ACB3B52820E2BAEB00C07AA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACB3B52720E2BAEB00C07AA6 /* Assets.xcassets */; };
 		ACB3B52B20E2BAEB00C07AA6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACB3B52920E2BAEB00C07AA6 /* LaunchScreen.storyboard */; };
+		ACC42D55210698A800894685 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACC42D54210698A700894685 /* Assets.xcassets */; };
+		ACC42D5921078D5700894685 /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC42D5621078D5600894685 /* SpotifyAuthentication.framework */; };
+		ACC42D5A21078D5700894685 /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC42D5721078D5600894685 /* SpotifyMetadata.framework */; };
+		ACC42D5B21078D5700894685 /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC42D5821078D5700894685 /* SpotifyAudioPlayback.framework */; };
+		ACC42D5D21078D7100894685 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC42D5C21078D7100894685 /* AVFoundation.framework */; };
+		ACC42D5F21078D7A00894685 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACC42D5E21078D7A00894685 /* SystemConfiguration.framework */; };
+		ACC42D63210790DE00894685 /* BridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACC42D62210790DE00894685 /* BridgeViewController.m */; };
+		ACF53671210FB8FE0023BAE7 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF53670210FB8FE0023BAE7 /* TutorialViewController.swift */; };
+		ACF5367321111CD10023BAE7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF5367221111CD10023BAE7 /* SearchViewController.swift */; };
+		ACF5367521111CE10023BAE7 /* SpottViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF5367421111CE10023BAE7 /* SpottViewController.swift */; };
+		ACF536772113A01C0023BAE7 /* SpottCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF536762113A01C0023BAE7 /* SpottCollectionViewCell.swift */; };
+		ACF53679211528DB0023BAE7 /* Object.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF53678211528DB0023BAE7 /* Object.swift */; };
+		ACF5367D2122349F0023BAE7 /* MapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF5367C2122349F0023BAE7 /* MapAnnotation.swift */; };
+		DEFB2029387E4A44E06C2DBD /* Pods_spott.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCCFEC86024F9A9EC3D4727F /* Pods_spott.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		AC1D205C20E42A9F007D20B3 /* ProfileScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScrollViewController.swift; sourceTree = "<group>"; };
-		AC1D205E20E47CE4007D20B3 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		AC1D206020E48A8A007D20B3 /* SpottViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottViewController.swift; sourceTree = "<group>"; };
-		AC1D206220E56FF5007D20B3 /* SpottScrollViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottScrollViewController.swift; sourceTree = "<group>"; };
-		AC1D206820E57375007D20B3 /* SpottScrollCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottScrollCollectionViewCell.swift; sourceTree = "<group>"; };
-		AC4DC5FF20EE7BFB008670E5 /* FoodViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodViewController.swift; sourceTree = "<group>"; };
+		4794F3FABB266489750098B3 /* Pods-spott.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spott.debug.xcconfig"; path = "Pods/Target Support Files/Pods-spott/Pods-spott.debug.xcconfig"; sourceTree = "<group>"; };
+		A8709DB593519BEA47C1E809 /* Pods-spott.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-spott.release.xcconfig"; path = "Pods/Target Support Files/Pods-spott/Pods-spott.release.xcconfig"; sourceTree = "<group>"; };
+		AC15B8FC21017AE80021415C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		AC15B8FE21017F860021415C /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		AC15B9002101818D0021415C /* B.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = B.swift; sourceTree = "<group>"; };
+		AC15B902210187DF0021415C /* spott.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = spott.entitlements; sourceTree = "<group>"; };
+		AC6C0F3A2102B41A008D129C /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		AC6C0F3C2102B5C5008D129C /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		AC70E5DA20E31634000C4F35 /* FuturaPTLight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FuturaPTLight.otf; sourceTree = "<group>"; };
-		AC93655920E700E7006AF979 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
-		AC93655B20E82DB9006AF979 /* WYDViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WYDViewController.swift; sourceTree = "<group>"; };
-		AC93655D20E83572006AF979 /* MesssagingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MesssagingViewController.swift; sourceTree = "<group>"; };
 		ACB3B51A20E2BAEB00C07AA6 /* spott.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spott.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACB3B51D20E2BAEB00C07AA6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ACB3B51F20E2BAEB00C07AA6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ACB3B52220E2BAEB00C07AA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ACB3B52520E2BAEB00C07AA6 /* spott.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = spott.xcdatamodel; sourceTree = "<group>"; };
-		ACB3B52720E2BAEB00C07AA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACB3B52A20E2BAEB00C07AA6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ACB3B52C20E2BAEB00C07AA6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ACC42D54210698A700894685 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ACC42D5621078D5600894685 /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		ACC42D5721078D5600894685 /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
+		ACC42D5821078D5700894685 /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
+		ACC42D5C21078D7100894685 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		ACC42D5E21078D7A00894685 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ACC42D60210790DD00894685 /* spott-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "spott-Bridging-Header.h"; sourceTree = "<group>"; };
+		ACC42D61210790DE00894685 /* BridgeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeViewController.h; sourceTree = "<group>"; };
+		ACC42D62210790DE00894685 /* BridgeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BridgeViewController.m; sourceTree = "<group>"; };
+		ACF53670210FB8FE0023BAE7 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		ACF5367221111CD10023BAE7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		ACF5367421111CE10023BAE7 /* SpottViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottViewController.swift; sourceTree = "<group>"; };
+		ACF536762113A01C0023BAE7 /* SpottCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpottCollectionViewCell.swift; sourceTree = "<group>"; };
+		ACF53678211528DB0023BAE7 /* Object.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Object.swift; sourceTree = "<group>"; };
+		ACF5367C2122349F0023BAE7 /* MapAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapAnnotation.swift; sourceTree = "<group>"; };
+		CCCFEC86024F9A9EC3D4727F /* Pods_spott.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_spott.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +72,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACC42D5F21078D7A00894685 /* SystemConfiguration.framework in Frameworks */,
+				ACC42D5D21078D7100894685 /* AVFoundation.framework in Frameworks */,
+				DEFB2029387E4A44E06C2DBD /* Pods_spott.framework in Frameworks */,
+				ACC42D5B21078D5700894685 /* SpotifyAudioPlayback.framework in Frameworks */,
+				ACC42D5A21078D5700894685 /* SpotifyMetadata.framework in Frameworks */,
+				ACC42D5921078D5700894685 /* SpotifyAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +89,8 @@
 			children = (
 				ACB3B51C20E2BAEB00C07AA6 /* spott */,
 				ACB3B51B20E2BAEB00C07AA6 /* Products */,
+				F8B0B1C9EC062752C03EE148 /* Pods */,
+				F2D809A2DB68C7154963F0D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,25 +105,52 @@
 		ACB3B51C20E2BAEB00C07AA6 /* spott */ = {
 			isa = PBXGroup;
 			children = (
+				AC15B902210187DF0021415C /* spott.entitlements */,
 				ACB3B51D20E2BAEB00C07AA6 /* AppDelegate.swift */,
-				ACB3B51F20E2BAEB00C07AA6 /* ViewController.swift */,
-				AC1D205C20E42A9F007D20B3 /* ProfileScrollViewController.swift */,
-				AC1D205E20E47CE4007D20B3 /* SearchViewController.swift */,
-				AC1D206020E48A8A007D20B3 /* SpottViewController.swift */,
-				AC1D206220E56FF5007D20B3 /* SpottScrollViewController.swift */,
-				AC1D206820E57375007D20B3 /* SpottScrollCollectionViewCell.swift */,
-				AC93655920E700E7006AF979 /* FriendsViewController.swift */,
-				AC93655B20E82DB9006AF979 /* WYDViewController.swift */,
-				AC93655D20E83572006AF979 /* MesssagingViewController.swift */,
-				AC4DC5FF20EE7BFB008670E5 /* FoodViewController.swift */,
+				AC15B8FE21017F860021415C /* MapViewController.swift */,
+				AC6C0F3A2102B41A008D129C /* WelcomeViewController.swift */,
+				ACF53670210FB8FE0023BAE7 /* TutorialViewController.swift */,
+				ACF5367221111CD10023BAE7 /* SearchViewController.swift */,
+				ACF5367421111CE10023BAE7 /* SpottViewController.swift */,
+				ACF536762113A01C0023BAE7 /* SpottCollectionViewCell.swift */,
+				ACF53678211528DB0023BAE7 /* Object.swift */,
+				ACF5367C2122349F0023BAE7 /* MapAnnotation.swift */,
+				AC15B9002101818D0021415C /* B.swift */,
+				AC6C0F3C2102B5C5008D129C /* Onboarding.storyboard */,
 				ACB3B52120E2BAEB00C07AA6 /* Main.storyboard */,
 				AC70E5DA20E31634000C4F35 /* FuturaPTLight.otf */,
-				ACB3B52720E2BAEB00C07AA6 /* Assets.xcassets */,
+				ACC42D54210698A700894685 /* Assets.xcassets */,
 				ACB3B52920E2BAEB00C07AA6 /* LaunchScreen.storyboard */,
+				ACC42D61210790DE00894685 /* BridgeViewController.h */,
+				ACC42D62210790DE00894685 /* BridgeViewController.m */,
 				ACB3B52C20E2BAEB00C07AA6 /* Info.plist */,
+				AC15B8FC21017AE80021415C /* GoogleService-Info.plist */,
 				ACB3B52420E2BAEB00C07AA6 /* spott.xcdatamodeld */,
+				ACC42D60210790DD00894685 /* spott-Bridging-Header.h */,
 			);
 			path = spott;
+			sourceTree = "<group>";
+		};
+		F2D809A2DB68C7154963F0D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ACC42D5E21078D7A00894685 /* SystemConfiguration.framework */,
+				ACC42D5C21078D7100894685 /* AVFoundation.framework */,
+				ACC42D5821078D5700894685 /* SpotifyAudioPlayback.framework */,
+				ACC42D5621078D5600894685 /* SpotifyAuthentication.framework */,
+				ACC42D5721078D5600894685 /* SpotifyMetadata.framework */,
+				CCCFEC86024F9A9EC3D4727F /* Pods_spott.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F8B0B1C9EC062752C03EE148 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4794F3FABB266489750098B3 /* Pods-spott.debug.xcconfig */,
+				A8709DB593519BEA47C1E809 /* Pods-spott.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -104,9 +160,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ACB3B52F20E2BAEB00C07AA6 /* Build configuration list for PBXNativeTarget "spott" */;
 			buildPhases = (
+				25CDC4D5AF347D862FC593C7 /* [CP] Check Pods Manifest.lock */,
 				ACB3B51620E2BAEB00C07AA6 /* Sources */,
 				ACB3B51720E2BAEB00C07AA6 /* Frameworks */,
 				ACB3B51820E2BAEB00C07AA6 /* Resources */,
+				630363CA7F161682C3EC1CEF /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -129,7 +187,13 @@
 				TargetAttributes = {
 					ACB3B51920E2BAEB00C07AA6 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -156,32 +220,97 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC6C0F3D2102B5C5008D129C /* Onboarding.storyboard in Resources */,
 				ACB3B52B20E2BAEB00C07AA6 /* LaunchScreen.storyboard in Resources */,
-				ACB3B52820E2BAEB00C07AA6 /* Assets.xcassets in Resources */,
+				AC15B8FD21017AE80021415C /* GoogleService-Info.plist in Resources */,
 				ACB3B52320E2BAEB00C07AA6 /* Main.storyboard in Resources */,
+				ACC42D55210698A800894685 /* Assets.xcassets in Resources */,
 				AC70E5DB20E31634000C4F35 /* FuturaPTLight.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		25CDC4D5AF347D862FC593C7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-spott-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		630363CA7F161682C3EC1CEF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-spott/Pods-spott-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
+				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-spott/Pods-spott-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		ACB3B51620E2BAEB00C07AA6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC1D206320E56FF5007D20B3 /* SpottScrollViewController.swift in Sources */,
-				AC93655A20E700E7006AF979 /* FriendsViewController.swift in Sources */,
-				AC1D205F20E47CE4007D20B3 /* SearchViewController.swift in Sources */,
-				AC1D206120E48A8A007D20B3 /* SpottViewController.swift in Sources */,
-				ACB3B52020E2BAEB00C07AA6 /* ViewController.swift in Sources */,
-				AC1D205D20E42A9F007D20B3 /* ProfileScrollViewController.swift in Sources */,
+				AC15B9012101818D0021415C /* B.swift in Sources */,
+				ACF5367521111CE10023BAE7 /* SpottViewController.swift in Sources */,
+				ACF53671210FB8FE0023BAE7 /* TutorialViewController.swift in Sources */,
+				ACF5367321111CD10023BAE7 /* SearchViewController.swift in Sources */,
 				ACB3B52620E2BAEB00C07AA6 /* spott.xcdatamodeld in Sources */,
-				AC1D206920E57375007D20B3 /* SpottScrollCollectionViewCell.swift in Sources */,
+				ACF536772113A01C0023BAE7 /* SpottCollectionViewCell.swift in Sources */,
+				ACF53679211528DB0023BAE7 /* Object.swift in Sources */,
+				AC15B8FF21017F860021415C /* MapViewController.swift in Sources */,
+				ACC42D63210790DE00894685 /* BridgeViewController.m in Sources */,
 				ACB3B51E20E2BAEB00C07AA6 /* AppDelegate.swift in Sources */,
-				AC93655E20E83572006AF979 /* MesssagingViewController.swift in Sources */,
-				AC4DC60020EE7BFB008670E5 /* FoodViewController.swift in Sources */,
-				AC93655C20E82DB9006AF979 /* WYDViewController.swift in Sources */,
+				AC6C0F3B2102B41A008D129C /* WelcomeViewController.swift in Sources */,
+				ACF5367D2122349F0023BAE7 /* MapAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,13 +445,23 @@
 		};
 		ACB3B53020E2BAEB00C07AA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4794F3FABB266489750098B3 /* Pods-spott.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = spott/spott.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 722MQCCEZT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = spott/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spott.spott;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "spott/spott-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -330,13 +469,22 @@
 		};
 		ACB3B53120E2BAEB00C07AA6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A8709DB593519BEA47C1E809 /* Pods-spott.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = spott/spott.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 722MQCCEZT;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = spott/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.spott.spott;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "spott/spott-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

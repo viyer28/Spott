@@ -1,0 +1,6 @@
+framework module Pods_spott {
+  umbrella header "Pods-spott-umbrella.h"
+
+  export *
+  module * { export * }
+}

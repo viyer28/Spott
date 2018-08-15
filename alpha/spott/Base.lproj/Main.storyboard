@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -40,9 +40,6 @@
                                     <constraint firstAttribute="height" constant="30" id="emg-KT-Xwm"/>
                                 </constraints>
                                 <state key="normal" title="search" image="search"/>
-                                <connections>
-                                    <segue destination="n7S-h1-btH" kind="presentation" id="Odg-rl-4gq"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qM1-1j-sbB">
                                 <rect key="frame" x="304" y="44" width="51" height="56"/>
@@ -51,9 +48,6 @@
                                     <constraint firstAttribute="width" constant="51" id="cIC-KD-BEV"/>
                                 </constraints>
                                 <state key="normal" title="profile" image="profile"/>
-                                <connections>
-                                    <segue destination="eua-ZV-3Vh" kind="presentation" id="Nq9-Fu-0PH"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EAX-Ww-yi8">
                                 <rect key="frame" x="161.66666666666666" y="438" width="52" height="35"/>
@@ -62,9 +56,6 @@
                                     <constraint firstAttribute="width" constant="52" id="Es3-hO-pTL"/>
                                 </constraints>
                                 <state key="normal" title="wyd" image="wyd"/>
-                                <connections>
-                                    <segue destination="kfD-c7-bpx" kind="presentation" id="eNu-ga-DPh"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7qv-Ny-a47">
                                 <rect key="frame" x="162.66666666666666" y="668" width="50" height="50"/>
@@ -73,9 +64,6 @@
                                     <constraint firstAttribute="width" constant="50" id="jun-qa-p6q"/>
                                 </constraints>
                                 <state key="normal" title="spott" image="spott-icon"/>
-                                <connections>
-                                    <segue destination="guh-Qw-MSc" kind="presentation" id="8LY-eZ-sOh"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bGf-qD-QoT">
                                 <rect key="frame" x="264" y="701" width="39" height="42"/>
@@ -84,9 +72,6 @@
                                     <constraint firstAttribute="height" constant="42" id="yA9-VM-vfY"/>
                                 </constraints>
                                 <state key="normal" title="food" image="food-icon"/>
-                                <connections>
-                                    <segue destination="jg4-K1-5WA" kind="presentation" id="dFL-eV-tnI"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pgL-bp-cmn">
                                 <rect key="frame" x="72" y="708" width="42" height="32"/>
@@ -95,9 +80,6 @@
                                     <constraint firstAttribute="width" constant="42" id="hB0-VP-8gK"/>
                                 </constraints>
                                 <state key="normal" title="friends" image="friend-icon"/>
-                                <connections>
-                                    <segue destination="jww-oi-faU" kind="presentation" id="q02-qc-gal"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nUV-LN-UUj">
                                 <rect key="frame" x="176" y="740" width="23" height="23"/>
@@ -106,9 +88,6 @@
                                     <constraint firstAttribute="height" constant="23" id="yn8-5k-x6v"/>
                                 </constraints>
                                 <state key="normal" title="message" image="msg-icon"/>
-                                <connections>
-                                    <segue destination="cfi-IN-MGB" kind="presentation" id="Bk6-lt-TJe"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -145,6 +124,7 @@
         <!--Profile-->
         <scene sceneID="ORy-dK-9Tc">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Vm0-Om-gzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Profile" id="eua-ZV-3Vh" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fJL-xz-bsD">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
@@ -220,9 +200,6 @@
                                                     <constraint firstAttribute="width" constant="25" id="qLV-X3-CnM"/>
                                                 </constraints>
                                                 <state key="normal" image="scroll"/>
-                                                <connections>
-                                                    <segue destination="dEz-tF-t1l" kind="presentation" id="FvF-1G-jI1"/>
-                                                </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Uta-AH-OcI">
                                                 <rect key="frame" x="15.666666666666657" y="469" width="249.99999999999997" height="45"/>
@@ -370,7 +347,6 @@
                         <viewLayoutGuide key="safeArea" id="orM-QY-XQE"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vm0-Om-gzk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="828" y="30.295566502463057"/>
         </scene>
@@ -1256,9 +1232,6 @@
                                     <constraint firstAttribute="height" constant="23" id="pJc-Xb-rKE"/>
                                 </constraints>
                                 <state key="normal" title="message" image="msg-icon"/>
-                                <connections>
-                                    <segue destination="aRL-FC-0vJ" kind="presentation" id="uqK-fu-XBd"/>
-                                </connections>
                             </button>
                             <collectionView multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="6xK-96-qM5">
                                 <rect key="frame" x="0.0" y="110" width="375" height="548"/>
